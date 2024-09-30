@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css'; 
-import Login from './controller/Login';
-import Nav from './controller/Nav'
-import RegisterEmp from './controller/RegisterEmp';
+import Login from './components/Login';
+import Nav from './components/Nav'
+import RegisterEmp from './components/RegisterEmp';
 
 
 function App() {
