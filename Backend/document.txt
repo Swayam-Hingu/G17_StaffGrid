@@ -1,0 +1,14 @@
+npm i express
+npm i nodemon
+npm i mongoose
+npm i jsonwebtoken
+npm i dotenv
+npm i cookie-parser
+npm install nodemailer
+
+
+//admin done 
+//hr,manager,employee
+
+
+npm install react-router-dom
