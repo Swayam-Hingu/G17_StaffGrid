@@ -4,8 +4,8 @@ const cookieParser = require('cookie-parser')
 
 // Check User is Login
 module.exports = async (req, res, next) => {
-    try {
-        const token = req.headers.authorization?.split(' ')[1]; 
+    try { 
+        const token = req.cookies.jwt;
         console.log(token) ;
         if (!token) {
             throw new Error("JWT not provided");

@@ -5,6 +5,10 @@ const authmiddleware = require('../auth/authmiddleware');
 const adminmiddleware = require('../auth/adminmiddleware');
 const router = express.Router(); 
 const sendEmail = require('nodemailer');
+const Counter = require('../model/storeId');
+ 
+
+
 
 function generatePassword() {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -18,6 +22,42 @@ function generatePassword() {
 
   return password;
 }
+
+
+// const incrementbyoneIDs = async(role) => { 
+//   let id = "";
+//   const curr = await Counter.findOne({ role });
+//   console.log(curr.role)  
+//   console.log(curr.cnt)
+
+//   if(curr.role=="employee") id = curr.eid;
+//   if(curr.role=="hr") id = curr.hid;
+//   if(curr.role=="manager") id = curr.mid; 
+
+//   var num = 0;
+//   // var num = parseInt(id.substr(5,5),10);
+//   num = num + 1;
+//   num = num.toString(); 
+//   var com = ""
+//   // var com = id.substr(0,5) + num; 
+
+//   if(curr.role=="employee") curr.eid = com;
+//   if(curr.role=="hr") id = curr.eid = com;
+//   if(curr.role=="manager") curr.mid = com;
+
+//   try {
+//       await Counter.updateOne({ role }, { $set: curr });
+//       console.log(curr)
+//   } catch (error) {
+//       console.error("Error updating the document:", error);
+//   }
+
+//   return com; 
+// }
+
+ 
+
+
 
 const adminsendemail = sendEmail.createTransport({
   service: 'gmail',
@@ -34,28 +74,26 @@ const adminsendemail = sendEmail.createTransport({
 router.post('/register',authmiddleware,adminmiddleware, async (req, res) => {
   // console.log("Request Body:", req.body);
   const { name, mail, role } = req.body;
+  
+  
   try {
     var pass = generatePassword();
-    const employee = new employeeModel({ name, pass, mail, role });
-    const token = await employee.generateAuthToken();  
+    var id = await incrementbyoneIDs(role);
+    console.log(id)
 
-    // console.log('Token is:', token);
+    const employee = new employeeModel({ name, pass, mail, role, id}); 
+     
 
-    res.cookie("jwt",token,{
-      expires: new Date(Date.now()+ 1000000),
-      httpOnly:true,
-  })
-
-
+    console.log(employee.id)
     await employee.save(); 
-    res.status(201).send({ employee, token }); 
+    res.status(201).send({ employee}); 
 
     //send the email to the employee
     const mailSendToEmployee = {
       from: "mistryriddhi1510@gmail.com",
       to: mail,
       subject:"Employee Registration",
-      text: `Hi ${name},\n\nYour account has been created successfully. Your password is: ${pass}\nPlease change it if you wnat.\n\nBest regards,\nAdmin Team`,
+      text: `Hi ${name},\n\nYour account has been created successfully. Your password is: ${pass}\nPlease change it if you wnat.\n\nBest regards,\nAdmin Team \nYour Role is: ${role} \n Your ${role}ID is: ${id} `,
     }
 
     adminsendemail.sendMail(mailSendToEmployee,(error,info)=>{
@@ -80,8 +118,8 @@ router.post('/login',async(req,res) => {
     
   try{
       // console.log(req.body.mail);
-      const emp = await employeeModel.findOne({mail:req.body.mail});
-      // console.log(emp)
+      const emp = await employeeModel.findOne({id:req.body.id});
+      console.log(emp)
 
       if(emp==undefined){
           return res.status(404).send({
@@ -90,7 +128,7 @@ router.post('/login',async(req,res) => {
           })
       }
       //check role
-      if(emp.role !== req.body.role){
+      if(emp.id !== req.body.id){
           return res.status(500).send({
               success:false,
               message:'role doesn\'t match'
@@ -105,8 +143,8 @@ router.post('/login',async(req,res) => {
       }
 
       //token for JWT
-      const token =  await emp.generateAuthToken(); 
-      // console.log('token is: ',token)
+      const token =  await emp.generateAuthToken();  
+      console.log('token is: ',token)
 
       res.cookie("jwt",token,{
         expires: new Date(Date.now()+ 1000000),
@@ -133,8 +171,9 @@ router.post('/login',async(req,res) => {
 //Change the password
 router.patch('/login/changepassword',authmiddleware, async(req,res)=>{
   try{
-    const emp = await employeeModel.findOne({mail:req.body.mail});
-    // console.log(emp)
+    const emp = await employeeModel.findOne({id:req.body.id});
+    console.log("Password changes dlfjasldfjs")
+    console.log(emp)
 
     if(emp==undefined){
         return res.status(404).send({
@@ -146,7 +185,8 @@ router.patch('/login/changepassword',authmiddleware, async(req,res)=>{
     const currpassword = req.body.currpassword;
     const newpassword = req.body.newpassword;
 
-    // console.log(currpassword,newpassword)
+    console.log(currpassword,newpassword)
+    console.log(currpassword,emp.pass);
 
     if(currpassword != emp.pass){
       return res.status(500).send({
@@ -191,6 +231,8 @@ router.get('/logout', authmiddleware, async (req, res) => {
   try {
 
       req.employee.tokens = [];
+
+      console.log(req.employee);
 
       await req.employee.save();  
       

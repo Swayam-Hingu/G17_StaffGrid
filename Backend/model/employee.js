@@ -3,8 +3,9 @@ const jwt = require('jsonwebtoken');
 
 const employeeSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  pass: { type: String, required: true },
+  pass: { type: String, required: true},
   mail: { type: String, required: true },
+  id: {type: String,require: true, unique: true},
   role: { type: String, default: 'employee' },
   tokens: [{
     token: {

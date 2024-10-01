@@ -16,7 +16,6 @@ const routes = require('./routes/authroute.js')//adding all datas
 const employeeroutes = require('./routes/employeeroutes.js')
 const adminRoutes = require('./routes/adminroutes.js');
 
-
 const _dirname = path.resolve();
 const corsOptions = {
     origin: 'http://localhost:3000',  
@@ -36,6 +35,8 @@ console.log(path.join(__dirname, '../Frontend/build'))
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../Frontend/build/index.html'));
 });
+
+
 
 
 app.listen(PORT,() => {
