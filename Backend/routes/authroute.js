@@ -24,36 +24,26 @@ function generatePassword() {
 }
 
 
-// const incrementbyoneIDs = async(role) => { 
-//   let id = "";
-//   const curr = await Counter.findOne({ role });
-//   console.log(curr.role)  
-//   console.log(curr.cnt)
+const incrementbyoneIDs = async(role) => { 
+  let id = "";
+  const curr = await Counter.findOne({ role });
+  console.log(curr.role)  
+  console.log(curr.cnt)
 
-//   if(curr.role=="employee") id = curr.eid;
-//   if(curr.role=="hr") id = curr.hid;
-//   if(curr.role=="manager") id = curr.mid; 
+  id = curr.cnt;
+ 
+  var num = parseInt(id.slice(5, 10), 10);
+  num = num + 1;
+  num = num.toString(); 
+  var com = ""
+  var com = id.slice(0, 5) + num;
 
-//   var num = 0;
-//   // var num = parseInt(id.substr(5,5),10);
-//   num = num + 1;
-//   num = num.toString(); 
-//   var com = ""
-//   // var com = id.substr(0,5) + num; 
+  curr.cnt = com;
 
-//   if(curr.role=="employee") curr.eid = com;
-//   if(curr.role=="hr") id = curr.eid = com;
-//   if(curr.role=="manager") curr.mid = com;
+  await Counter.updateOne({ role }, { $set: curr }); 
 
-//   try {
-//       await Counter.updateOne({ role }, { $set: curr });
-//       console.log(curr)
-//   } catch (error) {
-//       console.error("Error updating the document:", error);
-//   }
-
-//   return com; 
-// }
+  return com; 
+}
 
  
 

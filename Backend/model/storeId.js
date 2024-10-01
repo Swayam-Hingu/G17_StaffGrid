@@ -6,7 +6,7 @@ const counterSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  lastId: {
+  cnt: {
     type: String,
     required: true
   },
