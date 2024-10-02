@@ -15,6 +15,7 @@ const employeeSchema = new mongoose.Schema({
   }]
 });
 
+// add generateAuthToken methos to eployee schema 
 employeeSchema.methods.generateAuthToken = async function() {
   try {
     const token = jwt.sign({ _id: this._id.toString() }, process.env.SECRET_KEY);

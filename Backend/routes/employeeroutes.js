@@ -1,9 +1,9 @@
 const express = require('express');
 const employee = require('../model/employee');
-const authmiddleware = require('../auth/authmiddleware');
+const authmiddleware = require('../middlewares/authmiddleware');
 const router = express.Router();
 
-router.get("/employee/:id",authmiddleware, async(req, res) => { 
+router.get("/:id",authmiddleware, async(req, res) => { 
     try {
         const _id = req.params.id; 
         const employeeEntity = await employee.findById({_id}); 
@@ -17,4 +17,24 @@ router.get("/employee/:id",authmiddleware, async(req, res) => {
     }
 });
 
+router.get('employee/update/:id',authmiddleware,async (req,res)=>{
+    const id = req.params.id;
+
+    try{
+        
+    }catch(err){
+        console.log(err);
+        res.status(505).send("Error you can not update profile")
+    }
+});
+
 module.exports = router;
+
+
+
+// login
+
+// Admin
+// Register 
+// Mail user 
+// changePass 

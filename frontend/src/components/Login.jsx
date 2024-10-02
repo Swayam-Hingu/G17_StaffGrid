@@ -39,7 +39,6 @@ const Login = () => {
                 <input type="submit" value="Submit" className="btn btn-dark"/>
             </div>
         </form>
-
         <Link to="/api/login/changepassword">Forgot password</Link>
     </div>
   )
