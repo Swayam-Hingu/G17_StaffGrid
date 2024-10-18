@@ -25,7 +25,7 @@ module.exports = async (req, res, next) => {
 
         // Verify the token
         const verifyUser = jwt.verify(token, process.env.SECRET_KEY);
-        console.log("Verified User ID:", verifyUser._id);
+        console.log("Verified hr ID:", verifyhr._id);
 
         // Find the user in the database
         const user = await employeeModel.findById(verifyUser._id);

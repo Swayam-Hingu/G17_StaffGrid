@@ -2,6 +2,7 @@ const employeeModel = require('../model/employee');
 const cookieParser = require('cookie-parser');
 const sendEmail = require('nodemailer');
 const Counter = require('../model/storeId');
+const bcrypt = require('bcryptjs');
 
 // Generate 8 digit password
 function generatePassword() {
@@ -48,11 +49,16 @@ const adminSendeMail = sendEmail.createTransport({
 async function handleUserRegistration(req, res){
 
     const { name, mail, role } = req.body;
+    role = role.toLowerCase();
     
     try {
       var pass = generatePassword();
       var id = await getNextId(role);
       console.log(id)
+
+      //Encoding password for purpose of the security
+      emailpass = pass
+      pass = await bcrypt.hash(pass,10);
         
       // Create new employee with this given details
       const employee = new employeeModel({ name, pass, mail, role, id}); 
@@ -73,7 +79,7 @@ async function handleUserRegistration(req, res){
         Role: ${role}
         ${role} ID: ${id}
 
-        Your temporary password is: ${pass}
+        Your temporary password is: ${emailpass}
 
         For security purposes, we strongly recommend changing your password after your first login. If you encounter any issues or need assistance, feel free to contact the support team.
 
@@ -111,12 +117,14 @@ async function  handleUserLogin(req,res){
             });
         }
 
-        //Compare Password 
-        if(emp.pass != req.body.pass){
+        //first decode the password and compare with original pass 
+        console.log(req.body.pass,emp.pass)        
+        const statusoflogin = await bcrypt.compare(req.body.pass,emp.pass)
+        if(!statusoflogin){
             return res.status(500).send({
-                success:false,
-                message:'Invalid Password'   
-            });
+                        success:false,
+                        message:'Invalid Password'   
+                    });
         }
 
         //token for JWT
@@ -161,17 +169,21 @@ async function handleChangePassword(req,res){
         }
     
         const currpassword = req.body.currpassword;
-        const newpassword = req.body.newpassword;
+        const newpassword = req.body.newpassword; 
+        
     
         //console.log(currpassword,newpassword)
         //console.log(currpassword,emp.pass);
-    
-        if(currpassword != emp.pass){
-          return res.status(500).send({
-              success:false,
-              message:'Invalid Password'   
-          });
+
+
+        const statusofchange = await bcrypt.compare(req.body.currpassword,emp.pass)
+        if(!statusofchange){
+            return res.status(500).send({
+                        success:false,
+                        message:'Invalid Password'   
+                    });
         }
+         
 
         //token for JWT
         const token =  await emp.generateAuthToken();  
@@ -181,7 +193,7 @@ async function handleChangePassword(req,res){
           httpOnly:true,
         })
 
-        emp.pass = newpassword;
+        emp.pass =  await bcrypt.hash(newpassword,10);;
         await emp.save();
 
         return res.status(200).send({

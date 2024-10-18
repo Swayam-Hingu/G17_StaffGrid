@@ -16,11 +16,10 @@ module.exports = async (req, res, next) => {
 
         // Verify the token
         const verifyadmin = jwt.verify(token, process.env.SECRET_KEY);
-        console.log("Verified admin ID:", verifyadmin._id);
+        // console.log("Verified admin ID:", verifyadmin._id);
 
         // Find the admin in the database
-        const admin = await employeeModel.findById(verifyadmin._id);
-        console.log("jdlaf  ",admin.id);
+        const admin = await employeeModel.findById(verifyadmin._id); 
         if (!admin) {
             return res.status(401).send({
                 success: false,

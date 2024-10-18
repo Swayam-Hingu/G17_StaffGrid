@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Login = () => {
 
-  const {register,handleSubmit} = useForm();
+  const {register,handleSubmit,formState: { errors }} = useForm();
 
   const submitHandler = async (data) => {
     try{  
@@ -29,11 +29,25 @@ const Login = () => {
         <form onSubmit={handleSubmit(submitHandler)}>
             <div>
                 <label htmlFor="id">ID</label>
-                <input type="text" name="id" id="id" {...register("id")}/>
+                <input type="text" name="id" id="id" 
+                {...register("id", {
+                  required: "ID is required",
+                  minLength: {
+                    value: 10,
+                    message: "ID must be at least 10 characters long"
+                  }
+                })}
+                />
+                {errors.id && <p style={{ color: 'red' }}>{errors.id.message}</p>}
             </div>
             <div>
                 <label htmlFor="password">password</label>
-                <input type="password" name="password" id="password" {...register("pass")}/>
+                <input type="password" name="password" id="password" 
+                {...register("pass", {
+                  required: "Password is required",
+                })}
+                />
+                {errors.pass && <p style={{ color: 'red' }}>{errors.pass.message}</p>}
             </div> 
             <div>
                 <input type="submit" value="Submit" className="btn btn-dark"/>
