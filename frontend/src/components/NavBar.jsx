@@ -24,7 +24,7 @@ const Nav = ({ toggleMenu }) => {
       <button className="hamburger" onClick={toggleMenu}>
         ☰
       </button>
-      <img id='logo' src="logo.png" alt="" />
+      <h3>Staff Grid</h3>
       <div className="right-icons">
         <button className="search">🔍</button>
         <button className="profile">👤 Name</button>
