@@ -1,0 +1,944 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #E4F0F4; /* Changed background color */
+    height: 100vh;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    overflow: hidden;
+  }
+  
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #E4F0F4;
+    width: 100vw;
+    padding: 0 20px;
+  }
+  
+  .login-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 1200px;
+    height: 70vh;
+    padding: 20px;
+  }
+  
+  .left-side {
+    flex: 1; 
+    display: flex; 
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    background-color: #E4F0F4; 
+  }
+  
+  .content-wrapper { /* New wrapper for centering */
+    display: flex; 
+    flex-direction: column; /* Stack content vertically */
+    align-items: center;
+    padding-bottom: 120px; 
+  }
+  
+  .logo-image { 
+    width: 70%; 
+    max-width: 300px; 
+    scale: 3;  
+  }
+  
+  .right-side {
+    flex: 1;
+    height: 515px;
+    width: 636px;
+    background-color: #D5E4E9;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1px;
+    scale: 1;
+    width: 50%;
+    /* margin-top: 10px; */
+    margin-bottom: 30px;
+    
+    
+  
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+    font-size: 1.5em;
+  }
+  
+  .login{
+    align-items: center;
+    justify-self: center;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    
+    padding-left: 70px;
+    font-weight: bolder;
+    font-size: 40px;
+    padding-right: 90px;
+    color: black
+  }
+  
+  .staff-grid { 
+    text-align: center; 
+    color: #6cb7f3; 
+    /* font-weight: bold;  */
+    font-family: "Zen Tokyo Zoo", system-ui;
+    font-size: 2em; 
+    margin-bottom: 30px; /* Adjust spacing as needed */
+    font-weight: 400;
+    font-style: normal;
+    padding-bottom: 40px;
+    padding-left: 32px;
+    padding-bottom: 220px;
+    
+  }
+  
+  .input-box {
+    position: relative;
+    align-self: center;
+    justify-tracks: center;
+    margin: 15px 0;
+    width: 200%;
+    padding-left: -100px;
+  }
+  
+  .input-box input {
+    width: 100%;
+    padding: 15px;
+    padding-left: 40px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    font-size: 16px;
+    outline: none;
+    box-sizing: border-box;
+  }
+  
+  .input-icon {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: #999;
+  }
+  
+  .show-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #999;
+    cursor: pointer;
+  }
+  
+  .login-btn:hover {
+    background-color: #5aa6db;
+  }
+  
+  p {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .captcha-container {
+    display: flex;
+    align-items: center; /* Align items to the center */
+    gap: 15px;         /* Add spacing between captcha and input */
+    margin: 15px 0;
+    /* justify-content: space-between; */
+    /* align-content: space-between; */
+  }
+  
+  /* Rest of your CSS remains the same */
+  
+  .captcha-box {
+    display: flex;
+    flex-direction: row;
+    /* -ms-flex-item-align: baseline; */
+    align-items: center;
+    justify-content: space-between; 
+    /* margin-left: 15px; */
+  }
+  
+  .captcha-code {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    letter-spacing: 2px;
+    background-color: #E4F0F4;
+    padding: 5px;
+    border-radius: 5px;
+    text-decoration: line-through;
+    /* padding-right: 100px; */
+    /* padding-left: 15px; */
+  }
+  
+  .captcha-refresh {
+    cursor: pointer;
+    font-size: 20px;
+    color: #6cb7f3;
+    margin-left: 20px; /* Add some space between code and button */
+  }
+  
+  .captcha-refresh:hover {
+    color: #5aa6db;
+  }
+  
+  .captcha-input input { 
+    width: 110%;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    font-size: 16px;
+  }
+  
+  .login-btn {
+    width: 75%;
+    padding: 12px;
+    text-align: center;
+    font-weight: 400;
+    background-color: #6cb7f3;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 18px;
+    cursor: pointer;
+    display: block;
+    /* margin: 50px auto; */
+    margin-top: 2000px;
+    width: 50%;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .login-btn:hover {
+    background-color: #5aa6db;
+    transform: scale(1.05);
+  }
+  
+  .forgot-password {
+    color: gray;
+    text-decoration: none;
+    padding-top: 20px;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  /* Base styles remain as provided */
+  
+  /* Media Queries for responsiveness */
+  
+  /* For small devices (up to 600px) */
+  @media (max-width: 600px) {
+    .login-container {
+      padding: 0 10px;
+    }
+  
+    .login-box {
+      flex-direction: column; /* Stack left and right sides vertically */
+      width: 100%;
+      max-width: 100%;
+      height: auto; /* Allow height to adjust */
+      padding: 10px;
+    }
+  
+    .left-side, .right-side {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+  
+    .logo-image {
+      max-width: 200px; /* Adjust size of the logo for smaller screens */
+      scale: 1.5;
+    }
+  
+    .input-box, .captcha-input input, .login-btn {
+      width: 100%; /* Full width inputs and button */
+    }
+  
+    .login-btn {
+      width: 90%;
+    }
+  
+    .staff-grid {
+      font-size: 2em; /* Reduce font size for better readability */
+    }
+  
+    .login {
+      font-size: 30px; /* Reduce title size */
+    }
+  }
+  
+  /* For medium devices (601px to 1024px) */
+  @media (min-width: 601px) and (max-width: 1024px) {
+    .login-box {
+      flex-direction: row;
+      height: 60vh; /* Adjust height */
+    }
+  
+    .logo-image {
+      max-width: 250px; /* Slightly smaller logo */
+      scale: 2;
+    }
+  
+    .login {
+      font-size: 35px; /* Adjust title size */
+    }
+  
+    .input-box, .captcha-input input, .login-btn {
+      width: 95%; /* Adjust input/button width */
+    }
+  
+    .login-btn {
+      width: 80%;
+    }
+  
+    .staff-grid {
+      font-size: 2.5em;
+    }
+  }
+  
+  /* For larger devices (above 1024px) */
+  @media (min-width: 1025px) {
+    .login-box {
+      flex-direction: row;
+      height: 70vh;
+    }
+  
+    .logo-image {
+      max-width: 300px; /* Full-size logo for larger screens */
+      scale: 3;
+    }
+  
+    .input-box, .captcha-input input, .login-btn {
+      width: 100%; /* Standard input/button width */
+    }
+  
+    .login-btn {
+      width: 75%;
+    }
+  
+    .staff-grid {
+      font-size: 3em;
+    }
+  
+    .login {
+      font-size: 40px;
+    }
+  }
+  
+  
+  
+  
+  
+  
+  
+  /* Base styles remain the same */
+  
+  /* Media Queries for responsiveness */
+  
+  /* For extra small devices (up to 480px) */
+  @media (max-width: 480px) {
+    body {
+      height: auto;
+      padding: 20px;
+    }
+  
+    .login-container {
+      padding: 0 10px;
+      height: auto;
+    }
+  
+    .login-box {
+      flex-direction: column;
+      width: 100%;
+      height: auto; /* Allow height to adjust naturally */
+      padding: 10px;
+    }
+  
+    .left-side, .right-side {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+  
+    .logo-image {
+      max-width: 150px; /* Smaller logo for small screens */
+      scale: 1;
+    }
+  
+    .input-box, .captcha-input input, .login-btn {
+      width: 100%; /* Full width inputs and buttons */
+    }
+  
+    .login-btn {
+      width: 100%;
+    }
+  
+    .staff-grid {
+      font-size: 2em; /* Smaller font size */
+    }
+  
+    .login {
+      font-size: 28px; /* Adjust title size */
+    }
+  
+    h2 {
+      font-size: 1.2em;
+    }
+  }
+  
+  /* For small devices (481px to 768px) */
+  @media (min-width: 481px) and (max-width: 768px) {
+    .login-box {
+      flex-direction: column;
+      width: 100%;
+      height: auto;
+      padding: 20px;
+    }
+  
+    .left-side, .right-side {
+      width: 100%;
+      padding: 10px;
+    }
+  
+    .logo-image {
+      max-width: 180px; /* Slightly larger logo */
+      scale: 1.5;
+    }
+  
+    .input-box, .captcha-input input, .login-btn {
+      width: 90%; /* Adjust input/button width */
+    }
+  
+    .login-btn {
+      width: 85%;
+    }
+  
+    .staff-grid {
+      font-size: 2.2em;
+    }
+  
+    .login {
+      font-size: 30px;
+    }
+  
+    h2 {
+      font-size: 1.4em;
+    }
+  }
+  
+  /* For medium devices (769px to 1024px) */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .login-box {
+      flex-direction: row;
+      height: 60vh;
+    }
+  
+    .left-side, .right-side {
+      width: 50%; /* Split left and right sides */
+    }
+  
+    .logo-image {
+      max-width: 250px; /* Moderate size for medium screens */
+      scale: 2;
+    }
+  
+    .input-box, .captcha-input input, .login-btn {
+      width: 85%; /* Adjust input/button width */
+    }
+  
+    .login-btn {
+      width: 80%;
+    }
+  
+    .staff-grid {
+      font-size: 2.5em;
+    }
+  
+    .login {
+      font-size: 35px;
+    }
+  
+    h2 {
+      font-size: 1.5em;
+    }
+  }
+  
+  /* For large devices (1025px and above) */
+  @media (min-width: 1025px) {
+    .login-box {
+      flex-direction: row;
+      height: 70vh;
+    }
+  
+    .left-side, .right-side {
+      width: 50%; /* Keep sides equal */
+    }
+  
+    .logo-image {
+      max-width: 300px; /* Full-size logo for large screens */
+      scale: 3;
+    }
+  
+    .input-box, .captcha-input input, .login-btn {
+      width: 100%; /* Full width for large screens */
+    }
+  
+    .login-btn {
+      width: 75%;
+    }
+  
+    .staff-grid {
+      font-size: 3em;
+    }
+  
+    .login {
+      font-size: 40px;
+    }
+  
+    h2 {
+      font-size: 1.7em;
+    }
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  /* Base styles remain the same */
+  
+  /* Animations */
+  
+  /* Smooth fade-in for the login box */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Gentle scaling for logo on load */
+  @keyframes logoGrow {
+    from {
+      transform: scale(0.9);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+  
+  /* Subtle hover effect for input fields */
+  @keyframes inputHover {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.02);
+    }
+  }
+  
+  /* Button hover animation */
+  @keyframes buttonHover {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.05);
+    }
+  }
+  
+  /* Apply animations */
+  
+  /* Fade-in effect for the login box */
+  .login-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 1200px;
+    height: 70vh;
+    padding: 20px;
+    animation: fadeIn 1s ease-in-out; /* Smooth fade-in */
+  }
+  
+  /* Gentle scaling for the logo */
+  .logo-image {
+    width: 70%;
+    max-width: 300px;
+    animation: logoGrow 0.8s ease-out; /* Grows on load */
+  }
+  
+  /* Input field hover animation */
+  .input-box input {
+    width: 100%;
+    padding: 15px;
+    padding-left: 40px;
+    margin-right: 200px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    font-size: 16px;
+    outline: none;
+    box-sizing: border-box;
+   
+
+    
+    transition: transform 0.3s ease; /* Smooth scaling */
+  }
+  
+  .input-box input:hover {
+    animation: inputHover 0.3s forwards; /* Subtle hover scaling */
+  }
+  
+  /* Button hover effect */
+  .login-btn {
+    width: 75%;
+    padding: 12px;
+    background-color: #6cb7f3;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 18px;
+    cursor: pointer;
+    display: block;
+    margin: 2px auto;
+    margin-top: 30px;
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transitions */
+  }
+  
+  .login-btn:hover {
+    animation: buttonHover 0.3s forwards; /* Button grows slightly on hover */
+    background-color: #5aa6db; /* Change background color on hover */
+  }
+  
+  /* Animation on page load for the staff title */
+  .staff-grid {
+    text-align: center;
+    color: #6cb7f3;
+    font-family: "Zen Tokyo Zoo", system-ui;
+    font-size: 3em;
+    margin-bottom: 10px;
+    padding-bottom: 130px;
+    padding-left: 32px;
+    animation: fadeIn 1.2s ease-in-out 0.5s; /* Delayed fade-in */
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  /* For small devices (up to 600px) */
+  @media (max-width: 600px) {
+    .login-container {
+      padding: 0 10px;
+    }
+  
+    .login-box {
+      flex-direction: column; /* Stack left and right sides vertically */
+      width: 100%;
+      height: auto;
+      padding: 10px;
+    }
+  
+    .left-side, .right-side {
+      width: 100%;
+      padding: 10px;
+    }
+  
+    .logo-image {
+      max-width: 150px; /* Adjust logo size */
+      scale: 1; /* Remove extra scaling */
+    }
+  
+    /* Ensure STAFF GRID heading is visible */
+    .staff-grid {
+      font-size: 1.5em; /* Adjust font size for smaller screens */
+      display: block; /* Ensure it's not hidden */
+      visibility: visible; /* Make sure it is visible */
+      text-align: center; /* Center the heading */
+      margin: 10px 0; /* Add some space above and below */
+    }
+  
+    .login {
+      font-size: 1.8em;
+      padding-left: 0; /* Center align the text */
+    }
+  
+    .input-box, .captcha-input input, .login-btn {
+      width: 100%; /* Full width for inputs and buttons */
+      margin: 10px 0; /* Add margin between inputs */
+    }
+  
+    .captcha-container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .captcha-box {
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+  
+    .captcha-code {
+      font-size: 18px; /* Adjust captcha text size */
+    }
+  
+    .login-btn {
+      width: 100%;
+      padding: 10px;
+    }
+  }
+  
+  /* For medium devices (601px to 1024px) */
+  @media (min-width: 601px) and (max-width: 1024px) {
+    .login-box {
+      flex-direction: row;
+      height: 60vh;
+    }
+  
+    .left-side, .right-side {
+      width: 50%;
+    }
+  
+    .logo-image {
+      max-width: 200px; /* Slightly larger logo */
+      scale: 2;
+    }
+  
+    .staff-grid {
+      font-size: 2.2em;
+      margin: 15px 0;
+      text-align: center;
+    }
+  
+    .login {
+      font-size: 2.5em;
+    }
+  
+    .input-box, .captcha-input input, .login-btn {
+      width: 90%;
+    }
+  
+    .login-btn {
+      width: 80%;
+    }
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  /* For small devices (up to 600px) */
+  @media (max-width: 600px) {
+    .login-container {
+      padding: 0 10px;
+    }
+  
+    .login-box {
+      flex-direction: column;
+      width: 70%;
+      height: auto;
+      padding: 10px;
+    }
+  
+    .left-side, .right-side {
+      width: 100%;
+      padding: 10px;
+    }
+  
+    .logo-image {
+      max-width: 150px;
+      margin-bottom: -80px; /* Reduced margin below the logo */
+    }
+  
+    /* Ensure STAFF GRID heading is visible and reduce gap */
+    .staff-grid {
+      font-size: 1.5em;
+      display: block;
+      visibility: visible;
+      text-align: center;
+      margin-bottom: -80px; /* Reduced space above and below */
+      color:#8ec8f7;
+    }
+  
+    /* Hide "Login" heading on mobile */
+    .login {
+      display: none;
+    }
+  
+    .input-box, .captcha-input input, .login-btn {
+      width: 100%;
+      margin: 10px 0; 
+    }
+  
+    .captcha-container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .captcha-box {
+      justify-content: space-between;
+      margin-top: 10px;
+      padding-left: 60px;
+    }
+  
+    .captcha-code {
+      font-size: 18px; 
+      align-items: center;
+    }
+  
+    .login-btn {
+      width: 100%;
+      padding: 10px;
+    }
+  }
+  
+  /* For medium devices (601px to 1024px) */
+  @media (min-width: 601px) and (max-width: 1024px) {
+    .login-box {
+      flex-direction: row;
+      height: 60vh;
+    }
+  
+    .left-side, .right-side {
+      width: 50%;
+    }
+  
+    .logo-image {
+      max-width: 200px;
+    }
+  
+    .staff-grid {
+      font-size: 2.2em;
+      margin: 15px 0;
+      text-align: center;
+    }
+  
+    .login {
+      font-size: 2.5em;
+    }
+  
+    .input-box, .captcha-input input, .login-btn {
+      width: 90%;
+    }
+  
+    .login-btn {
+      width: 80%;
+    }
+  }
+  
+  /* For larger devices (1025px and above) */
+  @media (min-width: 1025px) {
+    .login-box {
+      flex-direction: row;
+      height: 70vh;
+    }
+  
+    .left-side, .right-side {
+      width: 50%;
+    }
+  
+    .logo-image {
+      max-width: 300px;
+    }
+  
+    .staff-grid {
+      font-size: 3em;
+      text-align: center;
+      margin: 10px 0;
+    }
+  
+    .login {
+      font-size: 40px;
+    }
+  
+    .input-box, .captcha-input input, .login-btn {
+      width: 100%;
+    }
+  
+    .login-btn {
+      width: 75%;
+    }
+  }
+  
+  .forgot-password-btn {
+    background: none; 
+    border: none; 
+    color: #6cb7f3; 
+    text-decoration:none; 
+    cursor: pointer; 
+    font-size: 1rem; 
+    padding: 0;
+    margin-top: 20px; 
+  }
+  
+  .forgot-password-btn:hover {
+    color: #5aa6db; 
+  }
+  

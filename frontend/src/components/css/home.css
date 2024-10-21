@@ -1,0 +1,101 @@
+/* Global Styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; 
+}
+
+#logo{
+  width: 200px;
+}
+.App {
+  height: 100%;
+}
+
+.App-header {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: calc(10px + 2vmin);
+  color: black;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background-color: #f0f8ff;
+}
+
+.hamburger {
+  font-size: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.right-icons {
+  display: flex;
+}
+
+.right-icons button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  background-color: #dbeeff;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+  padding-top: 60px;
+}
+
+.menu button.close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 30px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menu ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.menu ul li {
+  padding: 15px 20px;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+}
+
+.menu ul li:hover{
+  background: #c4e0f8;
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+  .menu {
+    width: 100%;
+  }
+}
+
+/* For mobile devices (max-width: 480px) */
+@media screen and (max-width: 480px) {
+
+  .menu {
+    width: 100%;
+  }
+}
