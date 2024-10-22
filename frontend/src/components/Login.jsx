@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react'
 import {useForm} from 'react-hook-form'
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate } from 'react-router-dom';
 import './css/login.css';
 import logo from './images/emslogo.png'
 import { FaEnvelope, FaLock } from 'react-icons/fa';
 // import ForgetPassword from './forgetpassword.jsx'
-import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie'; 
 
 
 const Login = () => {
@@ -15,7 +14,7 @@ const Login = () => {
   useEffect(()=>{
     const jwt = Cookies.get("jwt");
 
-    if(jwt) { navigate("/"); }
+    if(jwt) { navigate("/homepage"); }
   },[]);
 
   const {register,handleSubmit,formState: { errors }} = useForm();
@@ -29,8 +28,15 @@ const Login = () => {
       },{
         withCredentials: true
       }); 
-      
       console.log("Data is: ", response.data);
+      // console.log("EmployeeID: ",response.data.emp.id)
+      // console.log("EmployeeRole: ",response.data.emp.role)
+      Cookies.set('jwt', response.data.token);
+      Cookies.set('employeeID', response.data.emp.id);
+      Cookies.set('employeeRole',response.data.emp.role)
+
+      navigate("/homepage");
+
     }catch(error){
       console.log("ERROR:" , error);
     }
@@ -52,7 +58,7 @@ const Login = () => {
             <FaEnvelope className="input-icon" />
                 {/* <label htmlFor="id">ID</label> */}
                 <input 
-                type="text" name="id" id="id" placeholder='Email or Employee ID' 
+                type="text" name="id" id="id" placeholder='Employee ID' 
                 {...register("id", {
                   required: "ID is required",
                   minLength: {
@@ -77,10 +83,8 @@ const Login = () => {
                 <input type="submit" value="Login"  className="login-btn"/>
             </div>
         </form>
-        {/* <Link to="./forgetpassword.jsx" className="forgot-password-btn">
-  Forgot Password?
-</Link> */}
-<Link to="/forget-password" className="forgot-password-btn">
+        
+          <Link to="/api/login/forgotpassword" className="forgot-password-btn">
             Forgot Password?
           </Link> 
       </div>

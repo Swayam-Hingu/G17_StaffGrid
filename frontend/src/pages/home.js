@@ -1,6 +1,5 @@
 // App.jsx
-import React, { useState } from 'react';
-// import Nav from '../components/Nav';
+import React, { useState } from 'react'; 
 import NavBar from '../components/NavBar'
 import Sidebar from '../components/Sidebar';
 import "../components/css/home.css"

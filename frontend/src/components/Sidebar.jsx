@@ -1,9 +1,21 @@
 // Sidebar.jsx
-import React from 'react';
+import {React, useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
+import Cookies from "js-cookie";
 
 const Sidebar = ({ menuOpen, toggleMenu }) => {
   const navigate = useNavigate();
+
+  const [role, setRole] = useState("");
+
+  useEffect(() => {
+    const empRole = Cookies.get("employeeRole");
+    if (empRole) {
+      setRole(empRole);
+    }
+  }, []);
+
+
   return (
     menuOpen && (
       <div className="menu">
@@ -17,7 +29,9 @@ const Sidebar = ({ menuOpen, toggleMenu }) => {
           <li>Performance</li>
           <li>Salary</li>
           <li>Change Password</li>
-          <li onClick={()=>{navigate("/api/registration")}}>Register</li>
+          { 
+            role=='admin' && <li onClick={()=>{navigate("/api/registration")}}>Register</li>
+          }
           <li>Logout</li>
         </ul>
       </div>

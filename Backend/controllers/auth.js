@@ -48,8 +48,7 @@ const adminSendeMail = sendEmail.createTransport({
 // Handle Registration process
 async function handleUserRegistration(req, res){
 
-    const { name, mail, role } = req.body;
-    role = role.toLowerCase();
+    const { name, mail, role } = req.body; 
     
     try {
       var pass = generatePassword();
@@ -103,7 +102,7 @@ async function handleUserRegistration(req, res){
     }
 };
 
-// Handle changePassword process
+// Handle Login process
 async function  handleUserLogin(req,res){
 
     try{
@@ -153,13 +152,72 @@ async function  handleUserLogin(req,res){
     }
 };
 
-// Handle User Login Process
+// Handle User Forgot Password 
+// async function handleChangePassword(req,res){
+
+//     try{
+//         // first get user from the data base
+//         const emp = await employeeModel.findOne({id:req.body.id});
+//         //console.log(emp);
+    
+//         if(emp==undefined){
+//             return res.status(404).send({
+//                 success:false,
+//                 message:'ID is not valid'
+//             })
+//         }
+    
+//         const currpassword = req.body.currpassword;
+//         const newpassword = req.body.newpassword; 
+        
+    
+//         //console.log(currpassword,newpassword)
+//         //console.log(currpassword,emp.pass);
+
+
+//         const statusofchange = await bcrypt.compare(req.body.currpassword,emp.pass)
+//         if(!statusofchange){
+//             return res.status(500).send({
+//                         success:false,
+//                         message:'Invalid Password'   
+//                     });
+//         }
+         
+
+//         //token for JWT
+//         const token =  await emp.generateAuthToken();  
+    
+//         res.cookie("jwt",token,{
+//           expires: new Date(Date.now()+ 1000000),
+//           httpOnly:true,
+//         })
+
+//         emp.pass =  await bcrypt.hash(newpassword,10);;
+//         await emp.save();
+
+//         return res.status(200).send({
+//             success:true,
+//             message:'Password changed',
+//             token,
+//             emp
+//         });
+    
+//     }catch(error){
+//         console.log(error);
+//         res.status(500).send({
+//             success:false,
+//             message:'Error in password change',
+//             error
+//         });
+//     }
+// };
+
+
 async function handleChangePassword(req,res){
 
     try{
         // first get user from the data base
-        const emp = await employeeModel.findOne({id:req.body.id});
-        //console.log(emp);
+        const emp = await employeeModel.findOne({id:req.body.id}); 
     
         if(emp==undefined){
             return res.status(404).send({
@@ -167,16 +225,19 @@ async function handleChangePassword(req,res){
                 message:'ID is not valid'
             })
         }
-    
+
         const currpassword = req.body.currpassword;
         const newpassword = req.body.newpassword; 
         
     
-        //console.log(currpassword,newpassword)
-        //console.log(currpassword,emp.pass);
+        console.log(currpassword,newpassword)
+        console.log(currpassword,emp.pass);
 
 
         const statusofchange = await bcrypt.compare(req.body.currpassword,emp.pass)
+
+        console.log(statusofchange,currpassword)
+
         if(!statusofchange){
             return res.status(500).send({
                         success:false,
@@ -212,7 +273,62 @@ async function handleChangePassword(req,res){
         });
     }
 };
+async function handleSendEmailForChangePassword(req,res){
 
+    try{
+         
+        const emp = await employeeModel.findOne({id:req.body.id});
+        const mail = emp.mail; 
+    
+        if(emp==undefined){
+            return res.status(404).send({
+                success:false,
+                message:'ID is not valid'
+            })
+        } 
+        var pass = generatePassword(); 
+
+        const mailSendToEmployee = {
+            from: "mistryriddhi1510@gmail.com",
+            to: mail,
+            subject:"OTP for reset password",
+            text: `Dear ${emp.name},
+    
+            our One Time Password (OTP) for Reset password is: ${pass} 
+     
+            Best regards,
+            Admin Team
+            StaffGrid\n`,
+          }
+          pass = await bcrypt.hash(pass,10) 
+          emp.pass = pass;
+          console.log(pass,"hashPassW: ",emp.pass)
+          await emp.save();
+
+        adminSendeMail.sendMail(mailSendToEmployee,(error,info)=>{
+            if(error){
+              console.log("Sending Email Error",error);
+              return res.status(500).send(error);
+            }else{
+              console.log("Email is sent");
+            }
+          }) 
+        
+    
+          
+
+    
+    }catch(error){
+        console.log(error);
+        res.status(500).send({
+            success:false,
+            message:'Email is not sent Password ERROR',
+            error
+        });
+    }
+};
+
+ 
 // handle User Logout Process 
 async function handleUserLogout(req,res){
     try {
@@ -230,6 +346,7 @@ async function handleUserLogout(req,res){
 module.exports ={
     handleUserRegistration,
     handleUserLogin,
+    handleSendEmailForChangePassword,
     handleChangePassword,
     handleUserLogout
 }

@@ -6,6 +6,7 @@ const router = express.Router();
 const { 
   handleUserRegistration,
   handleUserLogin,
+  handleSendEmailForChangePassword,
   handleChangePassword,
   handleUserLogout
 } = require('../controllers/auth');
@@ -17,8 +18,11 @@ router.post('/register',authmiddleware,adminmiddleware, handleUserRegistration);
 // Login 
 router.post('/login',handleUserLogin);
 
+//Send email for change the password
+router.patch('/login/sendmailforpasschange', handleSendEmailForChangePassword);
+
 //Change the password
-router.patch('/login/changepassword',authmiddleware, handleChangePassword);
+router.patch('/login/changepassword', handleChangePassword);
 
 // Logout
 router.get('/logout', authmiddleware,handleUserLogout);

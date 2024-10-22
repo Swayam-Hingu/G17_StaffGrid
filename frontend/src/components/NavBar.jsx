@@ -1,12 +1,20 @@
 // Nav.jsx
-import React from 'react';
-import { Link } from 'react-router-dom'
+import {React, useEffect, useState} from 'react'; 
 import axios from 'axios';
 import Cookies from "js-cookie";
 import { useNavigate } from 'react-router-dom';
 
 const Nav = ({ toggleMenu }) => {
   const navigate = useNavigate();
+  const [ID, setID] = useState("");
+
+  useEffect(() => {
+    const ID = Cookies.get("employeeID");
+    if (ID) {
+      setID(ID);
+    }
+  }, []);
+
   const logoutsystem = async () => {
     try { 
       const response = await axios.get('http://localhost:8000/api/logout',{
@@ -27,7 +35,7 @@ const Nav = ({ toggleMenu }) => {
       <h3>Staff Grid</h3>
       <div className="right-icons">
         <button className="search">🔍</button>
-        <button className="profile">👤 Name</button>
+        <button className="profile">👤 {ID}</button>
       {/* <Link  to='/api/login'>Login</Link>
       <Link   to='/api/registration'>RegisterEmployee</Link>  */}
       <button onClick={()=>{logoutsystem()}}>LogOut</button>
