@@ -15,7 +15,7 @@ const Login = () => {
     const jwt = Cookies.get("jwt");
 
     if(jwt) { navigate("/homepage"); }
-  },[]);
+  },);
 
   const {register,handleSubmit,formState: { errors }} = useForm();
 
@@ -120,7 +120,7 @@ const Login = () => {
                 <input type="submit" value="Submit" className="btn btn-dark"/>
             </div>
         </form> */}
-        {/* <Link to="/api/login/changepassword">Forgot password</Link> */}
+        {/* <Link to="/api/login/chcangepassword">Forgot password</Link> */}
     </div>
   )
 }
