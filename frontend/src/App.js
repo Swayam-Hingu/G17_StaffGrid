@@ -6,6 +6,8 @@ import Forgotpassword from './components/Forgotpassword';
 import React from 'react';
 import HomePage from './pages/HomePage.js';
 import Home from "./pages/home.js"
+// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Attendance from './components/Attendance/Attendance';
 
 function App() {
   const location = useLocation();
@@ -21,7 +23,10 @@ function App() {
       <Route path='/' element = {<HomePage/>}/>
       <Route path='/api/registration'element = {<RegisterEmp/>}/> 
       <Route path="/api/login/forgotpassword" element={<Forgotpassword />} />
-      <Route path='/api/login/changepassword'element = {<Forgotpassword/>}/>      
+      <Route path='/api/login/changepassword'element = {<Forgotpassword/>}/>     
+      <Route path="/attendance" element={<Attendance />} /> 
+      {/* <Calendar/> */}
+     
     </Routes>
     </>
   );

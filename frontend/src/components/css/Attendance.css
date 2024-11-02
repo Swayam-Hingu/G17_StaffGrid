@@ -1,0 +1,153 @@
+/* src/components/css/Attendance.css */
+
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ 
+  padding: 20px;
+  position: relative;
+  /* z-index: -1; */
+}
+
+.dashboard-heading {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 600;
+  padding-top: 20px;
+  margin-bottom: 20px;
+  font-family: "Zen Tokyo Zoo", system-ui;
+  
+}
+
+.dashboard-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  
+  max-width: 1200px;
+  position: relative;
+}
+
+.month-selector {
+  margin-bottom: 40px;
+  margin-top: 40px;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #333;
+  align-self: start;
+}
+
+.scrollable-table {
+  max-height: 350px;
+  overflow-y: auto;
+  flex: 1;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  width: 80%;
+  margin-bottom: 10px;
+}
+
+.calendar-fixed {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  width: 250px;
+}
+
+.card {
+  background-color: #fff;
+  align-self: start;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 50px;
+}
+
+/* Calendar Day Highlight */
+.highlight-attendance {
+  background-color: #4CAF50;
+  color: white !important;
+  border-radius: 50%;
+}
+
+/* Responsive Design */
+
+/* Tablets and small screens (up to 1024px) */
+@media (max-width: 1024px) {
+  .dashboard-heading {
+    font-size: 2rem;
+  }
+
+  .dashboard-content {
+    max-width: 90%;
+  }
+
+  .scrollable-table {
+    width: 90%;
+  }
+
+  .calendar-fixed {
+    position: relative;
+    width: 100%;
+    margin-top: 20px;
+    right: 0;
+    top: 0;
+  }
+}
+
+/* Small tablets and large smartphones (up to 768px) */
+@media (max-width: 768px) {
+  .dashboard-heading {
+    font-size: 1.8rem;
+  }
+
+  .month-selector {
+    align-self: center;
+    font-size: 1rem;
+  }
+
+  .scrollable-table {
+    width: 100%;
+    max-height: 300px;
+  }
+
+  .calendar-fixed {
+    width: 100%;
+    margin-top: 30px;
+    text-align: center;
+  }
+}
+
+/* Mobile devices (up to 480px) */
+@media (max-width: 480px) {
+  .dashboard-heading {
+    font-size: 1.5rem;
+  }
+
+  .month-selector {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+  }
+
+  .scrollable-table {
+    width: 100%;
+    max-height: 250px;
+    padding: 5px;
+  }
+
+  .calendar-fixed {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .card {
+    width: 100%;
+    margin-bottom: 20px;
+    box-shadow: none;
+  }
+}

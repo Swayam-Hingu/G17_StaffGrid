@@ -1,0 +1,32 @@
+/* src/components/css/calender.css */
+
+.calendar-container {
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 100px;
+}
+
+.highlight-attendance {
+  background-color: #4CAF50;
+  color: white !important;
+  border-radius: 50%;
+}
+
+/* Responsive Design */
+
+/* Tablets and small screens (up to 1024px) */
+@media (max-width: 1024px) {
+  .calendar-container {
+    width: 100%;
+    margin-top: 20px;
+  }
+}
+
+/* Mobile devices (up to 480px) */
+@media (max-width: 480px) {
+  .calendar-container {
+    padding: 5px;
+    width: 100%;
+    margin-top: 10px;
+  }
+}
