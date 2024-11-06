@@ -8,6 +8,7 @@ import HomePage from './pages/HomePage.js';
 import Home from "./pages/home.js"
 // import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Attendance from './components/Attendance/Attendance';
+import ProfilePage from './pages/profile.js';
 
 function App() {
   const location = useLocation();
@@ -25,6 +26,7 @@ function App() {
       <Route path="/api/login/forgotpassword" element={<Forgotpassword />} />
       <Route path='/api/login/changepassword'element = {<Forgotpassword/>}/>     
       <Route path="/attendance" element={<Attendance />} /> 
+      <Route path="/api/profile" element={<ProfilePage/>} />
       {/* <Calendar/> */}
      
     </Routes>
