@@ -27,6 +27,7 @@ require('./connection.js');
 const staticRoutes = require('./routes/authRoutes.js')//adding all datas
 const employeeRoutes = require('./routes/employeeRoutes.js')
 const adminRoutes = require('./routes/adminRoutes.js');
+const profileRoute = require('./routes/profileroutes.js');
 
 const _dirname = path.resolve();
 
@@ -43,6 +44,7 @@ app.use(cookieParser());
 app.use("/api",staticRoutes);
 app.use("/api",adminRoutes)
 app.use("/employee/api",employeeRoutes);
+app.use('/profile/api', profileRoute);
 
 app.use(express.static(path.join(__dirname, '../Frontend/build')));
 console.log(path.join(__dirname, '../Frontend/build'))
