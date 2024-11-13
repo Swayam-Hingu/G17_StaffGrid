@@ -28,6 +28,8 @@ const staticRoutes = require('./routes/authRoutes.js')//adding all datas
 const employeeRoutes = require('./routes/employeeRoutes.js')
 const adminRoutes = require('./routes/adminRoutes.js');
 const profileRoute = require('./routes/profileroutes.js');
+const attendanceRoute = require('./routes/attendanceRoutes.js');
+const projectRoute = require('./routes/projectRoutes.js');
 
 const _dirname = path.resolve();
 
@@ -40,9 +42,13 @@ app.use(express.json());
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: true })); 
 
 app.use("/api",staticRoutes);
-app.use("/api",adminRoutes)
+app.use("/api",adminRoutes);
+app.use("/api/attendance",attendanceRoute);
+app.use("/api/project",projectRoute);
+
 app.use("/employee/api",employeeRoutes);
 app.use('/profile/api', profileRoute);
 

@@ -28,7 +28,7 @@ function App() {
       <Route path="/attendance" element={<Attendance />} /> 
       <Route path="/api/profile" element={<ProfilePage/>} />
       {/* <Calendar/> */}
-     
+
     </Routes>
     </>
   );

@@ -66,8 +66,6 @@ async function handleUserProfileViewOrNot(req, res) {
   }
 }
 
-
-
 module.exports = {
     handleUserProfileSave,
     handleUserProfileGet,
