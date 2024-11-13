@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import "../components/css/profile.css";
+import axios from 'axios';
+import Cookies from 'js-cookie'; 
 
 function ProfilePage() {
  
@@ -9,14 +11,106 @@ function ProfilePage() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const empid = Cookies.get('employeeID');
+  const jwtToken = Cookies.get('jwt11');
+  
+  console.log(jwtToken,empid)
+
+  const [detail,setDetail] = useState({});
+  const [profile,setProfile] = useState({});
+  const [view,setView] = useState(false);
+  //check if login the view page....
+
+  const checkCompOrNot = async () => { 
+    try {
+      const response = await axios.get(`http://localhost:8000/profile/api/checkfillornot/${empid}`, {
+        withCredentials: true,
+        headers: {
+          'Authorization': `Bearer ${jwtToken}`,
+        },
+      });
+      console.log(response.data.detailemployee);
+      setView(response.data.success);
+      setProfile(response.data.detailemployee)
+    } catch (error) {
+      console.error("Error in checkCompOrNot:", error.response || error.message);
+    }
+  };
+  
 
   const submitHandler = async (data) => {
-    console.log(data);
+    
+    try {
+      console.log("Data is:: ",data);
+    console.log("TOKEN::",jwtToken)
+
+    const response = await axios.post('http://localhost:8000/profile/api/add-detailprofile/',{
+      name:detail.name,
+      id:detail.id,
+      role:detail.role,
+      firstName:data.firstName,
+      lastName:data.lastName,
+      fatherName:data.fatherName,
+      motherName:data.motherName,
+      birthDate:data.birthDate,
+      mail:detail.mail,
+      phoneNumber:data.phoneNumber,
+      gender:data.gender,
+      nationality:data.nationality,
+      religion:data.religion,
+      block:data.block,
+      street:data.street,
+      village:data.village,
+      taluka:data.taluka,
+      district:data.district,
+      pincode:data.pincode,
+      country:data.country,
+      bankName:data.bankName,
+      ifscCode:data.ifscCode,
+      accountNo:data.accountNo,
+      aadharNumber:data.aadharNumber
+    }, {
+        withCredentials: true,
+        headers: {
+            'Authorization': `Bearer ${jwtToken}` // Set the token in the Authorization header
+        }
+    });
+      checkCompOrNot();
+    } catch (error) {
+      alert("ERROR {Form Submission}")
+    }
+
+
   };
+
+
+  useEffect(() => {
+    checkCompOrNot();
+    getDetailFirst();
+   
+  }, []);
+
+  const getDetailFirst = async () =>{
+    const response = await axios.get(`http://localhost:8000/profile/api/getEmpDetailbyid/${empid}`,{
+      withCredentials: true,
+      headers: {
+          'Authorization': `Bearer ${jwtToken}` // Set the token in the Authorization header
+      }});
+    console.log(response)
+    setDetail(response.data);
+  }
+
+  
 
   return (
     <>
       <style jsx>{`
+        body{
+        background:#E2F1E7;
+        }
+        section{
+        margin:90px;
+        }
         .special-left {
           flex: 1 1 300px;
           padding-left: 18%;
@@ -26,40 +120,120 @@ function ProfilePage() {
           padding-left: 25%;
         }
         .best-bg {
-          background-color: #d5e4e9;
+          background-color: #E2F1E7;
         }
         .zindex {
           z-index: 100;
         }
-      `}</style>
+        .bg-main { 
+        background-color: #243642;
+         }
+        .bg-accent {
+         background-color: #387478; 
+         }
+        .text-accent { 
+        color: #387478;
+         }
+        .text-light { 
+        color: #E2F1E7;
+         }
+        .border-accent { border-color: #629584; }
+        .border-light { border-color: #E2F1E7; }
+ 
+        .profile-card { box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+        .rounded-custom { border-radius: 8px; }
+        .profile-image { border: 3px solid #629584; }
+        .section-title { font-size: 1.25rem; font-weight: 600; }
 
-      {/* bootstrap  */}
-      {/* <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-    crossOrigin="anonymous"
-  /> */}
-      <section className="pt-5 best-bg ">
+        .imgProf {
+          width: 150px;
+          height: 150px;
+          border: 2px solid #387478; 
+          background-size: cover;  
+          background-position: center; 
+          border-radius: 50%; 
+}
+ `}</style> 
+
+      {
+        view ? 
+        
+    <div>   
+      <section className="pt-5 profile-container">
+        <div className="container">
+          <div className="card border-accent rounded-custom profile-card">
+            <div className="card-header bg-accent text-center text-light">
+              <h3 className="card-header-title mb-0 fs-4" style={{color:"white"}}>Profile Information</h3>
+            </div>
+
+            <div className="card-body"> 
+            <div className="mb-4 ">
+            <div className="col-md-3 text-center mx-auto">
+              <div className="imgProf" style={{width:"150px",height:"150px",margin:"auto",borderRadius:"50%"}}>
+                <img></img>
+              </div>
+            </div>
+          </div>
+              <div className="row mb-3">
+                <h5 className="section-title text-accent">Personal Information</h5>
+                <div className="col-md-6"><p><strong>Name:</strong> {profile.firstName} {profile.lastName}</p></div>
+                <div className="col-md-6"><p><strong>ID:</strong> {profile.id}</p></div>
+                <div className="col-md-6"><p><strong>Role:</strong> {profile.role}</p></div>
+                <div className="col-md-6"><p><strong>Father's Name:</strong> {profile.fatherName}</p></div>
+                <div className="col-md-6"><p><strong>Mother's Name:</strong> {profile.motherName}</p></div>
+                <div className="col-md-6"><p><strong>Birth Date:</strong> {new Date(profile.birthDate).toLocaleDateString()}</p></div>
+                <div className="col-md-6"><p><strong>Gender:</strong> {profile.gender}</p></div>
+              </div>
+      
+              <div className="row mb-3">
+                <h5 className="section-title text-accent">Contact Information</h5>
+                <div className="col-md-6"><p><strong>Email:</strong> {profile.mail}</p></div>
+                <div className="col-md-6"><p><strong>Phone Number:</strong> {profile.phoneNumber}</p></div>
+              </div>
+      
+              <div className="row mb-3">
+                <h5 className="section-title text-accent">Address</h5>
+                <div className="col-md-6"><p><strong>Block:</strong> {profile.block}</p></div>
+                <div className="col-md-6"><p><strong>Street:</strong> {profile.street}</p></div>
+                <div className="col-md-6"><p><strong>Village:</strong> {profile.village}</p></div>
+                <div className="col-md-6"><p><strong>Taluka:</strong> {profile.taluka}</p></div>
+                <div className="col-md-6"><p><strong>District:</strong> {profile.district}</p></div>
+                <div className="col-md-6"><p><strong>Pincode:</strong> {profile.pincode}</p></div>
+                <div className="col-md-6"><p><strong>Country:</strong> {profile.country}</p></div>
+              </div>
+      
+              <div className="row mb-3">
+                <h5 className="section-title text-accent">Bank Information</h5>
+                <div className="col-md-6"><p><strong>Bank Name:</strong> {profile.bankName}</p></div>
+                <div className="col-md-6"><p><strong>IFSC Code:</strong> {profile.ifscCode}</p></div>
+                <div className="col-md-6"><p><strong>Account Number:</strong> {profile.accountNo}</p></div>
+              </div>
+      
+              <div className="row mb-3">
+                <div className="col-md-12">
+                  <p><strong>Aadhar Number:</strong> {profile.aadharNumber}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </section>
+      </div>
+        
+        :<section className="pt-5 best-bg " style={{background:"#E2F1E7"}}>
         <div className="container ">
           <div className="row">
             <div className="col-xl-12">
               <form onSubmit={handleSubmit(submitHandler)}>
                 <div className="card  border    rounded-3 mb-3   ">
                   {/* Card header */}
-                  <div className="card-header bg-transparent border-bottom ">
-                    <div className="d-flex justify-content-between align-items-center">
-                      <h3 className="card-header-title mb-0 fs-5">
-                        Profile Information
-                      </h3>
-                      <button
-                        // className={`btn btn-${
-                        //   isEditable ? "success" : "primary"
-                        // } btn-sm`}
-                        className="btn btn-primary btn-sm bg-primary"
-                        // onClick={handleUpdate}
-                      >
-                        {/* {isEditable ? "Save" : "Edit"} */}
+                  <div className="card-header bg-transparent border-bottom "> 
+                    <div className="card-header bg-accent text-center text-light d-flex justify-content-between align-items-center">
+                      <h3 className="card-header-title mb-0 fs-4" style={{color:"white"}}>Profile Information</h3>
+                      <button  
+                        className="btn btn-primary btn-sm" 
+                        style={{background:"#E2F1E7",color:"black",border:"#E2F1E7"}}
+                      > 
                         Save
                       </button>
                     </div>
@@ -93,11 +267,11 @@ function ProfilePage() {
                           />
                           <img
                             src="  "
-                            className="uploaded-image img-fluid rounded-circle object-fit-cover border imagePreview"
+                            className="uploaded-image img-fluid rounded-circle object-fit-cover imagePreview"
                             width={120}
                             height={120}
                             alt=""
-                            style={{ height: 120, width: 120 }}
+                            style={{ height: 120, width: 120, border:"2px solid #387478!important" }}
                           />
                           <img
                             src=""
@@ -121,21 +295,22 @@ function ProfilePage() {
                         // style={{ flex: "1 1 300px", paddingLeft: "18%" }}
                       >
                         <div className="mb-2">
-                          <p className="form-control-static" id="user_name">
-                            {/* Name : {profile.firstName} {profile.lastName} */}
-                            Name : abc xyz
+                          <p className="form-control-static" id="user_name"
+                          >
+                             
+                            Name : {detail.name}
                           </p>
                         </div>
                         <div className="mb-2">
                           <p className="form-control-static" id="user_id">
                             {/* ID: {profile.id} */}
-                            ID : 12454
+                            ID : {detail.id}
                           </p>
                         </div>
                         <div className="mb-2">
                           <p className="form-control-static" id="user_role">
                             {/* Role : {profile.role} */}
-                            Role : Manager
+                            Role : {detail.role}
                           </p>
                         </div>
                       </div>
@@ -180,7 +355,7 @@ function ProfilePage() {
                         <input
                           type="text"
                           name="lastName"
-                          {...register("lastname", {
+                          {...register("lastName", {
                             required: "Name is required",
                             minLength: {
                               value: 3,
@@ -195,27 +370,17 @@ function ProfilePage() {
                           className="form-control"
                         />
                         {errors.lastname && (
-                          <p className="error-message">{errors.lastname.message}</p>
+                          <p className="error-message">{errors.lastName.message}</p>
                         )}
                       </div>
                       <div className="col-md-4 mb-4">
                         <label>ID</label>
                         <input
+                          readonly
                           type="text"
+                          value={detail.id}
                           name="id"
-                          {...register("id", {
-                            required: "ID is required",
-                            minLength: {
-                              value: 3,
-                              message: "ID must be at least 3 characters long",
-                            },
-                            maxLength: {
-                              value: 50,
-                              message: "ID cannot exceed 50 characters",
-                            },
-                          })
-
-                          }
+                         
                           className="form-control"
                         />
                         {errors.id && (
@@ -229,7 +394,7 @@ function ProfilePage() {
                         <input
                           type="text"
                           name="fatherName"
-                          {...register("fathername", {
+                          {...register("fatherName", {
                             required: "Father Name is required",
                             minLength: {
                               value: 3,
@@ -244,8 +409,8 @@ function ProfilePage() {
                           })}
                           className="form-control"
                         />
-                        {errors.fathername && (
-                          <p className="error-message">{errors.fathername.message}</p>
+                        {errors.fatherName && (
+                          <p className="error-message">{errors.fatherName.message}</p>
                         )}
                         
                       </div>
@@ -254,7 +419,7 @@ function ProfilePage() {
                         <input
                           type="text"
                           name="motherName"
-                          {...register("mothername", {
+                          {...register("motherName", {
                             required: "Mother Name is required",
                             minLength: {
                               value: 3,
@@ -270,7 +435,7 @@ function ProfilePage() {
                           className="form-control"
                         />
                         {errors.mothername && (
-                          <p className="error-message">{errors.mothername.message}</p>
+                          <p className="error-message">{errors.motherName.message}</p>
                         )}
                       </div>
                       <div className="col-md-4 mb-4">
@@ -278,14 +443,14 @@ function ProfilePage() {
                         <input
                           type="date"
                           name="dob"
-                          {...register("dob", {
+                          {...register("birthDate", {
                             required: "Date of Birth is required",
                           })}
             
                           className="form-control"
                         />
-                        {errors.dob && (
-                          <p className="error-message">{errors.dob.message}</p>
+                        {errors.birthDate && (
+                          <p className="error-message">{errors.birthDate.message}</p>
                         )}
                       </div>
                     </div>
@@ -293,15 +458,10 @@ function ProfilePage() {
                       <div className="col-md-4 mb-4">
                         <label>Email</label>
                         <input
+                          readOnly
+                          value={detail.mail}
                           type="email"
-                          name="email"
-                          {...register("email", {
-                            required: "Email is required",
-                            pattern: {
-                              value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                              message: "Invalid Email",
-                            },
-                          })}
+                          name="email" 
 
                           className="form-control"
                         />
@@ -314,7 +474,7 @@ function ProfilePage() {
                         <input
                           type="text"
                           name="phone"
-                          {...register("phone", {
+                          {...register("phoneNumber", {
                             required: "Phone is required",
                             pattern: {
                               value: /^[0-9]{10}$/,
@@ -323,8 +483,8 @@ function ProfilePage() {
                           })}
                           className="form-control"
                         />
-                        {errors.phone && (
-                          <p className="error-message">{errors.phone.message}</p>
+                        {errors.phoneNumber && (
+                          <p className="error-message">{errors.phoneNumber.message}</p>
                         )}
                       </div>
                       <div className="col-md-4 mb-4">
@@ -350,15 +510,12 @@ function ProfilePage() {
                       <div className="col-md-4 mb-4">
                         <label>Role</label>
                         <input
+                          readOnly
+                          value={detail.role}
                           type="text"
-                          name="role"
-                          {...register("role", { required: "Role is required" })}
-
+                          name="role"  
                           className="form-control"
-                        />
-                        {errors.role && (
-                          <p className="error-message">{errors.role.message}</p>
-                        )}
+                        /> 
 
                       </div>
                       <div className="col-md-4 mb-4">
@@ -599,7 +756,7 @@ function ProfilePage() {
                           <input
                             type="text"
                             name="accountNumber"
-                            {...register("accountNumber", {
+                            {...register("accountNo", {
                               required: "Account Number is required",
                               pattern: {
                                 value: /^[0-9]{9,18}$/,
@@ -608,8 +765,8 @@ function ProfilePage() {
                             })}
                             className="form-control"
                           />
-                          {errors.accountNumber && (
-                            <p className="error-message">{errors.accountNumber.message}</p>
+                          {errors.accountNo && (
+                            <p className="error-message">{errors.accountNo.message}</p>
                           )}
                         </div>
                       </div>
@@ -619,7 +776,7 @@ function ProfilePage() {
                           <input
                             type="text"
                             name="aadhar_number"
-                            {...register("aadhar_number", {
+                            {...register("aadharNumber", {
                               required: "Aadhar Number is required",
                               pattern: {
                                 value: /^[0-9]{12}$/,
@@ -628,8 +785,8 @@ function ProfilePage() {
                             })}
                             className="form-control"
                           />
-                          {errors.aadhar_number && (
-                            <p className="error-message">{errors.aadhar_number.message}</p>
+                          {errors.aadharNumber && (
+                            <p className="error-message">{errors.aadharNumber.message}</p>
                           )}
                         </div>
                       </div>
@@ -637,13 +794,11 @@ function ProfilePage() {
                   </div>
                 </div>
               </form>
-            </div>{" "}
-            {/* end col */}
-          </div>{" "}
-          {/* end row */}
-        </div>{" "}
-        {/* end container */}
+            </div>
+          </div> 
+        </div> 
       </section>
+      }
     </>
   );
 }

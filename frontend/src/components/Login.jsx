@@ -3,8 +3,7 @@ import {useForm} from 'react-hook-form'
 import axios from 'axios';
 import { Link ,useNavigate } from 'react-router-dom';
 import './css/login.css';
-import logo from './images/emslogo.png'
-import { FaEnvelope, FaLock } from 'react-icons/fa';
+import logo from './images/emslogo.png' 
 // import ForgetPassword from './forgetpassword.jsx'
 import Cookies from 'js-cookie'; 
 
@@ -17,7 +16,7 @@ const Login = () => {
     if(jwt) { navigate("/homepage"); }
   },);
 
-  const {register,handleSubmit,formState: { errors }} = useForm();
+  const {register,handleSubmit,formState: { errors },reset} = useForm();
 
   const submitHandler = async (data) => {
     try{  
@@ -31,13 +30,18 @@ const Login = () => {
       console.log("Data is: ", response.data);
       // console.log("EmployeeID: ",response.data.emp.id)
       // console.log("EmployeeRole: ",response.data.emp.role)
-      Cookies.set('jwt', response.data.token);
+      Cookies.set('jwt11', response.data.token); 
       Cookies.set('employeeID', response.data.emp.id);
-      Cookies.set('employeeRole',response.data.emp.role)
+      Cookies.set('employeeRole',response.data.emp.role);
+
+      console.log("Login Token:: ",response.data.token);
 
       navigate("/homepage");
 
     }catch(error){
+      reset();
+      alert("Login Error { Check ID & Password :<}")
+
       console.log("ERROR:" , error);
     }
   }
@@ -54,8 +58,7 @@ const Login = () => {
       <div className="right-side">
         <h2 className="login">Login</h2>
         <form onSubmit={handleSubmit(submitHandler)}>
-            <div className="input-box">
-            <FaEnvelope className="input-icon" />
+            <div className="input-box"> 
                 {/* <label htmlFor="id">ID</label> */}
                 <input 
                 type="text" name="id" id="id" placeholder='Employee ID' 
@@ -67,17 +70,16 @@ const Login = () => {
                   }
                 })}
                 />
-                {errors.id && <p style={{ color: 'red' }}>{errors.id.message}</p>}
+                {errors.id && <p style={{ color: 'red' }}  className="error-message">{errors.id.message}</p>}
             </div>
-            <div className="input-box">
-              <FaLock className="input-icon" />
+            <div className="input-box"> 
                 {/* <label htmlFor="password">password</label> */}
                 <input type="password" name="password" id="password"  placeholder='Password'
                 {...register("pass", {
                   required: "Password is required",
                 })}
                 />
-                {errors.pass && <p style={{ color: 'red' }}>{errors.pass.message}</p>}
+                {errors.pass && <p style={{ color: 'red' }}  className="error-message">{errors.pass.message}</p>}
             </div> 
             <div >
                 <input type="submit" value="Login"  className="login-btn"/>

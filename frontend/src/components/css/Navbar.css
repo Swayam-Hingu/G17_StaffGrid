@@ -1,0 +1,224 @@
+/* General Styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  background-color: #387478; /* Set the navbar background to black */
+  color: white; /* Set text color to white */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  position: fixed; /* Fix navbar to top of the page */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Ensure navbar stays on top */
+}
+
+.navbar h3.sg {
+  font-size: 1.5rem;
+  color: #fff; /* Title color */
+}
+
+.hamburger {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.right-icons {
+  display: flex;
+  align-items: center;
+}
+.pr {
+  display: flex; 
+  width: 50%;
+  justify-content:space-around;
+}
+
+
+.search,
+.pro {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+/* Button Styles */
+button {
+  background-color: transparent;
+  color: white;
+  border: 1px solid transparent;
+  padding: 10px 20px;
+  margin-left: 15px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Hover Effect for Buttons */
+button:hover {
+  background-color: #484a4f5e; /* Blue color for login-like theme */
+  border-color: #484a4f5e;
+}
+.sg{
+  padding: 10px 20px; 
+}
+
+/* Profile Button */
+.pro {
+  font-size: 23px;
+}
+
+.pro:hover {
+  background-color: #484a4f5e; /* Change profile button color on hover */
+}
+
+/* LogOut Button */
+button:active {
+  background-color: #cc0000;  
+}
+
+/* Media Queries for Responsive Design */
+
+/* For Tablets and Mobile Screens */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column; /* Stack items vertically on smaller screens */
+    align-items: flex-start;
+  }
+
+  /* Ensure Staff Grid Title stays in one line */
+  .navbar h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px; /* Space between title and buttons */
+  }
+
+  .hamburger {
+    font-size: 28px;
+  }
+
+  .right-icons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%; /* Make sure the right section stretches */
+    margin-top: 10px;
+  }
+  .pr{
+    display: flex;
+    justify-content: space-between;
+    width: 100%; 
+    margin-top: 10px; 
+  }
+
+  .search,
+  .pro,
+  button {
+    font-size: 16px;
+    margin-left: 10px;
+  }
+
+  button {
+    padding: 8px 15px;
+  }
+
+  .pro {
+    font-size: 20px;
+  }
+}
+
+/* For Small Mobile Screens */
+@media (max-width: 480px) {
+  .navbar {
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start;
+    padding: 10px;
+  }
+
+  /* Ensure Staff Grid Title stays in one line */
+  .navbar h3 {
+    font-size: 1rem;
+    margin-bottom: 5px; /* Space between title and buttons */
+  }
+
+  .hamburger {
+    font-size: 25px;
+  }
+
+  .right-icons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+  }
+  .pr {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .search,
+  .pro,
+  button {
+    font-size: 14px;
+    margin-left: 5px;
+  }
+
+  button {
+    padding: 6px 12px;
+  }
+
+  .pro {
+    font-size: 18px;
+  }
+}
+
+/* For Very Small Mobile Screens (Portrait mode) */
+@media (max-width: 320px) {
+  .navbar {
+    padding: 8px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar h3 {
+    font-size: 0.9rem;
+    margin-bottom: 5px; /* Space between title and buttons */
+  }
+
+  .hamburger {
+    font-size: 22px;
+  }
+
+  .right-icons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .pr {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+
+  .search,
+  .pro,
+  button {
+    font-size: 12px;
+    margin-left: 5px;
+  }
+
+  button {
+    padding: 5px 10px;
+  }
+
+  .pro {
+    font-size: 16px;
+  }
+}

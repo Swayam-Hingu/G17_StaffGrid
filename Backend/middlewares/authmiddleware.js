@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser')
 module.exports = async (req, res, next) => {
     try { 
         const token = req.cookies.jwt;
-        console.log(token) ;
+        console.log("T:",token) ;
         if (!token) {
             throw new Error("JWT not provided");
         }

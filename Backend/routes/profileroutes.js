@@ -1,9 +1,17 @@
 const express = require('express');
 const authmiddleware = require('../middlewares/authmiddleware');
 const router = express.Router();
-const { handleUserProfileSave } = require('../controllers/profileController');
+const { 
+    handleUserProfileSave ,
+    handleUserProfileGet,
+    handleUserProfileGetDetailed,
+    handleUserProfileViewOrNot
+} = require('../controllers/profileController');
+ 
+router.post('/add-detailprofile',authmiddleware,handleUserProfileSave);
+router.get('/getEmpDetailbyid/:id',authmiddleware,handleUserProfileGet);
+router.get('/getEmpfulldetailbyid/:id',authmiddleware,handleUserProfileGetDetailed);
+router.get('/checkfillornot/:id',authmiddleware,handleUserProfileViewOrNot)
 
-// Route to update profile details (including text fields, excluding image)
-router.post('/add-detailprofile',handleUserProfileSave);
 
 module.exports = router;

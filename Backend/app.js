@@ -46,11 +46,7 @@ app.use("/api",adminRoutes)
 app.use("/employee/api",employeeRoutes);
 app.use('/profile/api', profileRoute);
 
-app.use(express.static(path.join(__dirname, '../Frontend/build')));
-console.log(path.join(__dirname, '../Frontend/build'))
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../Frontend/build/index.html'));
-});
+ 
 
 app.listen(PORT,() => {
     console.log("Server is runing at port: ",PORT)

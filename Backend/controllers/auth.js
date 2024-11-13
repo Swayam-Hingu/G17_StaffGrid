@@ -131,7 +131,7 @@ async function  handleUserLogin(req,res){
         console.log('TOKEN: ',token)
 
         res.cookie("jwt",token,{
-            expires: new Date(Date.now()+ 1000000),
+            expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
             httpOnly:true,
         })
 
@@ -250,7 +250,7 @@ async function handleChangePassword(req,res){
         const token =  await emp.generateAuthToken();  
     
         res.cookie("jwt",token,{
-          expires: new Date(Date.now()+ 1000000),
+          expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
           httpOnly:true,
         })
 

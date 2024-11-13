@@ -11,7 +11,7 @@ const RegisterEmp = () => {
   const {register, handleSubmit, formState: { errors }} = useForm();
 
   const submitHandler = async (data) => {
-    const token = localStorage.getItem('token'); 
+    const token = Cookies.get('token');; 
     console.log(token);
     try {
         const response = await axios.post('http://localhost:8000/api/register', {

@@ -7,17 +7,18 @@ body {
 }
 
 
-.login-container {
-  background-image: url("../images/imgback.jpg");
-  background-repeat: no-repeat;
-  background-size: 100% 100%; 
+.login-container { 
+  background-color: #243642; 
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 100vh; 
 }
 .content-wrapper{
   padding:20px;
+  height: 100%; 
+  background-color: #E2F1E7;
+  border-radius: 50% !important;
   
 }
 
@@ -26,11 +27,10 @@ body {
   justify-content: space-between;
   align-items: center;
   border-radius: 15px;
-  width: 90%; 
-  max-width: 800px;
-  background-color: #D5E4E9;
-  padding: 20px;
-  animation: fadeIn 1s ease-in-out;
+  width: 80%;  
+  background-color:#E2F1E7;
+  padding: 50px;
+  animation: fadeIn 1s ease-in-out; 
 }
 
 .left-side,
@@ -38,12 +38,13 @@ body {
   flex: 1;
   display: flex;
   justify-content: center;
-  align-items: center;
-  border-radius: 15px!important;
+  align-items: center; 
 }
  
 .left-side {
-  background-color: #E4F0F4;
+  background-color: #E2F1E7;
+  border-radius: 15px;
+ 
 
 }
 
@@ -68,7 +69,7 @@ h2 {
 
 .staff-grid {  
   text-align: center; 
-  color: #6cb7f3;  
+  color: #243642;  
   font-family: "Zen Tokyo Zoo", system-ui;
   font-size: 2em;  
   font-weight: 400;
@@ -85,6 +86,7 @@ h2 {
 .input-box {
   position: relative;
   margin: 15px 0;
+  margin-bottom: 20px;
   width: 100%;
 }
 
@@ -159,7 +161,7 @@ h2 {
   padding: 12px;
   text-align: center;
   font-weight: 400;
-  background-color: #6cb7f3;
+  background-color: #387478;
   color: white;
   border: none;
   border-radius: 25px;
@@ -176,7 +178,7 @@ h2 {
 }
 
 .login-btn:hover {
-  background-color: #5aa6db;
+  background-color: #387478;
   transform: scale(1.05);
 }
 
@@ -205,10 +207,7 @@ h2 {
 
   .login-btn {
     width: 90%;
-  }
-  .content-wrapper{
-    
-  }
+  } 
 }
 @media (max-width: 650px) {
   .login-box {
@@ -238,10 +237,15 @@ h2 {
     height: 200px!important;   
     border-radius: 10px;   
 }
-}
-
-/* Animations */
+} 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
+}
+ 
+.error-message {
+  color: red;
+  font-size: 14px; 
+  text-align: center;
+  padding:10px;
 }

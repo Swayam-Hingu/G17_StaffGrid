@@ -3,6 +3,7 @@ import {React, useEffect, useState} from 'react';
 import axios from 'axios';
 import Cookies from "js-cookie";
 import { useNavigate } from 'react-router-dom';
+import './css/Navbar.css'
 
 const Nav = ({ toggleMenu }) => {
   const navigate = useNavigate();
@@ -29,16 +30,15 @@ const Nav = ({ toggleMenu }) => {
   }
   return (
     <div className="navbar">
+      <div className='pr'>
       <button className="hamburger" onClick={toggleMenu}>
         ☰
       </button>
-      <h3>Staff Grid</h3>
-      <div className="right-icons">
-        <button className="search">🔍</button>
-        <button className="profile">👤 {ID}</button>
-      {/* <Link  to='/api/login'>Login</Link>
-      <Link   to='/api/registration'>RegisterEmployee</Link>  */}
-      <button onClick={()=>{logoutsystem()}}>LogOut</button>
+      <h3 className='sg'>Staff Grid</h3>
+      </div>
+      <div className="right-icons"> 
+        <button className="pro">👤 {ID}</button> 
+        <button className="pro" onClick={()=>{logoutsystem()}}>LogOut</button>
       </div>
     </div>
   );

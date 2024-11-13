@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const detailedProfileSchema = new mongoose.Schema({
     name: { type: String, immutable: true },
-    id: { type: String, unique: true, immutable: true },
+    id: { type: String, immutable: true },
     role: { type: String, immutable: true },
     profileImage: { type: String},
     firstName: {type: String},
@@ -11,9 +11,9 @@ const detailedProfileSchema = new mongoose.Schema({
     fatherName: { type: String, trim: true },
     motherName: { type: String, trim: true },
     birthDate: { type: Date },
-    mail: { type: String, unique: true, trim: true, match: /\S+@\S+\.\S+/ },
+    mail: { type: String, trim: true, match: /\S+@\S+\.\S+/ },
     phoneNumber: { type: String, match: /^[0-9]{10}$/ },
-    gender: { type: String, enum: ['Male', 'Female', 'Other'],  },
+    gender: { type: String, enum: ['male', 'female', 'other'],  },
     nationality: { type: String, trim: true, default: 'Indian' },
     religion: { type: String, trim: true },
     block: { type: String, trim: true },
@@ -26,7 +26,7 @@ const detailedProfileSchema = new mongoose.Schema({
     bankName: {type: String, trim: true, }, 
     ifscCode: {type: String, trim: true, }, 
     accountNo: {type: String, trim: true, }, 
-    aadharNumber: { type: String, unique: true, match: /^[0-9]{12}$/ },
+    aadharNumber: { type: String, match: /^[0-9]{12}$/ },
 });
 
 const DetailedProfile = mongoose.model('DetailedProfile', detailedProfileSchema);
