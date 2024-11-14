@@ -25,7 +25,7 @@ const Sidebar = ({ menuOpen, toggleMenu }) => {
       <ul>
         <li><Link to="/api/profile"><FaUser className="icon" /> Profile</Link></li>
         <li><Link to="/attendance"><FaListAlt className="icon" /> Attendance</Link></li>
-        <li><Link to="/projects"><FaListAlt className="icon" /> Projects</Link></li>
+        <li><Link to="/api/project"><FaListAlt className="icon" /> Projects</Link></li>
         <li><Link to="/apply-leave"><FaListAlt className="icon" /> Apply Leave</Link></li>
         <li><Link to="/performance"><FaListAlt className="icon" /> Performance</Link></li>
         <li><Link to="/salary"><FaListAlt className="icon" /> Salary</Link></li>

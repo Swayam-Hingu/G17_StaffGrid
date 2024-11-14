@@ -10,6 +10,7 @@ import Home from "./pages/home.js"
 import Attendance from './components/Attendance/Attendance';
 import ProfilePage from './pages/profile.js';
 import Announcement from './components/Announcement.jsx';
+import ProjectPage from './pages/projectPage';
 
 function App() {
   const location = useLocation();
@@ -29,6 +30,7 @@ function App() {
       <Route path="/attendance" element={<Attendance />} /> 
       <Route path="/api/profile" element={<ProfilePage/>} />
       <Route path="/api/view" element={<Announcement/>} />
+      <Route path="/api/project" element={<ProjectPage/>} />
       {/* <Calendar/> */}
     </Routes>
     </>
