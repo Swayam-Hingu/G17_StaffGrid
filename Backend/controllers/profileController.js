@@ -2,9 +2,31 @@ const multer = require('multer');
 const path = require('path');
 const detailedProfile = require('../model/detailedProfileModel');
 const employeeModel = require('../model/employee');
+const attendanceModel = require("../model/attendanceModel");
+const cloudinary = require("cloudinary").v2;
+
+cloudinary.config({ 
+  cloud_name: 'ddwvc5srx', 
+  api_key: '691912233247725', 
+  api_secret: 'aYy8av87-CJhk4Lcre_5kZ7RNyI'
+});
+
+async function handleUploadImage(req,res){
+  console.log(1);
+  if (!req.file) {
+    return res.status(400).send({ success: false, message: "No file uploaded" });
+  }
+  cloudinary.uploader.upload(req.file.path, function (err, result){
+    if(err) {
+      return res.status(500).send({ success: false,message:err});
+    }
+    res.status(200).send({success: true,message:"profileImageUploaded Successfully!",imageURL: result.url});
+  })
+}
 
 async function handleUserProfileSave(req, res){
 
+  console.log(req.body);
     const { name, id,firstName ,lastName , fatherName, motherName, birthDate, mail, phoneNumber, gender, role, nationality, religion, block, street, village, taluka, district, pincode, country, bankName, ifscCode, accountNo, aadharNumber} = req.body; 
     const profileImage="img"
     
@@ -70,5 +92,6 @@ module.exports = {
     handleUserProfileSave,
     handleUserProfileGet,
     handleUserProfileGetDetailed,
-    handleUserProfileViewOrNot
+    handleUserProfileViewOrNot,
+    handleUploadImage
 };
