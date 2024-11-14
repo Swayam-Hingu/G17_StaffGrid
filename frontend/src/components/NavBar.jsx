@@ -37,6 +37,7 @@ const Nav = ({ toggleMenu }) => {
       <h3 className='sg'>Staff Grid</h3>
       </div>
       <div className="right-icons"> 
+        <button className="pro" onClick={() => navigate('/api/view')}>🔔 </button>
         <button className="pro">👤 {ID}</button> 
         <button className="pro" onClick={()=>{logoutsystem()}}>LogOut</button>
       </div>

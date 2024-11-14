@@ -9,6 +9,7 @@ import Home from "./pages/home.js"
 // import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Attendance from './components/Attendance/Attendance';
 import ProfilePage from './pages/profile.js';
+import Announcement from './components/Announcement.jsx';
 
 function App() {
   const location = useLocation();
@@ -27,8 +28,8 @@ function App() {
       <Route path='/api/login/changepassword'element = {<Forgotpassword/>}/>     
       <Route path="/attendance" element={<Attendance />} /> 
       <Route path="/api/profile" element={<ProfilePage/>} />
+      <Route path="/api/view" element={<Announcement/>} />
       {/* <Calendar/> */}
-
     </Routes>
     </>
   );
