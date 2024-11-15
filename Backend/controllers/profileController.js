@@ -11,6 +11,62 @@ cloudinary.config({
   api_secret: 'aYy8av87-CJhk4Lcre_5kZ7RNyI'
 });
 
+
+async function handleUpdateDetails(req,res){
+  try {
+    const { id } = req.params;
+    const updateData = { ...req.body };
+
+    const emp = detailedProfile.findOne({id:id});
+
+    if (!req.file) {
+      updateData.profileImage="";
+    }
+    else{
+      const result = await cloudinary.uploader.upload(req.file.path);
+      updateData.profileImage = result.url;
+      // cloudinary.uploader.upload(req.file.path, function (err, result){
+      //   if(err) {
+      //     return res.status(500).send({ success: false,message:err});
+      //   }
+      //   updateData.profileImage=result.url;
+      // })
+    }
+
+      if(emp){
+        const updatedEmployee = await detailedProfile.findOneAndUpdate(
+          { id:id},
+          { $set: updateData },
+          { new: true, runValidators: true }
+        );
+
+        if (!updatedEmployee) {
+          return res.status(404).send({ success: false, message: 'Employee not found' });
+        }
+
+        res.status(200).send({ success: true, message: 'Employee profile updated successfully', profileImageURl: updatedEmployee.profileImage});
+      }
+      else{
+
+        const { name, id,firstName ,lastName , fatherName, motherName, birthDate, mail, phoneNumber, gender, role, nationality, religion, block, street, village, taluka, district, pincode, country, bankName, ifscCode, accountNo, aadharNumber} = req.body; 
+        const profileImage=updateData.profileImage
+
+        const detailedprofile = new detailedProfile({name,id,role,profileImage,firstName ,lastName , fatherName, motherName, birthDate, mail, phoneNumber, gender, nationality, religion, block, street, village, taluka, district, pincode, country, bankName, ifscCode, accountNo, aadharNumber}); 
+
+        console.log(detailedprofile);
+
+        await detailedprofile.save(); 
+
+        console.log("Save DONE:::><")
+        res.status(201).send({ detailedprofile});
+
+      }
+
+  } catch (error) {
+      res.status(500).send({ success: false, message: 'Error updating employee profile', error: error.message });
+  }
+}
+
 async function handleUploadImage(req,res){
   console.log(1);
   if (!req.file) {
@@ -31,6 +87,7 @@ async function handleUserProfileSave(req, res){
     const profileImage="img"
     
     try {  
+
       const detailedprofile = new detailedProfile({name,id,role,profileImage,firstName ,lastName , fatherName, motherName, birthDate, mail, phoneNumber, gender, nationality, religion, block, street, village, taluka, district, pincode, country, bankName, ifscCode, accountNo, aadharNumber}); 
 
       console.log(detailedprofile);
@@ -45,6 +102,8 @@ async function handleUserProfileSave(req, res){
       res.status(400).send({ error: error.message });  
     }
 };
+
+
 
 async function handleUserProfileGet(req, res){
 
@@ -93,5 +152,6 @@ module.exports = {
     handleUserProfileGet,
     handleUserProfileGetDetailed,
     handleUserProfileViewOrNot,
-    handleUploadImage
+    handleUploadImage,
+    handleUpdateDetails
 };

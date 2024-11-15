@@ -6,14 +6,19 @@ from datetime import datetime
 from pymongo import MongoClient
 from flask import Flask, jsonify, request
 from threading import Thread
+import requests
+from flask_cors import CORS
+import asyncio
 
 # create Flask app
 app = Flask(__name__)
+CORS(app)
 
 # access mongoDBs
 client = MongoClient("mongodb+srv://mistryriddhi1510:OZBgSEDfrZVCY9la@cluster0.qa3sq.mongodb.net/EMS")
 db = client["EMS"]
 attendanceDetail = db["attendanceDetail"]
+detailProfile = db["detailedprofiles"]
 
 def getAllEmployeesEncodeProfilePhoto():
     # to store all employees encoded images (array-128 length)
@@ -23,28 +28,52 @@ def getAllEmployeesEncodeProfilePhoto():
     idOfAll = []
     nameOfAll = []
     
-    profiles = attendanceDetail.find({})
-    for emp in profiles:
-        if (not emp['profilePhoto'].get('data')) or (not emp.get('profilePhoto')):
-            continue
-        
-        print(emp['profilePhoto'].get('data'))
-        if not emp.get('encodedProfilePhoto'):
-            imgBinary = emp['profilePhoto']['data']
+    ############################ we have to find employee in detailProfileSchema or employee schema
 
-            imgArr = np.frombuffer(imgBinary, np.uint8)
-            # get image from the array
-            img = cv2.imdecode(imgArr, cv2.IMREAD_COLOR)
-            # now this image is ready to encode for face recognition
-            encodedImage = face_recognition.face_encodings(img)
-            if encodedImage: 
-                encodedImagesOfAllEmp.append(encodedImage[0])  
-                attendanceDetail.find_one_and_update(
-                    {'id': emp['id']},
-                    {'encodedProfilePhoto': encodedImage[0]}
-                )
-                idOfAll.append(emp['id'])
-                nameOfAll.append(emp['name'])
+    profiles = detailProfile.find({})
+    for emp in profiles:
+
+        if not emp.get('profileImage') or emp.get('profileImage')=='img':
+            continue
+
+        profile_url = emp['profileImage']
+        print(profile_url)
+        
+        if not emp.get('encodedProfilePhoto'):
+            # get Image from the cloudinary
+            img_response = requests.get(profile_url)
+
+            if img_response.status_code == 200:
+                img_data = np.frombuffer(img_response.content, np.uint8)
+                img = cv2.imdecode(img_data, cv2.IMREAD_COLOR)
+
+                # Now this image is ready to encode for face recognition
+                encodedImage = face_recognition.face_encodings(img)
+                if encodedImage:
+                    encodedImagesOfAllEmp.append(encodedImage[0])
+                    detailProfile.find_one_and_update(
+                        {'id': emp['id']},
+                        {'$set': {'encodedProfilePhoto': encodedImage[0]}}
+                    )
+                    idOfAll.append(emp['id'])
+                    nameOfAll.append(emp['name'])
+
+            # imgBinary = emp['profilePhoto']['data']
+
+            # imgArr = np.frombuffer(imgBinary, np.uint8)
+            # # get image from the array
+            # img = cv2.imdecode(imgArr, cv2.IMREAD_COLOR)
+            # # now this image is ready to encode for face recognition
+            # encodedImage = face_recognition.face_encodings(img)
+            # if encodedImage: 
+            #     encodedImagesOfAllEmp.append(encodedImage[0])  
+            #     attendanceDetail.find_one_and_update(
+            #         {'id': emp['id']},
+            #         {'encodedProfilePhoto': encodedImage[0]}
+            #     )
+            #     idOfAll.append(emp['id'])
+            #     nameOfAll.append(emp['name'])
+
         else:
             encodedImage = emp['encodedProfilePhoto']
             encodedImagesOfAllEmp.append(encodedImage)
@@ -53,6 +82,7 @@ def getAllEmployeesEncodeProfilePhoto():
 
     return encodedImagesOfAllEmp, idOfAll, nameOfAll
 
+# this is also perfect
 def markAttendance(emp_id, date):
     print("inside mark")
     attendance_record = {'date': date, 'status': "present"}
@@ -62,6 +92,7 @@ def markAttendance(emp_id, date):
     )
     return True
 
+# this is perfect
 def alreadyMarked(emp_id, date):
     emp = attendanceDetail.find_one({
         "id": emp_id,
@@ -91,9 +122,11 @@ messages=[]
 def process_attendance(data):
     try:
         print("yes")
-        emp = attendanceDetail.find_one({'id': data['id']})
+        # emp = attendanceDetail.find_one({'id': data['id']})
+
+        id = data['id']
         currDate = datetime.now().strftime("%Y-%m-%d")
-        if alreadyMarked(emp['id'], currDate):
+        if alreadyMarked(id, currDate):
             print("Attendance already marked.")
             return
         
@@ -107,7 +140,7 @@ def process_attendance(data):
         maxFrame = 5
         currFrame = 0
 
-        print("loog stared and camera opened")
+        print("loop stared and camera opened")
         while True:
             success, frame = cap.read()
             cv2.imshow('StaffGrid-Attendance - Webcam', frame)
@@ -125,13 +158,18 @@ def process_attendance(data):
                 # compare current image with all the existing employees
                 matches = face_recognition.compare_faces(encodedImagesOfAllEmp, encodeFace)
                 faceDis = face_recognition.face_distance(encodedImagesOfAllEmp, encodeFace)
-
+                
+                if len(faceDis) == 0:
+                    print("Not have any photo to match your face")
+                if not matches :
+                    print("No matches found; retrying...")
+                    continue
                 # find the minimum value
                 matchIndex = np.argmin(faceDis)
 
                 # if matched, then mark attendance
                 if matches[matchIndex]:
-                    markAttendance(emp['id'], currDate) 
+                    markAttendance(id, currDate) 
                     msgWhenMarks = f"{idOfAll[matchIndex]} - {nameOfAll[matchIndex]}"
                     y1, x2, y2, x1 = faceLoc
                     y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
@@ -158,24 +196,32 @@ def process_attendance(data):
 
 messages=[]
 
-@app.route('/api/mark', methods=['POST'])
+@app.route('/api/markAttendance', methods=['POST'])
 def handleMarkAttendance():
-    messages=[]
-    data = request.get_json()
-        
-    emp = attendanceDetail.find_one({'id': data['id']})
-    if not emp:
-        return jsonify({"success": False, "message": "Employee not found"}), 404
-    
-    if not emp.get('profilePhoto') or not emp['profilePhoto'].get('data'):
-        return jsonify({"success": False, "message": "You have to upload profile photo first to mark attendance"}), 400
-    
-    print("thread started")
-    # Start a new thread to process attendance
-    thread = Thread(target=process_attendance, args=(data,))
-    thread.start()
-    
-    return jsonify({"success": True, "message": "Attendance marking started"}), 202
+    try:
+        data = request.get_json()
+
+        # Correctly use motor's async query method
+        emp = detailProfile.find_one({'id': data['id']})
+        if not emp:
+            print("Employee not found")
+            return jsonify({"success": False, "message": "Employee not found"}), 404
+
+        if not emp.get('profileImage') or emp.get('profileImage')=='img':
+            print("You have to upload profile photo first to mark attendance")
+            return jsonify({"success": False, "message": "You have to upload profile photo first to mark attendance"}), 400
+
+        print(f"Employee found: {emp}")
+
+        # Start the process in the background
+        thread = Thread(target=process_attendance, args=(data,))
+        thread.start()
+
+        return jsonify({"success": True, "message": "Attendance marking started"}), 202
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"success": False, "message": "Error processing the attendance request"}), 500
 
 
 if __name__ == '__main__':

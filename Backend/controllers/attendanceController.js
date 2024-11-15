@@ -15,15 +15,21 @@ async function handleMarkAttendance(req,res){
             return res.status(404).send({"error":"employee with this id not found"}); 
         
         console.log(emp.id);
-        const response = await axios.post(' http://127.0.0.1:5000/api/mark',{
-            id:emp.id
-        },{ timeout: 600000  });
+
+        
+        // const rs = await axios.post('http://127.0.0.1:5000/');
+        // console.log(rs.data);
+
+        const response = await axios.post('http://127.0.0.1:5000/api/markAttendance', {
+            id: emp.id
+        }, { timeout: 600000 });
 
         return res.status(response.status).send(response.data);
     } catch (error) {
         return res.status(504).send({
             status:false,
-            "error":"API not found"
+            "error":"API not found",
+            "Actual_error":error
         })
     }
 }

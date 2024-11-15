@@ -1,4 +1,6 @@
 const employeeModel = require('../model/employee');
+const detailedProfileModel = require('../model/detailedProfileModel');
+
 const cookieParser = require('cookie-parser');
 const sendEmail = require('nodemailer');
 const Counter = require('../model/storeId');
@@ -64,6 +66,11 @@ async function handleUserRegistration(req, res){
       console.log(employee.id);
 
       await employee.save(); 
+
+      // Add initial att in detail profile 
+      const detailedProfile = new detailedProfileModel({name,mail,role,id});
+      await detailedProfile.save();
+
       res.status(201).send({ employee}); 
   
       // Send the email to the employee

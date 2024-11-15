@@ -27,6 +27,9 @@ const detailedProfileSchema = new mongoose.Schema({
     ifscCode: {type: String, trim: true, }, 
     accountNo: {type: String, trim: true, }, 
     aadharNumber: { type: String, match: /^[0-9]{12}$/ },
+    
+    // this is for attendance purpose
+    encodedProfilePhoto: { type: Array }
 });
 
 const DetailedProfile = mongoose.model('DetailedProfile', detailedProfileSchema);

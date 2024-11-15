@@ -9,12 +9,9 @@ const attendanceRecordSchema = new mongoose.Schema({
 const attendanceSchema = new mongoose.Schema({ 
     id: {type: String,require: true},
     name: {type:String,require: true},
-    profilePhoto: {
-      data: Buffer,
-      contentType: String
-    },
+    //profilePhoto:{type:String},
     attendance: [attendanceRecordSchema],
-    encodedProfilePhoto: { type: Array }
+    // encodedProfilePhoto: { type: Array }
 })
 
 const attendanceDetail = mongoose.model('detailProfile', attendanceSchema);
