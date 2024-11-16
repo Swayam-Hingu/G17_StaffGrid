@@ -31,6 +31,7 @@ const adminRoutes = require('./routes/adminRoutes.js');
 const profileRoute = require('./routes/profileroutes.js');
 const attendanceRoute = require('./routes/attendanceRoutes.js');
 const projectRoute = require('./routes/projectRoutes.js');
+const announcementroutes = require('./routes/announcementroutes.js');
 
 const _dirname = path.resolve();
 
@@ -55,6 +56,7 @@ app.use("/api/project",projectRoute);
 
 app.use("/employee/api",employeeRoutes);
 app.use('/profile/api', profileRoute);
+app.use("/api",announcementroutes)
 
 
 app.listen(PORT,() => {

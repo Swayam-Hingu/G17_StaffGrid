@@ -1,6 +1,4 @@
 const employeeModel = require('../model/employee');
-const detailedProfileModel = require('../model/detailedProfileModel');
-
 const cookieParser = require('cookie-parser');
 const sendEmail = require('nodemailer');
 const Counter = require('../model/storeId');
@@ -66,11 +64,6 @@ async function handleUserRegistration(req, res){
       console.log(employee.id);
 
       await employee.save(); 
-
-      // Add initial att in detail profile 
-      const detailedProfile = new detailedProfileModel({name,mail,role,id});
-      await detailedProfile.save();
-
       res.status(201).send({ employee}); 
   
       // Send the email to the employee
@@ -126,6 +119,7 @@ async function  handleUserLogin(req,res){
         //first decode the password and compare with original pass 
         console.log(req.body.pass,emp.pass)        
         const statusoflogin = await bcrypt.compare(req.body.pass,emp.pass)
+        console.log("SOLOGIN: ",statusoflogin)
         if(!statusoflogin){
             return res.status(500).send({
                         success:false,
@@ -159,66 +153,7 @@ async function  handleUserLogin(req,res){
     }
 };
 
-// Handle User Forgot Password 
-// async function handleChangePassword(req,res){
-
-//     try{
-//         // first get user from the data base
-//         const emp = await employeeModel.findOne({id:req.body.id});
-//         //console.log(emp);
-    
-//         if(emp==undefined){
-//             return res.status(404).send({
-//                 success:false,
-//                 message:'ID is not valid'
-//             })
-//         }
-    
-//         const currpassword = req.body.currpassword;
-//         const newpassword = req.body.newpassword; 
-        
-    
-//         //console.log(currpassword,newpassword)
-//         //console.log(currpassword,emp.pass);
-
-
-//         const statusofchange = await bcrypt.compare(req.body.currpassword,emp.pass)
-//         if(!statusofchange){
-//             return res.status(500).send({
-//                         success:false,
-//                         message:'Invalid Password'   
-//                     });
-//         }
-         
-
-//         //token for JWT
-//         const token =  await emp.generateAuthToken();  
-    
-//         res.cookie("jwt",token,{
-//           expires: new Date(Date.now()+ 1000000),
-//           httpOnly:true,
-//         })
-
-//         emp.pass =  await bcrypt.hash(newpassword,10);;
-//         await emp.save();
-
-//         return res.status(200).send({
-//             success:true,
-//             message:'Password changed',
-//             token,
-//             emp
-//         });
-    
-//     }catch(error){
-//         console.log(error);
-//         res.status(500).send({
-//             success:false,
-//             message:'Error in password change',
-//             error
-//         });
-//     }
-// };
-
+ 
 
 async function handleChangePassword(req,res){
 

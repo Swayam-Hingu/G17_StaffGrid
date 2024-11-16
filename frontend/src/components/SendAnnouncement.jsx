@@ -5,40 +5,123 @@ import Cookies from 'js-cookie';
 import './css/sendannouncement.css';
 
 function SendAnnouncement() {
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset } = useForm(); 
   const [responseMessage, setResponseMessage] = useState("");
   const [rangeOption, setRangeOption] = useState("Specific");
-  const [emprole, setemprole] = useState();
+  const [emprole, setemprole] = useState("");
 
-  useEffect(() => {
+  useEffect(() => { 
     const role = Cookies.get('employeeRole');
     setemprole(role);
   }, []);
 
-  const submitHandler = async (data) => {
-    console.log(data);
+  const submitHandler = async (data) => { 
     const token = Cookies.get('token');
     const empid = Cookies.get('employeeID');
     let empIDS = [];
 
-    if (emprole === 'manager') {
-      if (data.rangeOption !== "Range") {
+    if(emprole === 'manager'){ 
+      if(data.rangeOption !== "Range"){ 
         empIDS = data.specificEmployeeId.split(',').map(id => id.trim());
         empIDS.forEach(ids => {
-          if (ids.substr(5, 1) !== '3' || ids.length !== 10) {
-            console.log("ERROR INVALID IDS");
+          if(ids.substr(5,1) !== '3' || ids.length !== 10){
+            console.log("ERROR INVALID IDS:::::::::::::::<><><><><");
           }
         });
-      } else {
+      } else { 
         const start = data.rangeStart;
         const end = data.rangeEnd;
-        if (start.substr(5, 1) !== '3' || start.length !== 10 || end.substr(5, 1) !== '3' || end.length !== 10 || end < start) {
+        
+        if(start.substr(5,1) !== '3' || start.length !== 10 || end.substr(5,1) !== '3' || end.length !== 10 || end < start){
           console.log("ERROR IN INPUT RANGE");
         } else {
           for (let i = start; i <= end; i++) {
-            empIDS.push(`${i}`);
+            const empId = `${i}`;  
+            empIDS.push(empId);
           }
+          console.log("Valid IDs in range:", empIDS);
+        }      
+      }
+    } else if(emprole === 'admin'){ 
+      if(data.rangeOption === "Specific"){ 
+        empIDS = data.specificEmployeeId.split(',').map(id => id.trim());
+        empIDS.forEach(ids => {
+          if(ids.substr(5,1) === '0' || ids.length !== 10 || ids.substr(5,1) > '3'){
+            console.log("ERROR INVALID IDS:::::::::::::::<><><><><ADMIN");
+          }
+        });
+      } else if(data.rangeOption === 'All'){ 
+        const mstart = "2024020001";
+        const hstart = "2024010001";
+        const estart = "2024030001";
+        
+        try {
+          const response = await axios.get('http://localhost:8000/api/login/alllastcnt', 
+          {
+            withCredentials: true,
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          
+          const { employee, manager, hr } = response.data.lastIds;
+          
+          if(employee > estart){
+            for (let i = estart; i <= employee; i++) {
+              const empId = `${i}`;  
+              empIDS.push(empId);
+            }
+          }
+          if(manager > mstart){
+            for (let i = mstart; i <= manager; i++) {
+              const empId = `${i}`;  
+              empIDS.push(empId);
+            }
+          }
+          if(hr > hstart){
+            for (let i = hstart; i <= hr; i++) {
+              const empId = `${i}`;  
+              empIDS.push(empId);
+            }
+          }
+        } catch(error){
+          console.log(error);
         }
+      } else { 
+        const start = data.rangeStart;
+        const end = data.rangeEnd;
+
+        if((start.substr(5,1) !== end.substr(5,1)) || start.substr(5,1) < '1' || start.length !== 10 || end.substr(5,1) !== '3' || end.length !== 10 || end < start || start.substr(5,1) > '3' || end.substr(5,1) < '1' || start.substr(5,1) > '3'){
+          console.log("ERROR IN INPUT RANGE ADMIN");
+        } else {
+          for (let i = start; i <= end; i++) {
+            const empId = `${i}`;  
+            empIDS.push(empId);
+          }
+          console.log("Valid IDs in range: ADMIN", empIDS);
+        }      
+      }
+    } else if(emprole === 'hr'){ 
+      if(data.rangeOption !== "Range"){ 
+        empIDS = data.specificEmployeeId.split(',').map(id => id.trim());
+        empIDS.forEach(ids => {
+          if(ids.substr(5,1) <= '1' || ids.length !== 10 || ids.substr(5,1) > '3'){
+            console.log("ERROR INVALID IDS:::::::::::::::<><><><><");
+          }
+        });
+      } else { 
+        const start = data.rangeStart; 
+        const end = data.rangeEnd;
+
+        if(( start.substr(5,1) !== end.substr(5,1)) || start.length !== 10 || end.length !== 10 || end < start || start.substr(5,1) <= '1' || start.substr(5,1) > '3' || end.substr(5,1) <= '1' || end.substr(5,1) > '3'){
+          console.log("ERROR IN INPUT RANGE");
+        } else {
+          for (let i = start; i <= end; i++) {
+            const empId = `${i}`;  
+            empIDS.push(empId);
+          }
+          console.log("Valid IDs in range:", empIDS);
+        }      
       }
     }
 
@@ -119,7 +202,7 @@ function SendAnnouncement() {
           </>
         )}
 
-        {/* {emprole === "admin" && ( */}
+        {emprole === "admin" && (
           <label className="radio-label">
             <input
               type="radio"
@@ -130,7 +213,7 @@ function SendAnnouncement() {
             />
             All Employees
           </label>
-        {/* )} */}
+        )}
 
         <button type="submit" className="submit-button">
           Send

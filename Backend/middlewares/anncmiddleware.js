@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const employeeModel = require('../model/employee');
 const cookieParser = require('cookie-parser')
 
-// Check manager is manager
+// Check employee is manager || HR || Admin
 module.exports = async (req, res, next) => {
     try { 
 
@@ -13,31 +13,32 @@ module.exports = async (req, res, next) => {
                 message: 'Authorization denied.',
             });
         }
+ 
+        const verifyemp = jwt.verify(token, process.env.SECRET_KEY);
+        // console.log("Verified emp ID:", verifyemp._id);
 
-        // Verify the token
-        const verifymanager = jwt.verify(token, process.env.SECRET_KEY);
-        // console.log("Verified manager ID:", verifymanager._id);
-
-        // Find the manager in the database
-        const manager = await employeeModel.findById(verifymanager._id); 
-        if (!manager) {
+        // Find the emp in the database
+        const emp = await employeeModel.findById(verifyemp._id); 
+        if (!emp) {
             return res.status(401).send({
                 success: false,
-                message: 'manager not found.',
+                message: 'emp not found.',
             });
         }
 
-        // Check if the login is an manager  
-        if (manager.id.substr(0,6)!=202402) {
+        // Check if the login is an emp 
+        // ----------------------update------------------------
+        console.log("emp id:                            ",emp.role)
+        if (emp.role != 'manager' && emp.role != 'hr' && emp.role != 'admin') {
             return res.status(403).send({
                 success: false,
-                message: 'Authorization failed: manager privileges required.',
+                message: 'Authorization failed: emp privileges required.',
             });
         }
 
-        // Attach manager and token to the request object
+        // Attach emp and token to the request object
         req.token = token;
-        req.manager = manager;
+        req.emp = emp;
 
         // Proceed to the next middleware or route handler
         next();
@@ -46,7 +47,7 @@ module.exports = async (req, res, next) => {
         console.error("Authorization error:", error);
         return res.status(401).send({
             success: false,
-            message: 'Authorization failed. manager API access denied.',
+            message: 'Authorization failed. emp API access denied.',
             error: error.message,
         });
     }

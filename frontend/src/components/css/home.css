@@ -1,306 +1,100 @@
-/* Main Container */
-.homepage-container {
-    min-height: 100vh;
-    background: white;
-    display: flex;
-  }
-  
-  /* Sidebar Styles */
-  .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    background-color: #03393f;
-    color: white;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  }
-  
- 
-  .sidebar.open {
-    width: 256px;
-  }
-  
-  .sidebar.closed {
-    width: 120px;
-  }
-  
-  /* Sidebar Toggle Button */
-  .sidebar-toggle {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    right: 0;
-    top: 16px;
-    transform: translateX(50%);
-    background-color: #0284c7;
-    border-radius: 50%;
-    padding: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  
-  .sidebar-toggle:hover {
-    background-color: #0ea5e9;
-  }
-  
-  /* Logo Section */
-  .logo-section {
-    justify-content:center ;
-    padding: 18px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .logo-circle {
-    width: 50px;
-    height: 45px;
-    background-color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .logo-circle span {
-    color: #0369a1;
-    font-weight: bold;
-    font-size: 1.25rem;
-  }
-  
-  .company-name {
-    font-weight: bold;
-    font-size: 1.125rem;
-    transition: opacity 0.2s;
-  }
-  
-  /* Navigation Menu */
-  .nav-menu {
-    margin-top: 32px;
-  }
-  
-  .nav-item {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 12px 24px;
-    transition: background-color 0.2s;
-    border: none;
-    background: none;
-    color: rgba(255, 255, 255, 0.9);
-    cursor: pointer;
-    text-align: left;
-  }
-  
-  .nav-item:hover {
-    background-color: #0284c7;
-  }
-  
-  .nav-item.active {
-    background-color: #075985;
-    color: white;
-  }
-  
-  .nav-divider {
-    border-top: 1px solid #0284c7;
-    margin: 16px 0;
-  }
-  
-  /* Main Content */
-  .main-content {
-    flex: 1;
-    transition: margin-left 0.3s ease-in-out;
-  }
-  
-  .main-content.shifted {
-    margin-left: 256px;
-  }
-  
-  .main-content:not(.shifted) {
-    margin-left: 80px;
-  }
-  
-  
-  /* Top Bar */
-  .top-bar {
-    background-color: rgb(9, 195, 151);
-    border-bottom: 1px solid #e5e7eb;
-    padding: 16px 24px;
-    display: flex;
-    justify-content: flex-end;
-  }
- 
-  .profile-section {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    width: 60%;
-    justify-content: space-between;  
-  }
-  
-.profile-section h1 {
-  color: #eef2f5;  /* Change to any color you prefer */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.notification {
-  background-color: #141414;
-  color: white;
-  text-decoration: none;
-  padding: 15px 26px;
-  position: relative;
-  display: inline-block;
-  border-radius: 2px;
+body, html {
+  height: 100%;
 }
 
-.notification:hover {
-  background: red;
-}
-
-.notification .badge {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  padding: 5px 10px;
-  border-radius: 50%;
-  background: red;
-  color: white;
-}
-
-.inbox{
-  gap: 20px;
-    display: flex;
-    
-}
-  
-  .profile-photo-container {
-    position: relative;
-    width: 50px;
-    height: 50px;
-  }
-  
-  .profile-photo {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #0369a1;
-    
-  }
-  .staffgrid{
-    width: 200px;
-  }
-  .online-status {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 12px;
-    height: 12px;
-    background-color: #22c55e;
-    border-radius: 50%;
-    border: 2px solid white;
-  }
-  
-  /* Welcome Section */
-  .welcome-container {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 32px;
-    background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.46), rgba(255, 255, 255, 0.60)), /* White overlay with opacity */
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.46), rgba(255, 255, 255, 0.60)),
     url('https://www.scienceofpeople.com/wp-content/uploads/2023/08/949766_BodyLanguage_D1_012121.png');
   background-size: cover;
-  background-position: center;
-  
-  }
+  background-position: center center;
+  background-repeat: no-repeat;
+  min-height: 100vh; /* Cover the entire viewport */
+  width: 100%; /* Full width */
+}
 
-  .welcome-content {
-    text-align: center;
-  }
-  
-  .welcome-text {
-    font-size: 4.5rem;
-    font-weight: bold;
-    color: #1f2937;
-    margin-bottom: 24px;
-    letter-spacing: 0.05em;
-    position: relative;
-    overflow: hidden;  /* Hide overflow text for typed effect */
-    white-space: nowrap;  /* Keep text on a single line */
-    animation: typed 3s steps(60, end) infinite;
-  }
+.welcome-content {
+  text-align: center;
+  color: #1f2937;
+}
 
-  .welcome-text::after {
-    content: "";
-    display: inline-block;
-    width: 10px;
-    background-color: #1f2937;
-    margin-left: 5px;
-   
-  }
+.welcome-text {
+  font-size: 4.5rem;
+  font-weight: bold;
+  margin-bottom: 24px;
+  letter-spacing: 0.05em;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typed 3s steps(60, end) infinite;
+}
 
-  .employee-name-large {
-    font-size: 1.875rem;
-    color: #000000;
-    font-weight: 500;
-    animation: bounceIn 0.7s ease-out 0.8s both;
-  }
-  
-  .welcome-subtitle {
-    color: #000308;
+.welcome-text::after {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  background-color: #1f2937;
+  margin-left: 5px;
+}
+
+.employee-name-large {
+  font-size: 1.875rem;
+  color: #000000;
+  font-weight: 500;
+  animation: bounceIn 0.7s ease-out 0.8s both;
+}
+
+.welcome-subtitle {
+  color: #000308;
   margin-top: 16px;
   animation: fadeIn 0.7s ease-out 0.8s both;
-  }
-  
-  /* Utility Classes */
-  .visible {
-    opacity: 1;
-  }
-  
-  .hidden {
-    opacity: 0;
+}
+
+/* Utility Classes */
+.visible {
+  opacity: 1;
+}
+
+.hidden {
+  opacity: 0;
+  width: 0;
+}
+
+/* Animations */
+@keyframes typed {
+  from {
     width: 0;
   }
-  
-  /* Animations */
-  @keyframes typed {
-    from {
-      width: 0;
-    }
-    to {
-      width: 100%;
-    }
+  to {
+    width: 100%;
   }
-  
-  @keyframes beam-blink {
-    50% {
-      opacity: 0;
-    }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
   }
-  
-  
-  @keyframes bounceIn {
-    0% {
-      opacity: 0;
-      transform: scale(0.3);
-    }
-    50% {
-      opacity: 0.9;
-      transform: scale(1.1);
-    }
-    80% {
-      opacity: 1;
-      transform: scale(0.9);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.1);
   }
-  
-  
+  80% {
+    opacity: 1;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

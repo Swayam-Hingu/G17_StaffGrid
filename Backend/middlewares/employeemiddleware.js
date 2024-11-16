@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const employeeModel = require('../model/employee');
 const cookieParser = require('cookie-parser')
 
-// Check manager is manager
+// Check employee is employee
 module.exports = async (req, res, next) => {
     try { 
 
@@ -15,29 +15,29 @@ module.exports = async (req, res, next) => {
         }
 
         // Verify the token
-        const verifymanager = jwt.verify(token, process.env.SECRET_KEY);
-        // console.log("Verified manager ID:", verifymanager._id);
+        const verifyemployee = jwt.verify(token, process.env.SECRET_KEY);
+        // console.log("Verified employee ID:", verifyemployee._id);
 
-        // Find the manager in the database
-        const manager = await employeeModel.findById(verifymanager._id); 
-        if (!manager) {
+        // Find the employee in the database
+        const employee = await employeeModel.findById(verifyemployee._id); 
+        if (!employee) {
             return res.status(401).send({
                 success: false,
-                message: 'manager not found.',
+                message: 'employee not found.',
             });
         }
 
-        // Check if the login is an manager  
-        if (manager.id.substr(0,6)!=202402) {
+        // Check if the login is an employee  
+        if (employee.id.substr(0,6)!="202403") {
             return res.status(403).send({
                 success: false,
-                message: 'Authorization failed: manager privileges required.',
+                message: 'Authorization failed: employee privileges required.',
             });
         }
 
-        // Attach manager and token to the request object
+        // Attach employee and token to the request object
         req.token = token;
-        req.manager = manager;
+        req.employee = employee;
 
         // Proceed to the next middleware or route handler
         next();
@@ -46,7 +46,7 @@ module.exports = async (req, res, next) => {
         console.error("Authorization error:", error);
         return res.status(401).send({
             success: false,
-            message: 'Authorization failed. manager API access denied.',
+            message: 'Authorization failed. employee API access denied.',
             error: error.message,
         });
     }

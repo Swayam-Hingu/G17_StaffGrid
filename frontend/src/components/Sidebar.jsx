@@ -37,6 +37,11 @@ const Sidebar = ({ menuOpen, toggleMenu }) => {
             </li>
           )
         }
+        {
+          role == 'manager' && (
+            <li><Link to="/api/uploadproject"><FaListAlt className="icon" />Upload Project</Link></li>
+          )
+        }
         <li><Link to="/api/login" onClick={() => Cookies.remove("jwt")}><FaPowerOff className="icon" /> Logout</Link></li>
       </ul>
     </div>

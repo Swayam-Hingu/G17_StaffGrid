@@ -33,6 +33,7 @@ const Login = () => {
       Cookies.set('jwt11', response.data.token); 
       Cookies.set('employeeID', response.data.emp.id);
       Cookies.set('employeeRole',response.data.emp.role);
+      Cookies.set('employeeName',response.data.emp.name);
 
       console.log("Login Token:: ",response.data.token);
 
