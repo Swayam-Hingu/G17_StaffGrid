@@ -10,7 +10,6 @@ const {
   } = require('../controllers/anncController');
 const adminmiddleware = require('../middlewares/adminmiddleware');
 
-
 router.post('/login/announcement',authmiddleware,anncmiddleware, handleAnnouncement);
 router.get('/login/viewannouncement',authmiddleware, handleAnnouncementView);
 router.get('/login/alllastcnt',authmiddleware,adminmiddleware, handleLastIds);

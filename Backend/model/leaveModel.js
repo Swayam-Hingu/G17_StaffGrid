@@ -16,5 +16,5 @@ const leaveSchema = new mongoose.Schema({
   
 });
 
-const Leave = mongoose.model('Leave', employeeSchema);
+const Leave = mongoose.model('Leave', leaveSchema);
 module.exports = Leave;

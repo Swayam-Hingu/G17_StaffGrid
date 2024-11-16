@@ -7,7 +7,7 @@ const cloudinary = require("cloudinary").v2;
 const generateLeaveID = async () => {
     const lastLeave = await leaveModel.findOne().sort({ appliedOn: -1 });
     if (!lastLeave) return 'L1';
-    const lastID = lastLeave.projectID;
+    const lastID = lastLeave.leaveID;
     const lastNumber = parseInt(lastID.substring(1), 10);
     return `L${lastNumber + 1}`;
 };
@@ -15,11 +15,14 @@ const generateLeaveID = async () => {
 async function handleApplyLeave(req,res){
     try {
         const { senderId,receiverId,type,leaveType,fromDate,toDate,totalDays} = req.body;
+        attachment="";
+        if(req.file.path){
+            const result = await cloudinary.uploader.upload(req.file.path);
+            attachment = result.url;
+        }
 
-        const result = await cloudinary.uploader.upload(req.file.path);
-        attachment = result.url;
-        
-        leaveID = generateLeaveID();
+        leaveID = await generateLeaveID();
+
         const newLeave = new leaveModel({
             leaveID,
             senderId,
@@ -30,6 +33,7 @@ async function handleApplyLeave(req,res){
             toDate,
             totalDays,
             attachment,
+            appliedOn: new Date()
         });
 
         const savedLeave = await newLeave.save();
@@ -43,7 +47,7 @@ async function handleGetReceivedLeaves(req,res){
     try {
         const { receiverId } = req.params;
     
-        const receivedLeaves = await Leave.find({ receiverId }).sort({ appliedOn: -1 });
+        const receivedLeaves = await leaveModel.find({ receiverId }).sort({ appliedOn: -1 });
         res.status(200).send({status:true, receivedLeaves: receivedLeaves});
 
     } catch (error) {
@@ -54,7 +58,7 @@ async function handleGetReceivedLeaves(req,res){
 async function handleGetSentLeaves(req,res){
     try {
         const { senderId } = req.params;
-        const sentLeaves = await Leave.find({ senderId }).sort({ appliedOn: -1 });
+        const sentLeaves = await leaveModel.find({ senderId }).sort({ appliedOn: -1 });
         res.status(200).send({status:true, sentLeave: sentLeaves});
 
     } catch (error) {
@@ -62,7 +66,7 @@ async function handleGetSentLeaves(req,res){
     }
 }
 
-async function handleUpadateLeave(req,res){
+async function handleUpdateLeave(req,res){
     try {
         const { leaveID } = req.params;
         const { leaveStatus, comment } = req.body;
@@ -87,5 +91,5 @@ module.exports = {
     handleApplyLeave,
     handleGetReceivedLeaves,
     handleGetSentLeaves,
-    handleUpadateLeave
+    handleUpdateLeave 
 };

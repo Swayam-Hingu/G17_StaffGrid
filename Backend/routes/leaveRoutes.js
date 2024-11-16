@@ -1,17 +1,15 @@
 const express = require('express');
 const authmiddleware = require('../middlewares/authmiddleware');
 const managerMiddleware = require('../middlewares/authmiddleware');
-
 const upload = require("../middlewares/multer");
+const router = express.Router();
 
 const { 
     handleApplyLeave,
     handleGetReceivedLeaves,
     handleGetSentLeaves,
-    handleUpadateLeave
-} = require('../controllers/profileController');
-
-const router = express.Router();
+    handleUpdateLeave 
+} = require('../controllers/leaveController');
 
 // apply leave
 router.post('/apply',upload.single('attachment'),authmiddleware,handleApplyLeave);
@@ -23,6 +21,6 @@ router.get('/getreceivedleaves/:id',authmiddleware,managerMiddleware,handleGetRe
 router.get('/getsentleaves/:id',authmiddleware ,handleGetSentLeaves);
 
 // handle leave by manager
-router.patch('/update/:leaveID',authmiddleware,managerMiddleware,handleUpadateLeave);
+router.patch('/update/:leaveID',authmiddleware,managerMiddleware,handleUpdateLeave);
 
 module.exports = router;
