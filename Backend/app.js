@@ -31,7 +31,9 @@ const adminRoutes = require('./routes/adminRoutes.js');
 const profileRoute = require('./routes/profileroutes.js');
 const attendanceRoute = require('./routes/attendanceRoutes.js');
 const projectRoute = require('./routes/projectRoutes.js');
+
 const announcementroutes = require('./routes/announcementroutes.js');
+const leaveRoute = require('./routes/leaveRoutes.js');
 
 const _dirname = path.resolve();
 
@@ -53,6 +55,7 @@ app.use("/api",staticRoutes);
 app.use("/api",adminRoutes);
 app.use("/api/attendance",attendanceRoute);
 app.use("/api/project",projectRoute);
+app.use("api/leave",leaveRoute);
 
 app.use("/employee/api",employeeRoutes);
 app.use('/profile/api', profileRoute);

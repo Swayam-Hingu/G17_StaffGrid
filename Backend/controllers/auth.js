@@ -9,7 +9,7 @@ function generatePassword() {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$_';
     let password = '';
     const length = 8;
-  
+
     for (let i = 0; i < length; i++) {
       const randomIndex = Math.floor(Math.random() * characters.length);
       password += characters[randomIndex];
@@ -255,11 +255,7 @@ async function handleSendEmailForChangePassword(req,res){
               console.log("Email is sent");
             }
           }) 
-        
-    
-          
 
-    
     }catch(error){
         console.log(error);
         res.status(500).send({
