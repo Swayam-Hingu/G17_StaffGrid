@@ -3,6 +3,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import './css/UploadProject.css';
 
 const UploadProject = () => { 
   const { register, handleSubmit, control, formState: { errors } } = useForm(); // No defaultValues set
@@ -127,10 +128,10 @@ const UploadProject = () => {
                 placeholder="Member ID"
               />
               {errors.teamMembers?.[index]?.id && <p className="error-message">{errors.teamMembers[index].id.message}</p>}
-              <button type="button" onClick={() => removeTeamMember(index)} style={{ color: "red" }}>Remove Member</button>
+              <button type="button" onClick={() => removeTeamMember(index)} style={{ color: "white" }}>Remove Member</button>
             </div>
           ))}
-          <button type="button" onClick={() => appendTeamMember({ id: "" })} style={{ color: "red" }}>Add Team Member</button>
+          <button type="button" onClick={() => appendTeamMember({ id: "" })} style={{ color: "white" }}>Add Team Member</button>
         </div>
 
         {/* Tasks */}
@@ -167,7 +168,7 @@ const UploadProject = () => {
                 <option value="Completed">Completed</option>
                 <option value="Blocked">Blocked</option>
               </select>
-              <button type="button" onClick={() => removeTask(index)} style={{ color: "red" }}>Remove Task</button>
+              <button type="button" onClick={() => removeTask(index)} style={{ color: "white" }}>Remove Task</button>
             </div>
           ))}
           <button type="button" onClick={() => appendTask({
@@ -176,7 +177,7 @@ const UploadProject = () => {
             assignedTo: { id: "" },
             dueDate: "",
             status: "Not Started"
-          })} style={{ color: "red" }}>Add Task</button>
+          })} style={{ color: "white" }}>Add Task</button>
         </div>
 
         {/* Start and End Dates */}
