@@ -5,7 +5,10 @@ import { Typography } from '@mui/material';
 import AttendanceTable from './AttendanceTable';
 import AttendanceSearch from './AttendanceSearch';
 import Calendar from '../calender';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import '../css/Attendance.css';
+
 
 const Attendance = () => {
   const [attendanceData, setAttendanceData] = useState([]);
@@ -65,6 +68,14 @@ const Attendance = () => {
         Attendance Dashboard
       </Typography>
 
+      {/* Fixed Calendar */}
+      <div className='plusicon'>
+      <FontAwesomeIcon icon={faPlus}  />
+    </div>
+      <div className="calendar-fixed">
+        <Calendar attendanceDates={attendanceDates} />
+      </div>
+
       <div className="dashboard-content">
         {/* Month Selector */}
         <div className="month-selector">
@@ -77,10 +88,7 @@ const Attendance = () => {
         </div>
       </div>
 
-      {/* Fixed Calendar */}
-      <div className="calendar-fixed">
-        <Calendar attendanceDates={attendanceDates} />
-      </div>
+      
     </div>
   );
 };

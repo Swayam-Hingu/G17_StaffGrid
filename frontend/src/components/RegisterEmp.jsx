@@ -11,7 +11,7 @@ const RegisterEmp = () => {
   const {register, handleSubmit, formState: { errors }} = useForm();
 
   const submitHandler = async (data) => {
-    const token = Cookies.get('token');; 
+    const token = localStorage.getItem('token'); 
     console.log(token);
     try {
         const response = await axios.post('http://localhost:8000/api/register', {
@@ -31,8 +31,9 @@ const RegisterEmp = () => {
   };
 
   return (
+    <div className="registerRmployeebackground">
     <div className="register-container">
-      <h1 className="register-header">Register Form</h1>
+      <h1 className="register-header">Register User</h1>
       <form className="register-form" onSubmit={handleSubmit(submitHandler)}>
         <div className="form-group">
           <label htmlFor="name">Name</label>
@@ -53,8 +54,9 @@ const RegisterEmp = () => {
               }
             })}
           />
-          {errors.name && <p className="error-message">{errors.name.message}</p>}
+          
         </div>
+        {errors.name && <p className="error-message">{errors.name.message}</p>}
 
         <div className="form-group">
           <label htmlFor="mail">Email</label>
@@ -71,8 +73,9 @@ const RegisterEmp = () => {
               }
             })}
           />
-          {errors.mail && <p className="error-message">{errors.mail.message}</p>}
+         
         </div>
+        {errors.mail && <p className="error-message">{errors.mail.message}</p>}
 
         <div className="form-group">
           <label htmlFor="role">Role</label>
@@ -86,13 +89,14 @@ const RegisterEmp = () => {
               validate: value => ["manager", "employee", "hr"].includes(value.toLowerCase()) || "Role must be either 'manager', 'employee', or 'hr'"
             })}
           />
-          {errors.role && <p className="error-message">{errors.role.message}</p>}
+          
         </div>
-
+        {errors.role && <p className="error-message">{errors.role.message}</p>}
         <div className="form-submit">
           <input type="submit" value="Submit" className="submit-button" />
         </div>
       </form>
+    </div>
     </div>
   );
 };

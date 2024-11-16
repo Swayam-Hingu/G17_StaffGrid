@@ -8,7 +8,7 @@ const AttendanceSearch = ({ month, onMonthChange }) => {
 
   return (
     <div className="attendance-search">
-      <label>Select Month: </label>
+      <label style={{'margin-right':'20px' }}>Month</label>
       <input 
         type="month" 
         value={month} 
