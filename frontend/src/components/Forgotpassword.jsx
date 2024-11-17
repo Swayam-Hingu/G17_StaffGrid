@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -5,6 +6,9 @@ import axios from 'axios';
 import './css/Forgotpassword.css'
 
 import logo from './images/emslogo.png'
+
+
+
 const Forgotpassword = () => {
   const { register: register1, handleSubmit: handleSubmit1, formState: { errors: errors1 } } = useForm();  
   const { register: register2, handleSubmit: handleSubmit2, formState: { errors: errors2 } } = useForm();
@@ -85,8 +89,9 @@ const Forgotpassword = () => {
                 }
               })}
             />
-            {errors1.id && <p className="error-message">{errors1.id.message}</p>}
+            
           </div>
+          {errors1.id && <p className="error-message">{errors1.id.message}</p>}
 
           <div className="form-group">
             <input type="submit" value="Generate Password" className="btn generate-btn" />
@@ -111,9 +116,9 @@ const Forgotpassword = () => {
                 }
               })}
             />
-            {errors2.newpassword && <p className="error-message">{errors2.newpassword.message}</p>}
+            
           </div>
-
+          {errors2.newpassword && <p className="error-message">{errors2.newpassword.message}</p>}
           <div className="form-group">
             <label htmlFor="currpassword"></label>
             <input
@@ -124,11 +129,11 @@ const Forgotpassword = () => {
               className="input-field"
               {...register2("currpassword", { required: "Confirmation password is required" })}
             />
-            {errors2.currpassword && <p className="error-message">{errors2.currpassword.message}</p>}
+            
           </div>
-
+          {errors2.currpassword && <p className="error-message">{errors2.currpassword.message}</p>}
           <div className="form-group">
-            <input type="submit" value="Confirm" className="btn confirm-btn" />
+            <input type="submit" value="Confirm" className="btn confirm-btn"  />
           </div>
         </form>
       </div>

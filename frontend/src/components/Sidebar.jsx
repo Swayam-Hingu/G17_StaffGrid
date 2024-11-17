@@ -29,11 +29,12 @@ const Sidebar = ({ menuOpen, toggleMenu }) => {
         <li><Link to="/apply-leave"><FaListAlt className="icon" /> Apply Leave</Link></li>
         <li><Link to="/performance"><FaListAlt className="icon" /> Performance</Link></li>
         <li><Link to="/salary"><FaListAlt className="icon" /> Salary</Link></li>
+        <li><Link to="/api/registration"><FaCog className="icon" /> Register Employee</Link></li>
         <li><Link to="/api/login/forgotpassword"><FaCog className="icon" /> Change Password</Link></li>
         {
           role === 'admin' && (
             <li onClick={() => { navigate("/api/registration"); }} className="role-specific">
-              <FaUser className="icon" /> Register
+              <FaUser className="icon" /><Link to="/api/registration"><FaCog className="icon" /> Register</Link>
             </li>
           )
         }

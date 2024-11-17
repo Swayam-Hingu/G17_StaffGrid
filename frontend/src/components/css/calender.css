@@ -3,11 +3,20 @@
 .calendar-container {
   padding: 10px;
   border-radius: 8px;
-  margin-top: 100px;
+  margin-top: 150px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-.highlight-attendance {
+.highlight-attendance-green {
   background-color: #4CAF50;
+  color: white !important;
+  border-radius: 50%;
+}
+
+.highlight-attendance-red {
+  background-color: red;
   color: white !important;
   border-radius: 50%;
 }
@@ -17,14 +26,18 @@
 /* Tablets and small screens (up to 1024px) */
 @media (max-width: 1024px) {
   .calendar-container {
+    display: flex;
+    justify-content: center;
     width: 100%;
-    margin-top: 20px;
+    margin-top: 50px;
   }
 }
 
 /* Mobile devices (up to 480px) */
 @media (max-width: 480px) {
   .calendar-container {
+    display: flex;
+    justify-content: center;
     padding: 5px;
     width: 100%;
     margin-top: 10px;

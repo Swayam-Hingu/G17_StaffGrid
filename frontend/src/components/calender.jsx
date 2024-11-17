@@ -10,7 +10,7 @@ const Calendar = ({ attendanceDates }) => {
   const highlightDates = attendanceDates.map(date => new Date(date));
 
   return (
-    <div className="calendar-container">
+    <div className="calendar-container" >
       <DatePicker
         selected={selectedDate}
         onChange={(date) => setSelectedDate(date)}

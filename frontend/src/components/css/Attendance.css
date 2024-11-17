@@ -1,12 +1,17 @@
 /* src/components/css/Attendance.css */
+.example::-webkit-scrollbar {
+  display: none;
+}
 
 .dashboard-container {
   display: flex;
+  background-color: #E2F1E7;
   flex-direction: column;
   align-items: center;
- 
-  padding: 20px;
+  margin-top: 50px;
+  padding: 50px;
   position: relative;
+  
   /* z-index: -1; */
 }
 
@@ -15,24 +20,42 @@
   font-size: 2.5rem;
   font-weight: 600;
   padding-top: 20px;
-  margin-bottom: 20px;
-  font-family: "Zen Tokyo Zoo", system-ui , sans-serif;
+  margin-top: 30px;
+  font-family: "Zen Tokyo Zoo", system-ui , sans-serif !important;
   
 }
 
+.plusicon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  scale: 1.5;
+  background-color: #243642;
+  color: white;
+  margin-top: 10px;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  display: flex;
+  align-self: flex-end;
+}
+
+
 .dashboard-content {
+  margin-top: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  
+  margin-left: auto;
   max-width: 1200px;
   position: relative;
 }
 
 .month-selector {
   margin-bottom: 40px;
-  margin-top: 40px;
+  margin-top: 10px;
   text-align: center;
   font-size: 1.2rem;
   color: #333;
@@ -52,10 +75,9 @@
 }
 
 .calendar-fixed {
-  position: fixed;
-  top: 80px;
-  right: 20px;
-  width: 250px;
+  position: relative;
+  align-self: center;
+  margin-top: -120px;
 }
 
 .card {
@@ -80,6 +102,7 @@
 @media (max-width: 1024px) {
   .dashboard-heading {
     font-size: 2rem;
+    padding-top: 100px;
   }
 
   .dashboard-content {
@@ -103,6 +126,7 @@
 @media (max-width: 768px) {
   .dashboard-heading {
     font-size: 1.8rem;
+
   }
 
   .month-selector {
@@ -120,12 +144,14 @@
     margin-top: 30px;
     text-align: center;
   }
+  
 }
 
 /* Mobile devices (up to 480px) */
 @media (max-width: 480px) {
   .dashboard-heading {
     font-size: 1.5rem;
+    margin-top: 40px;
   }
 
   .month-selector {
@@ -149,5 +175,8 @@
     width: 100%;
     margin-bottom: 20px;
     box-shadow: none;
+  }
+  .dashboard-heading{
+    padding-top: 100px;
   }
 }
