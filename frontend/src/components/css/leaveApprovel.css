@@ -1,0 +1,290 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+/* General Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif; /* Apply the font globally */
+}
+
+/* Container */
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 100px;
+}
+
+
+/* Heading */
+.header h1 {
+  font-size: 2vw;
+  color: #fff;
+  margin: 0;
+  flex-shrink: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Search and Refresh Container */
+.search-refresh-container {
+  display: flex;
+  align-items: center;
+}
+
+/* Icons */
+.icon {
+  font-size: 1.5vw;
+  color: #fff;
+  margin-left: 1vw;
+  cursor: pointer;
+}
+
+/* Search Input */
+.search-input {
+  display: none;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 4px;
+  outline: none;
+}
+
+.search-input.show {
+  display: inline-block;
+  width: 15vw;
+  margin-left: 1vw;
+}
+
+/* Employee Table */
+.employee-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.employee-table th, .employee-table td {
+  padding: 1vw;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: 1.2vw;
+}
+
+.employee-table th {
+  background-color: #f2f2f2;
+}
+
+/* Action Icon */
+.action-icon {
+  font-size: 1.8vw;
+  cursor: pointer;
+  color: #0cbc87;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 3vw;
+  }
+
+  .search-input.show {
+    width: 100%;
+  }
+
+  .icon {
+    font-size: 2vw;
+  }
+
+  .employee-table th, .employee-table td {
+    padding: 1.5vw;
+    font-size: 1.5vw;
+  }
+
+  .popup-content {
+    width: 95%;
+  }
+}
+
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 4vw;
+  }
+
+  .icon {
+    font-size: 2.5vw;
+  }
+
+  .employee-table {
+    font-size: 1.8vw;
+  }
+
+  .popup-content {
+    width: 95%;
+  }
+}
+
+
+
+/* Popup Overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3); /* Lighten the overlay */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out; /* Added animation */
+}
+
+/* Popup Content */
+.popup-content {
+  background: linear-gradient(135deg, #f9f9f9, #e0e0e0); /* Gradient background */
+  padding: 30px;
+  width: 50%; /* Increased width */
+  max-width: 600px; /* Set max width */
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
+  position: relative;
+  padding-top: 120px;
+  transition: transform 0.3s ease; /* Smooth transition */
+  transform: translateY(-50px); /* Start with a slight upward position */
+  animation: slideUp 0.5s ease-out forwards; /* Popup slide-in animation */
+}
+
+/* Popup Table */
+.popup-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.popup-table td {
+  padding: 12px 15px; /* Larger padding for better readability */
+  border: 1px solid #ddd;
+  font-size: 1vw;
+}
+
+.popup-table td:first-child,
+.popup-table td:nth-child(3) {
+  font-weight: 600;
+  color: #0cbc87; /* Highlight labels */
+}
+
+/* Popup Field */
+.popup-field {
+  margin-bottom: 20px;
+}
+
+.popup-field label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 1.2vw;
+}
+
+.popup-field input,
+.popup-field select,
+.popup-field textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+  font-size: 1vw;
+  transition: border-color 0.3s ease; /* Smooth border color transition */
+}
+
+.popup-field input:focus,
+.popup-field select:focus,
+.popup-field textarea:focus {
+  border-color: #007bff; /* Change border color on focus */
+  outline: none;
+}
+
+/* Buttons */
+button {
+  background-color: #0cbc87;
+  color: white;
+  padding: 12px 20px;
+  font-size: 1.1vw;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #0cbc87;
+  transform: translateY(-3px); /* Hover effect: slightly lift button */
+}
+
+button:active {
+  transform: translateY(1px); /* Press effect */
+}
+
+/* Close Button */
+button.close {
+  background-color: #f44336;
+}
+
+button.close:hover {
+  background-color: #d32f2f;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .popup-content {
+    width: 80%; /* Make popup narrower on small screens */
+    padding: 20px;
+  }
+  .container{
+    margin-top: 150px;
+  }
+  .popup-field input,
+  .popup-field select,
+  .popup-field textarea {
+    font-size: 1.2vw; /* Slightly smaller inputs */
+  }
+
+  button {
+    font-size: 1.2vw; /* Adjust button size for mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .popup-content {
+    width: 90%; /* Further narrow on very small screens */
+    padding: 15px;
+  }
+}
