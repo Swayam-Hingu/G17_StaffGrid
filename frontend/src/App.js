@@ -12,6 +12,10 @@ import Announcement from './components/Announcement.jsx';
 import ProjectPage from './pages/projectPage';
 import UploadProject from './components/UploadProject.jsx';
 import HomePage from './pages/HomePage.js'
+import LeaveForm from './components/leaveform.jsx';
+import LeaveApprpval from './components/leaveApproval.jsx';
+import LeaveBalance from './components/leaveBalance.jsx';
+
 
 function App() {
   const location = useLocation();
@@ -34,6 +38,9 @@ function App() {
       <Route path="/api/view" element={<Announcement/>} />
       <Route path="/api/project" element={<ProjectPage/>} />
       <Route path="/api/uploadproject" element={<UploadProject/>} />
+      <Route path="/api/leaveform" element={<LeaveForm/>}/>
+      <Route path="/api/approve" element={<LeaveApprpval/>}/>
+      <Route path="/api/leave" element={<LeaveBalance/>}/>
 
       {/* <Calendar/> */}
     </Routes>

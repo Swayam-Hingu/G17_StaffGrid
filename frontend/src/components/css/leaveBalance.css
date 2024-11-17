@@ -1,0 +1,201 @@
+/* Fade-in animation for elements */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Container styling with fade-in animation */
+.leave-balance-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  border-radius: 12px;
+  background: #f3f7fa;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  opacity: 0;
+  animation: fadeIn 1s ease-out forwards;
+  animation-delay: 0.2s;
+}
+
+/* Title styling */
+.leave-title,
+.leave-records-title {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeIn 1s ease-out forwards;
+}
+
+.leave-title {
+  animation-delay: 0.5s;
+}
+
+.leave-records-title {
+  font-size: 20px;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  animation-delay: 0.7s;
+  text-align: center;
+}
+
+/* Leave info container with single-row responsiveness */
+.leave-info {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+/* Individual leave item styling with animations */
+.leave-item {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.leave-item:nth-child(1) {
+  animation-delay: 1.2s;
+}
+
+.leave-item:nth-child(2) {
+  animation-delay: 1.5s;
+}
+
+.leave-item:nth-child(3) {
+  animation-delay: 1.8s;
+}
+
+.leave-item:nth-child(4) {
+  animation-delay: 2.1s;
+}
+
+.leave-item h3 {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.leave-item p {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.leave-item.approved {
+  border-top: 4px solid #4caf50;
+}
+
+.leave-item.pending {
+  border-top: 4px solid #ff9800;
+}
+
+.leave-item.rejected {
+  border-top: 4px solid #f44336;
+}
+
+/* Apply leave button styling */
+.apply-leave-button {
+  background-color: #2196f3;
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  opacity: 0;
+  animation: fadeIn 1s ease-out forwards;
+  animation-delay: 2.5s;
+}
+
+.apply-leave-button:hover {
+  background-color: #1976d2;
+}
+
+/* Leave Records Table Styling */
+.leave-records-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  opacity: 0;
+  animation: fadeIn 1s ease-out forwards;
+  animation-delay: 0.5s;
+}
+
+.leave-records-table th,
+.leave-records-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  transition: background-color 0.3s ease;
+}
+
+.leave-records-table th {
+  background-color: #f0f4f8;
+  color: #333;
+  font-weight: 600;
+}
+
+.leave-records-table td {
+  font-size: 15px;
+  color: #555;
+}
+
+.leave-records-table td:nth-child(5) {
+  font-weight: 600;
+}
+
+.leave-records-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+  .leave-info {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .leave-records-table th,
+  .leave-records-table td {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .apply-leave-button {
+    width: 100%;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .leave-info {
+    grid-template-columns: 1fr;
+  }
+
+  .leave-title,
+  .leave-records-title {
+    font-size: 20px;
+  }
+
+  .leave-records-table th,
+  .leave-records-table td {
+    font-size: 12px;
+    padding: 8px;
+  }
+}
