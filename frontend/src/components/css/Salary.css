@@ -1,0 +1,213 @@
+.salary-form-container {
+    width: 65%;
+    margin: 30px auto;
+    background-color: #e0f7fa;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: 004d40;
+}
+
+h2 {
+    font-size: 1.8em;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    color: #004d40;
+    text-align: center;
+}
+
+h3 {
+    text-align: center;
+    color: #004d40;
+    font-size: medium;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.form-group label {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #004d40;
+    margin-bottom: 5px;
+    display: block;
+    text-align: center;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+.error-message {
+    color: #d9534f;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.employee-detail {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 65%;
+}
+
+button {
+    font-size: 1.1em;
+    font-weight: 600;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    align-items: center;
+    width: 50%;
+    margin: 20px auto;
+  }
+  
+  button[type="submit"], .add-btn {
+    background-color: #387478;
+    color: white;
+    transition: background-color 0.3s;
+    display: block;
+    width: 50%;
+    margin: 20px auto;
+  }
+  
+  button[type="submit"]:hover, .add-btn:hover {
+    background-color: #2f5e63;
+  }
+  
+  button[type="button"] {
+    background-color: #387478;
+    color: white;
+    margin-right: 10px;
+    align-items: center;
+    width: 100%;
+  }
+  
+  button.remove-btn {
+    align-self: center;
+    background-color: #d9534f;
+    color: white;
+  }
+  
+  button.remove-btn:hover {
+    background-color: #c9302c;
+  }
+  
+  input[type="text"], input[type="date"], textarea, select {
+    width: 100%;
+    padding: 8px;
+    font-size: 1em;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+select {
+    width: 100%;
+    padding: 8px;
+    font-size: 1em;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zY2hlbWVzL3N2ZyIgaGVpZ2h0PSIxMHB4IiB3aWR0aD0iMTAwJSI+PHBhdGggZD0iTTEwMCw1MDBaTTEwMCw0MDBaTDEwMCwzMDBaTDEwMCwyMDBaTDEwMCwzMDBaTDEwMCw1MDBaIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0iIzAwNzkwNCIvPjwvc3ZnPg==');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+@media (max-width: 768px) {
+    .salary-form-container {
+        width: 90%;
+        padding: 20px;
+        margin: 40px auto;
+    }
+
+    h2 {
+        font-size: 1.5em;
+        margin-top: 100px;
+    }
+
+    label {
+        font-size: 1.2em;
+    }
+
+    .form-control {
+        font-size: 0.9em;
+    }
+
+    button {
+        font-size: 0.9em;
+        padding: 6px 10px;
+        text-align: center;
+      }
+    
+
+    .employee-detail {
+        gap: 8px;
+        margin-top: 40px;
+    }
+
+    .btn-primary, .add-btn {
+        font-size: 0.9em;
+    }
+
+    select {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 480px) {
+    .salary-form-container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 1.3em;
+        margin-top: 120px;
+    }
+
+    label {
+        font-size: 1em;
+    }
+
+    .form-control {
+        font-size: 0.8em;
+    }
+
+    button {
+        font-size: 0.8em;
+        padding: 5px 8px;
+        display: block;
+        margin: 10px auto;
+        text-align: center;
+    }
+
+    .employee-detail {
+        gap: 6px;
+    }
+
+    .btn-primary, .add-btn {
+        font-size: 0.8em;
+    }
+
+    select {
+        font-size: 0.8em;
+    }
+}

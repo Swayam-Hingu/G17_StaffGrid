@@ -16,7 +16,7 @@ import LeaveForm from './components/leaveform.jsx';
 import LeaveApprpval from './components/leaveApproval.jsx';
 import LeaveBalance from './components/leaveBalance.jsx';
 import People from './components/People.jsx';
-
+import Salary from './components/Salary.jsx';
 
 function App() {
   const location = useLocation();
@@ -43,6 +43,7 @@ function App() {
       <Route path="/api/approve" element={<LeaveApprpval/>}/>
       <Route path="/api/leave" element={<LeaveBalance/>}/>
       <Route path="/api/allemployeeview" element={<People/>} /> 
+      <Route path="/salary" element={<Salary/>} /> 
     </Routes>
     </>
   );
