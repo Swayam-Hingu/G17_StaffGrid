@@ -3,15 +3,15 @@ const {handleProjectUpload,handleGetAllProject,handleGetPerticulerProject,handle
     handleDeleteProject,handleAssignProjects} = require("../controllers/projectController");
 const router = express.Router();
 const authmiddleware = require('../middlewares/authmiddleware');
-const managermiddleware = require('../middlewares/managermiddleware')
+const adminmanagermiddleware = require('../middlewares/adminmanagermiddleware')
 const employeemiddleware = require('../middlewares/employeemiddleware')
 
-router.post("/upload",authmiddleware,managermiddleware,handleProjectUpload);
-router.get("/:managerID",authmiddleware,managermiddleware,handleGetAllProject);
+router.post("/upload",authmiddleware,adminmanagermiddleware,handleProjectUpload);
+router.get("/:managerID",authmiddleware,adminmanagermiddleware,handleGetAllProject);
 router.get("/employee/:employeeID",authmiddleware,employeemiddleware,handleAssignProjects);
-router.get("/:projectID",authmiddleware,managermiddleware,handleGetPerticulerProject);
-router.patch("/:projectID",authmiddleware,managermiddleware,handleUpdateProjectDetail);
-router.delete("/:projectID",authmiddleware,managermiddleware,handleDeleteProject);
+router.get("/:projectID",authmiddleware,adminmanagermiddleware,handleGetPerticulerProject);
+router.patch("/:projectID",authmiddleware,adminmanagermiddleware,handleUpdateProjectDetail);
+router.delete("/:projectID",authmiddleware,adminmanagermiddleware,handleDeleteProject);
 
 module.exports = router;
 

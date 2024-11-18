@@ -106,7 +106,7 @@ const UploadProject = () => {
         {/* Team Manager */}
         <div className="form-group">
           <h3>Team Manager</h3>
-          <label htmlFor="teamManager.id">Manager ID</label>
+          <label htmlFor="teamManager.id">Manager ID/ Admin ID</label>
           <input
             type="text"
             id="teamManager.id"
@@ -117,7 +117,7 @@ const UploadProject = () => {
         </div>
 
         {/* Team Members */}
-        <div className="form-group">
+        <div className="form-group1">
           <h3>Team Members</h3>
           {teamMembersFields.map((item, index) => (
             <div key={item.id} className="team-member">
@@ -135,7 +135,7 @@ const UploadProject = () => {
         </div>
 
         {/* Tasks */}
-        <div className="form-group">
+        <div className="form-group1">
           <h3>Tasks</h3>
           {tasksFields.map((item, index) => (
             <div key={item.id} className="task">

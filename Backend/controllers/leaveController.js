@@ -1,6 +1,5 @@
 
-const leaveModel = require('../model/leaveModel.js');
-const cloudinary = require("cloudinary").v2;
+const leaveModel = require('../model/leaveModel.js'); 
 
 // how to store number of approved leave a
 
@@ -13,26 +12,27 @@ const generateLeaveID = async () => {
 };
 
 async function handleApplyLeave(req,res){
+    console.log("ENTER HERE FOR SAVE LEAVE...")
     try {
-        const { senderId,receiverId,type,leaveType,fromDate,toDate,totalDays} = req.body;
-        attachment="";
-        if(req.file.path){
-            const result = await cloudinary.uploader.upload(req.file.path);
-            attachment = result.url;
-        }
+        const { senderId,leaveType,fromDate,toDate,totalDays,otherReason} = req.body;  
 
         leaveID = await generateLeaveID();
 
+        if (leaveType === "Other Reason" && !otherReason) {
+            return res.status(400).send({
+                status: false,
+                message: "Please provide additional details for 'Other' leave type."
+            });
+        }
+
         const newLeave = new leaveModel({
             leaveID,
-            senderId,
-            receiverId,
-            type,
+            senderId,  
             leaveType,
             fromDate,
             toDate,
-            totalDays,
-            attachment,
+            totalDays, 
+            ...(leaveType === "Other Reason" && { otherReason }), 
             appliedOn: new Date()
         });
 
@@ -43,11 +43,9 @@ async function handleApplyLeave(req,res){
     }
 }
 
-async function handleGetReceivedLeaves(req,res){
-    try {
-        const { receiverId } = req.params;
-    
-        const receivedLeaves = await leaveModel.find({ receiverId }).sort({ appliedOn: -1 });
+async function handleGetAllLeaves(req,res){
+    try { 
+        const receivedLeaves = await leaveModel.find().sort({ appliedOn: -1 });
         res.status(200).send({status:true, receivedLeaves: receivedLeaves});
 
     } catch (error) {
@@ -57,7 +55,8 @@ async function handleGetReceivedLeaves(req,res){
 
 async function handleGetSentLeaves(req,res){
     try {
-        const { senderId } = req.params;
+        const { id: senderId } = req.params;
+        console.log(senderId)
         const sentLeaves = await leaveModel.find({ senderId }).sort({ appliedOn: -1 });
         res.status(200).send({status:true, sentLeave: sentLeaves});
 
@@ -67,21 +66,52 @@ async function handleGetSentLeaves(req,res){
 }
 
 async function handleUpdateLeave(req,res){
+    console.log("ENTER HERE....")
     try {
         const { leaveID } = req.params;
-        const { leaveStatus, comment } = req.body;
+        const leaveData = req.body;
+        // console.log(leaveID,leaveStatus,comment) 
+
+        console.log(leaveData,leaveID)
+      const LeaveUpdate = await leaveModel.findOneAndUpdate(
+        { leaveID: leaveID },
+        leaveData,
+          { new: true }
+      );
+      
+      if (!LeaveUpdate) {
+          return res.status(404).json({ message: "Leave not found" });
+      }
+
+      return res.status(200).json({
+          message: "Leave updated successfully",
+          LeaveUpdate
+      });
+
+    } catch(error) {
+      console.error("Error updating Leave:", error);
+      return res.status(500).json({ message: "Server error" });
+    }
     
-        const updatedLeave = await leaveModel.findByIdAndUpdate(
-            leaveID,
-            { leaveStatus, comment },
-            { new: true }
-        );
-    
-        if (!updatedLeave) {
-          return res.status(404).json({ message: 'Leave not found' });
+       
+}
+
+
+async function handleDeleteLeave(req,res){
+    console.log("Enter Here...")
+    try {
+        const { leaveID } = req.params;
+        console.log(leaveID)
+        if (!leaveID) {
+            return res.status(400).send({ error: "Leave ID is required." });
         }
-    
-        res.status(200).send({ message: 'Leave status updated successfully', leaveStatus: updatedLeave.leaveStatus });
+        const deletedLeave = await leaveModel.findOneAndDelete({ leaveID:leaveID });
+        if (!deletedLeave) {
+            return res.status(404).send({ error: "Leave record not found." });
+        }
+        res.status(200).send({ message: "Leave record deleted successfully.", deletedLeave });
+
+
     } catch (error) {
         res.status(500).send({ error: error.message });
     }
@@ -89,7 +119,8 @@ async function handleUpdateLeave(req,res){
 
 module.exports = {
     handleApplyLeave,
-    handleGetReceivedLeaves,
+    handleGetAllLeaves,
     handleGetSentLeaves,
-    handleUpdateLeave 
+    handleUpdateLeave,
+    handleDeleteLeave 
 };

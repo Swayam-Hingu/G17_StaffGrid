@@ -1,290 +1,161 @@
-/* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-
-/* General Reset */
+/* Global Styles */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Roboto', sans-serif; /* Apply the font globally */
 }
 
-/* Container */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f7fa;
+  color: #333;
+}
+
 .container {
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-top: 100px;
+  margin-top: 150px;
+  padding: 0 20px;
 }
 
-
-/* Heading */
-.header h1 {
-  font-size: 2vw;
-  color: #fff;
-  margin: 0;
-  flex-shrink: 1;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-/* Search and Refresh Container */
-.search-refresh-container {
-  display: flex;
-  align-items: center;
-}
-
-/* Icons */
-.icon {
-  font-size: 1.5vw;
-  color: #fff;
-  margin-left: 1vw;
-  cursor: pointer;
-}
-
-/* Search Input */
-.search-input {
-  display: none;
-  border: 1px solid #ccc;
-  padding: 5px;
-  border-radius: 4px;
-  outline: none;
-}
-
-.search-input.show {
-  display: inline-block;
-  width: 15vw;
-  margin-left: 1vw;
-}
-
-/* Employee Table */
-.employee-table {
+/* Table Styles */
+table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  margin: 20px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.employee-table th, .employee-table td {
-  padding: 1vw;
+th, td {
+  padding: 12px 15px;
   text-align: left;
+}
+
+th {
+  background-color: #387478; /* Dark Teal */
+  color: #E2F1E7; /* Light Mint */
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+td {
+  background-color: #fff;
   border-bottom: 1px solid #ddd;
-  font-size: 1.2vw;
+  color: #243642; /* Dark Slate */
 }
 
-.employee-table th {
-  background-color: #f2f2f2;
+tr:nth-child(even) td {
+  background-color: #f9f9f9;
 }
 
-/* Action Icon */
-.action-icon {
-  font-size: 1.8vw;
-  cursor: pointer;
-  color: #0cbc87;
+tr:hover td {
+  background-color: #E2F1E7; /* Light Mint */
+  color: #387478; /* Dark Teal */
 }
 
+caption {
+  font-size: 1.5em;
+  margin: 10px 0;
+  font-weight: bold;
+  color: #387478;
+}
 
-/* Responsive Design */
+/* Responsive design for smaller screens */
 @media (max-width: 768px) {
-  .header h1 {
-    font-size: 3vw;
+  table {
+    font-size: 0.9em;
   }
 
-  .search-input.show {
-    width: 100%;
+  th, td {
+    padding: 10px;
   }
 
-  .icon {
-    font-size: 2vw;
+  caption {
+    font-size: 1.3em;
   }
 
-  .employee-table th, .employee-table td {
-    padding: 1.5vw;
-    font-size: 1.5vw;
-  }
-
+  /* Ensure that popup content fits on mobile screens */
   .popup-content {
-    width: 95%;
+    padding: 20px;
+    width: 90%;
   }
+ 
 }
-
-@media (max-width: 480px) {
-  .header h1 {
-    font-size: 4vw;
-  }
-
-  .icon {
-    font-size: 2.5vw;
-  }
-
-  .employee-table {
-    font-size: 1.8vw;
-  }
-
-  .popup-content {
-    width: 95%;
-  }
-}
-
-
-
-/* Popup Overlay */
+   
+/* Popup Styles */
 .popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.3); /* Lighten the overlay */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  animation: fadeIn 0.3s ease-in-out; /* Added animation */
-}
-
-/* Popup Content */
-.popup-content {
-  background: linear-gradient(135deg, #f9f9f9, #e0e0e0); /* Gradient background */
-  padding: 30px;
-  width: 50%; /* Increased width */
-  max-width: 600px; /* Set max width */
-  border-radius: 15px; /* Rounded corners */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
-  position: relative;
-  padding-top: 120px;
-  transition: transform 0.3s ease; /* Smooth transition */
-  transform: translateY(-50px); /* Start with a slight upward position */
-  animation: slideUp 0.5s ease-out forwards; /* Popup slide-in animation */
-}
-
-/* Popup Table */
-.popup-table {
   width: 100%;
-  margin-top: 20px;
-  border-collapse: collapse;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
-.popup-table td {
-  padding: 12px 15px; /* Larger padding for better readability */
-  border: 1px solid #ddd;
-  font-size: 1vw;
+.popup-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+  color: #387478; /* Dark Teal */
 }
 
-.popup-table td:first-child,
-.popup-table td:nth-child(3) {
-  font-weight: 600;
-  color: #0cbc87; /* Highlight labels */
-}
-
-/* Popup Field */
 .popup-field {
   margin-bottom: 20px;
 }
 
 .popup-field label {
   display: block;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: #333;
-  font-size: 1.2vw;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
-.popup-field input,
 .popup-field select,
 .popup-field textarea {
   width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  margin-top: 5px;
-  font-size: 1vw;
-  transition: border-color 0.3s ease; /* Smooth border color transition */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
-.popup-field input:focus,
-.popup-field select:focus,
-.popup-field textarea:focus {
-  border-color: #007bff; /* Change border color on focus */
-  outline: none;
+.popup-field textarea {
+  min-height: 100px;
 }
 
-/* Buttons */
 button {
-  background-color: #0cbc87;
+  padding: 10px 20px;
+  background-color: #387478;
   color: white;
-  padding: 12px 20px;
-  font-size: 1.1vw;
   border: none;
-  border-radius: 8px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-size: 1em;
 }
 
 button:hover {
-  background-color: #0cbc87;
-  transform: translateY(-3px); /* Hover effect: slightly lift button */
+  background-color: #2c5c5c; /* Darker Teal */
 }
 
-button:active {
-  transform: translateY(1px); /* Press effect */
+button:focus {
+  outline: none;
 }
 
-/* Close Button */
+/* Close button styles */
 button.close {
-  background-color: #f44336;
+  background-color: #e74c3c;
+  margin-top: 20px;
 }
 
 button.close:hover {
-  background-color: #d32f2f;
+  background-color: #c0392b;
 }
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes slideUp {
-  0% {
-    transform: translateY(-50px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .popup-content {
-    width: 80%; /* Make popup narrower on small screens */
-    padding: 20px;
-  }
-  .container{
-    margin-top: 150px;
-  }
-  .popup-field input,
-  .popup-field select,
-  .popup-field textarea {
-    font-size: 1.2vw; /* Slightly smaller inputs */
-  }
-
-  button {
-    font-size: 1.2vw; /* Adjust button size for mobile */
-  }
-}
-
-@media (max-width: 480px) {
-  .popup-content {
-    width: 90%; /* Further narrow on very small screens */
-    padding: 15px;
-  }
+/* Character count */
+.popup-field p {
+  font-size: 0.85em;
+  color: #888;
 }

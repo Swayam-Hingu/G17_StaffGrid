@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useRef} from "react";
 import { useForm } from "react-hook-form";
 import "../components/css/profile.css";
 import axios from 'axios';
@@ -6,19 +6,19 @@ import Cookies from 'js-cookie';
 
 function ProfilePage() {
  
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, formState: { errors },setValue} = useForm();
   const empid = Cookies.get('employeeID');
   const jwtToken = Cookies.get('jwt11');
+  const imageRef = useRef();
   
   console.log(jwtToken,empid)
 
   const [detail,setDetail] = useState({});
   const [profile,setProfile] = useState({});
   const [view,setView] = useState(false);
+  const [preview, setPreview] = useState(null); 
+  const [fileset,setFileSet] = useState(null);
+  const [imgset,setImgset] = useState(null);
   //check if login the view page....
 
   const checkCompOrNot = async () => { 
@@ -29,60 +29,87 @@ function ProfilePage() {
           'Authorization': `Bearer ${jwtToken}`,
         },
       });
-      console.log(response.data.detailemployee);
+      console.log("GETORNOT::: >",response.data.detailemployee);
       setView(response.data.success);
       setProfile(response.data.detailemployee)
+      setImgset(response.data.detailemployee.profileImage)
+      console.log("IMG RES:> ",response.data.detailemployee.profileImage)
     } catch (error) {
       console.error("Error in checkCompOrNot:", error.response || error.message);
     }
   };
   
 
-  const submitHandler = async (data) => {
-    
-    try {
-      console.log("Data is:: ",data);
-    console.log("TOKEN::",jwtToken)
-
-    const response = await axios.post('http://localhost:8000/profile/api/add-detailprofile/',{
-      name:detail.name,
-      id:detail.id,
-      role:detail.role,
-      firstName:data.firstName,
-      lastName:data.lastName,
-      fatherName:data.fatherName,
-      motherName:data.motherName,
-      birthDate:data.birthDate,
-      mail:detail.mail,
-      phoneNumber:data.phoneNumber,
-      gender:data.gender,
-      nationality:data.nationality,
-      religion:data.religion,
-      block:data.block,
-      street:data.street,
-      village:data.village,
-      taluka:data.taluka,
-      district:data.district,
-      pincode:data.pincode,
-      country:data.country,
-      bankName:data.bankName,
-      ifscCode:data.ifscCode,
-      accountNo:data.accountNo,
-      aadharNumber:data.aadharNumber
-    }, {
-        withCredentials: true,
-        headers: {
-            'Authorization': `Bearer ${jwtToken}` // Set the token in the Authorization header
-        }
-    });
-      checkCompOrNot();
-    } catch (error) {
-      alert("ERROR {Form Submission}")
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    console.log("File is her, ",file)
+    if (file) {
+      setFileSet(file);
+      const reader = new FileReader();
+      reader.onload = () => {
+        setPreview(reader.result);   
+      };
+      reader.readAsDataURL(file);
     }
-
-
   };
 
+  
+  const submitHandler = async (data) => { 
+    try {
+      console.log("Data is:: ", data);
+      console.log("TOKEN::", jwtToken);
+
+      const formData = new FormData();
+      console.log(detail.name,data.firstName)
+      formData.append("name", detail.name);
+      formData.append("id", detail.id);
+      formData.append("role", detail.role);
+      formData.append("firstName", data.firstName);
+      formData.append("lastName", data.lastName);
+      formData.append("fatherName", data.fatherName);
+      formData.append("motherName", data.motherName);
+      formData.append("birthDate", data.birthDate);
+      formData.append("mail", detail.mail);
+      formData.append("phoneNumber", data.phoneNumber);
+      formData.append("gender", data.gender);
+      formData.append("nationality", data.nationality);
+      formData.append("religion", data.religion);
+      formData.append("block", data.block);
+      formData.append("street", data.street);
+      formData.append("village", data.village);
+      formData.append("taluka", data.taluka);
+      formData.append("district", data.district);
+      formData.append("pincode", data.pincode);
+      formData.append("country", data.country);
+      formData.append("bankName", data.bankName);
+      formData.append("ifscCode", data.ifscCode);
+      formData.append("accountNo", data.accountNo);
+      formData.append("aadharNumber", data.aadharNumber);
+      
+      console.log(data.profileImage);
+      data.profileImage=fileset;
+      console.log(fileset); 
+      if (data.profileImage) {
+        console.log("IJDFSL: ",fileset);
+        formData.append("profileImage", fileset);   
+      }
+
+      console.log("Form Data:", formData)
+      const response = await axios.post(`http://localhost:8000/profile/api/add-detailprofile/${empid}`, formData, {
+        withCredentials: true,
+        headers: {
+          'Authorization': `Bearer ${jwtToken}`,
+          'Content-Type': 'multipart/form-data'
+        },
+      });
+
+      console.log(response.data); 
+      checkCompOrNot()  
+    } catch (error) {
+      console.error("Error in form submission:", error);
+      alert("ERROR {Form Submission}");
+    }
+  };
 
   useEffect(() => {
     checkCompOrNot();
@@ -94,9 +121,8 @@ function ProfilePage() {
     const response = await axios.get(`http://localhost:8000/profile/api/getEmpDetailbyid/${empid}`,{
       withCredentials: true,
       headers: {
-          'Authorization': `Bearer ${jwtToken}` // Set the token in the Authorization header
-      }});
-    console.log(response)
+          'Authorization': `Bearer ${jwtToken}` 
+      }}); 
     setDetail(response.data);
   }
 
@@ -108,8 +134,7 @@ function ProfilePage() {
         body{
         background:#E2F1E7;
         }
-        section{
-        margin:90px;
+        section{ 
         }
         .special-left {
           flex: 1 1 300px;
@@ -169,9 +194,34 @@ function ProfilePage() {
             <div className="card-body"> 
             <div className="mb-4 ">
             <div className="col-md-3 text-center mx-auto">
-              <div className="imgProf" style={{width:"150px",height:"150px",margin:"auto",borderRadius:"50%"}}>
-                <img></img>
-              </div>
+              {/* <div className="imgProf" style={{width:"150px",height:"150px",margin:"auto",borderRadius:"50%"}}>
+                <img src={imgset} style={{width:"90%",height:"90%"}}></img>
+              </div> */}
+              <div 
+              className="imgProf" 
+              style={{
+                width: "150px",
+                height: "150px",
+                margin: "auto",
+                borderRadius: "50%",
+                overflow: "hidden", 
+                display: "flex", 
+                alignItems: "center",
+                justifyContent: "center",
+                backgroundColor: "#f0f0f0" 
+              }}
+            >
+              <img 
+                src={imgset} 
+                alt="Profile" 
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",  
+                }}
+              />
+            </div>
+
             </div>
           </div>
               <div className="row mb-3">
@@ -219,8 +269,8 @@ function ProfilePage() {
         </div>
         </section>
       </div>
-        
-        :<section className="pt-5 best-bg " style={{background:"#E2F1E7"}}>
+        :
+        <section className="pt-5 best-bg " style={{background:"#E2F1E7"}}>
         <div className="container ">
           <div className="row">
             <div className="col-xl-12">
@@ -258,34 +308,28 @@ function ProfilePage() {
                             required=""
                             accept="image/*"
                             data-error="profile_photo-errors"
+                            ref={imageRef}
+                            onChange={handleImageChange}
                           />
-                          <input
-                            type="hidden"
-                            name="old_photo"
-                            id="old_photo"
-                            defaultValue=""
-                          />
-                          <img
-                            src="  "
-                            className="uploaded-image img-fluid rounded-circle object-fit-cover imagePreview"
-                            width={120}
-                            height={120}
-                            alt=""
-                            style={{ height: 120, width: 120, border:"2px solid #387478!important" }}
-                          />
-                          <img
-                            src=""
-                            className="edit-absolute"
-                            width={36}
-                            height={36}
-                            alt=""
+                          {/* <button onClick={()=>imageRef?.current.click()} style={{border:"1px solid red"}}>Upload Image</button> */}
+                           
+                           <div
                             style={{
-                              position: "absolute",
-                              bottom: 0,
-                              right: 0,
-                              display: "none",
+                              width: "100px",
+                              height: "100px",
+                              border: "1px solid #ccc",
+                              marginTop: "10px",
                             }}
-                          />
+                          >
+                            {preview && (
+                              <img
+                                src={preview}
+                                alt="Preview"
+                                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                              />
+                            )}
+                          </div>
+                           
                         </label>
                         <div className="profile_photo-errors" />
                       </div>
@@ -332,7 +376,7 @@ function ProfilePage() {
                         <input
                           type="text"
                           name="firstName"
-                          {...register("firstname", {
+                          {...register("firstName", {
                             required: "Name is required",
                             minLength: {
                               value: 3,
@@ -346,8 +390,8 @@ function ProfilePage() {
                           })}
                           className="form-control"
                         />
-                        {errors.firstname && (
-                          <p className="error-message">{errors.firstname.message}</p>
+                        {errors.firstName && (
+                          <p className="error-message">{errors.firstName.message}</p>
                         )}
                       </div>
                       <div className="col-md-4 mb-4">
@@ -798,9 +842,13 @@ function ProfilePage() {
           </div> 
         </div> 
       </section>
+
+        
       }
     </>
-  );
+ 
+ 
+);
 }
 
 export default ProfilePage;

@@ -13,7 +13,7 @@ const Login = () => {
   useEffect(()=>{
     const jwt = Cookies.get("jwt");
 
-    if(jwt) { navigate("/homepage"); }
+    if(jwt) { navigate("/api/homepage"); }
   },);
 
   const {register,handleSubmit,formState: { errors },reset} = useForm();
@@ -37,7 +37,7 @@ const Login = () => {
 
       console.log("Login Token:: ",response.data.token);
 
-      navigate("/homepage");
+      navigate("/api/homepage");
 
     }catch(error){
       reset();
@@ -59,11 +59,10 @@ const Login = () => {
       <div className="right-side">
         <h2 className="login">Login</h2>
         <form onSubmit={handleSubmit(submitHandler)}>
-            <div className="input-box"> 
-                {/* <label htmlFor="id">ID</label> */}
-                <input 
-                type="text" name="id" id="id" placeholder='Employee ID' 
-                {...register("id", {
+        <div className="input-box"> 
+                {/* <label htmlFor="password">password</label> */}
+                <input type="id" name="id" id="id"  placeholder='Id'
+                 {...register("id", {
                   required: "ID is required",
                   minLength: {
                     value: 10,
@@ -72,7 +71,7 @@ const Login = () => {
                 })}
                 />
                 {errors.id && <p style={{ color: 'red' }}  className="error-message">{errors.id.message}</p>}
-            </div>
+            </div> 
             <div className="input-box"> 
                 {/* <label htmlFor="password">password</label> */}
                 <input type="password" name="password" id="password"  placeholder='Password'
@@ -82,6 +81,7 @@ const Login = () => {
                 />
                 {errors.pass && <p style={{ color: 'red' }}  className="error-message">{errors.pass.message}</p>}
             </div> 
+            
             <div >
                 <input type="submit" value="Login"  className="login-btn"/>
             </div>

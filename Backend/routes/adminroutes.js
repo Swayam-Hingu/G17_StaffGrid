@@ -1,18 +1,12 @@
 const express = require("express");
+const router = express.Router(); 
 const adminMiddleware = require("../middlewares/adminmiddleware");
 const Employee = require('../model/employee'); 
 const authmiddleware = require("../middlewares/authmiddleware");
+const { 
+    handleAllEmployeeDetails
+} = require('../controllers/adminController'); 
 
-const router = express.Router(); 
-
-router.get('/employeelist',authmiddleware , adminMiddleware, async (req, res) => {
-    try {
-        const employees = await Employee.find({});  
-        res.status(200).json(employees);  
-    } catch (error) {
-        console.error("Error fetching employee list:", error);
-        res.status(500).send('Server error');
-    }
-});
+router.get('/login/viewAllemployee',authmiddleware,adminMiddleware, handleAllEmployeeDetails); 
 
 module.exports = router;

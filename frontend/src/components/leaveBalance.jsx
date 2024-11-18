@@ -1,18 +1,60 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './css/leaveBalance.css';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
 const LeaveBalance = () => {
   const [leaveRecords, setLeaveRecords] = useState([
     { id: 1, applied: '2024-11-01', type: 'Sick Leave', from: '2024-11-01', to: '2024-11-02', days: 2, status: 'Pending' },
-    { id: 2, applied: '2024-10-15', type: 'Annual Leave', from: '2024-10-15', to: '2024-10-19', days: 5, status: 'Approved' },
-    { id: 3, applied: '2024-09-20', type: 'Emergency Leave', from: '2024-09-20', to: '2024-09-20', days: 1, status: 'Rejected' },
-    { id: 4, applied: '2024-09-20', type: 'Emergency Leave', from: '2024-09-20', to: '2024-09-20', days: 1, status: 'Rejected' },
   ]);
+  const empid = Cookies.get("employeeID");
+  const token = Cookies.get("jwt11")
 
   // Function to handle the cancellation of leave directly
-  const handleCancelClick = (leave) => {
-    setLeaveRecords((prevRecords) => prevRecords.filter((record) => record.id !== leave.id));
+  const handleCancelClick = async (leavedata) => {
+    console.log("Delete This...",leavedata);
+    const leaveId = leavedata.leaveID;
+    try {
+      const response = await axios.delete(`http://localhost:8000/api/leave/delete/${leaveId}` , {
+          withCredentials: true,
+          headers: {
+              'Authorization': `Bearer ${token}`  
+          }
+      }); 
+      getAllListofLeave();
+      console.log(response)  
+
+    } catch (error) {
+        console.log("ERROR IS: ",error)
+    }
+  };
+
+  const getAllListofLeave = async () =>{
+    try {
+      const response = await axios.get(`http://localhost:8000/api/leave/getsentleaves/${empid}` , {
+          withCredentials: true,
+          headers: {
+              'Authorization': `Bearer ${token}`  
+          }
+      }); 
+      console.log(response) 
+      setLeaveRecords(response.data.sentLeave);
+
+    } catch (error) {
+        console.log("ERROR IS: ",error)
+    }
+  }
+  useEffect(()=>{
+    getAllListofLeave();
+  },[])
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
   };
 
   return (
@@ -26,15 +68,17 @@ const LeaveBalance = () => {
         </div>
         <div className="leave-item approved">
           <h3>Approved</h3>
-          <p>{leaveRecords.filter((record) => record.status === 'Approved').length}</p>
+          <p>{leaveRecords.filter((record) => record.
+leaveStatus
+ === 'Approved').length}</p>
         </div>
         <div className="leave-item pending">
           <h3>Pending</h3>
-          <p>{leaveRecords.filter((record) => record.status === 'Pending').length}</p>
+          <p>{leaveRecords.filter((record) => record.leaveStatus === 'Pending').length}</p>
         </div>
         <div className="leave-item rejected">
           <h3>Rejected</h3>
-          <p>{leaveRecords.filter((record) => record.status === 'Rejected').length}</p>
+          <p>{leaveRecords.filter((record) => record.leaveStatus === 'Rejected').length}</p>
         </div>
       </div>
 
@@ -51,24 +95,28 @@ const LeaveBalance = () => {
             <th>From Date</th>
             <th>To Date</th>
             <th>Days</th>
+            <th>Status</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {leaveRecords.map((record) => (
             <tr key={record.id}>
-              <td>{record.type}</td>
-              <td>{record.applied}</td>
-              <td>{record.from}</td>
-              <td>{record.to}</td>
-              <td>{record.days}</td>
+              <td>{record.leaveType}</td>
+              <td>{formatDate(record.appliedOn)}</td>
+              <td>{formatDate(record.fromDate)}</td>
+              <td>{formatDate(record.toDate)}</td>
+              <td>{record.totalDays}</td>
+              <td>{record.leaveStatus}</td>
               <td>
+              {record.leaveStatus === "Pending" && (
                 <button
                   className="cancel-button"
                   onClick={() => handleCancelClick(record)}
                 >
                   Cancel
                 </button>
+              )}
               </td>
             </tr>
           ))}

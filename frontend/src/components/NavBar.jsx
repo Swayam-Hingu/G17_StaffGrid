@@ -34,11 +34,11 @@ const Nav = ({ toggleMenu }) => {
       <button className="hamburger" onClick={toggleMenu}>
         ☰
       </button>
-      <h3 className='sg'>Staff Grid</h3>
+      <h3 className='sg' style={{cursor: 'pointer'}} onClick={() => navigate('/api/homepage')}>Staff Grid</h3>
       </div>
       <div className="right-icons"> 
         <button className="pro" onClick={() => navigate('/api/view')}>🔔 </button>
-        <button className="pro">👤 {ID}</button> 
+        <button className="pro">{ID}</button> 
         <button className="pro" onClick={()=>{logoutsystem()}}>LogOut</button>
       </div>
     </div>

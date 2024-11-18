@@ -27,11 +27,10 @@ require('./connection.js');
 
 const staticRoutes = require('./routes/authRoutes.js')//adding all datas
 const employeeRoutes = require('./routes/employeeRoutes.js')
-const adminRoutes = require('./routes/adminRoutes.js');
+const adminRoutes = require('./routes/adminroutes.js');
 const profileRoute = require('./routes/profileroutes.js');
 const attendanceRoute = require('./routes/attendanceRoutes.js');
 const projectRoute = require('./routes/projectRoutes.js');
-
 const announcementroutes = require('./routes/announcementroutes.js');
 const leaveRoute = require('./routes/leaveRoutes.js');
 
@@ -51,15 +50,15 @@ app.use(express.urlencoded({ extended: true }));
 //   useTempFiles:true
 // }));
 
-app.use("/api",staticRoutes);
-app.use("/api",adminRoutes);
+app.use("/api",staticRoutes); 
 app.use("/api/attendance",attendanceRoute);
 app.use("/api/project",projectRoute);
-app.use("api/leave",leaveRoute);
-
+app.use("/api/leave",leaveRoute);
 app.use("/employee/api",employeeRoutes);
 app.use('/profile/api', profileRoute);
 app.use("/api",announcementroutes)
+app.use("/api",adminRoutes)
+
 
 
 app.listen(PORT,() => {

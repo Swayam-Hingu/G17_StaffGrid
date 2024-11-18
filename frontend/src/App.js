@@ -15,6 +15,7 @@ import HomePage from './pages/HomePage.js'
 import LeaveForm from './components/leaveform.jsx';
 import LeaveApprpval from './components/leaveApproval.jsx';
 import LeaveBalance from './components/leaveBalance.jsx';
+import People from './components/People.jsx';
 
 
 function App() {
@@ -41,8 +42,7 @@ function App() {
       <Route path="/api/leaveform" element={<LeaveForm/>}/>
       <Route path="/api/approve" element={<LeaveApprpval/>}/>
       <Route path="/api/leave" element={<LeaveBalance/>}/>
-
-      {/* <Calendar/> */}
+      <Route path="/api/allemployeeview" element={<People/>} /> 
     </Routes>
     </>
   );

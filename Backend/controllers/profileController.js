@@ -68,7 +68,6 @@ async function handleUpdateDetails(req,res){
 }
 
 async function handleUploadImage(req,res){
-  console.log(1);
   if (!req.file) {
     return res.status(400).send({ success: false, message: "No file uploaded" });
   }
@@ -80,29 +79,74 @@ async function handleUploadImage(req,res){
   })
 }
 
-async function handleUserProfileSave(req, res){
-
-  console.log(req.body);
-    const { name, id,firstName ,lastName , fatherName, motherName, birthDate, mail, phoneNumber, gender, role, nationality, religion, block, street, village, taluka, district, pincode, country, bankName, ifscCode, accountNo, aadharNumber} = req.body; 
-    const profileImage="img"
+// async function handleUserProfileSave(req, res){
+ 
+//   console.log(req.body);
+//     const { name, id,firstName ,lastName , fatherName, motherName, birthDate, mail, phoneNumber, gender, role, nationality, religion, block, street, village, taluka, district, pincode, country, bankName, ifscCode, accountNo, aadharNumber} = req.body;  
     
-    try {  
+//     try {  
+//       let photosaved;
+//       if (!req.file) {
+//         photosaved="";
+//       }else{
+//         const result = await cloudinary.uploader.upload(req.file.path);
+//         photosaved = result.url;
+//       }
 
-      const detailedprofile = new detailedProfile({name,id,role,profileImage,firstName ,lastName , fatherName, motherName, birthDate, mail, phoneNumber, gender, nationality, religion, block, street, village, taluka, district, pincode, country, bankName, ifscCode, accountNo, aadharNumber}); 
 
-      console.log(detailedprofile);
+//       const detailedprofile = new detailedProfile({name,id,role,profileImage:photosaved,firstName ,lastName , fatherName, motherName, birthDate, mail, phoneNumber, gender, nationality, religion, block, street, village, taluka, district, pincode, country, bankName, ifscCode, accountNo, aadharNumber}); 
 
-      await detailedprofile.save(); 
+//       console.log(detailedprofile);
 
-      console.log("Save DONE:::><")
-      res.status(201).send({ detailedprofile}); 
+//       if (!req.file) {
+//         detailedprofile.profileImage="";
+//       }else{
+//         const result = await cloudinary.uploader.upload(req.file.path);
+//         detailedprofile.profileImage = result.url;
+//       }
+
+//       await detailedprofile.save(); 
+
+//       console.log("Save DONE:::><")
+//       res.status(201).send({ detailedprofile}); 
   
-    } catch (error) {
-      console.error("Error in Detail Profile:", error);
-      res.status(400).send({ error: error.message });  
-    }
-};
+//     } catch (error) {
+//       console.error("Error in Detail Profile:", error);
+//       res.status(400).send({ error: error.message });  
+//     }
+// };
 
+
+async function handleUserProfileSave(req, res) {
+
+
+  const { 
+    name, id,firstName,lastName,fatherName,motherName,birthDate,mail,phoneNumber,gender,role,nationality,religion,block,street,village,taluka,district,pincode,country,bankName,ifscCode,accountNo,aadharNumber 
+  } = req.body;
+
+
+  try {
+    let profileImageUrl = "";   
+ 
+    console.log("HERE IS BACKEND FILE: ",req.file);
+    
+    if (req.file) { 
+      const result = await cloudinary.uploader.upload(req.file.path);
+      profileImageUrl = result.url;   
+    } 
+    const detailedprofile = new detailedProfile({name,id,role,profileImage: profileImageUrl,firstName,   lastName,fatherName,motherName,birthDate,mail,phoneNumber,gender,nationality,religion,block,street,  village,taluka,district,pincode,country,bankName,ifscCode,accountNo,aadharNumber
+    });
+
+    // Save the profile in the database
+    await detailedprofile.save();
+
+    console.log("Save DONE:::><");
+    res.status(201).send({ detailedprofile });
+  } catch (error) {
+    console.error("Error in Detail Profile:", error);
+    res.status(400).send({ error: error.message });
+  }
+}
 
 
 async function handleUserProfileGet(req, res){

@@ -3,37 +3,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    margin-top:100px; 
 }
 
-/* Sidebar */
-.sidebar {
-    width: 250px;
-    background-color: #3367d6;
-    padding: 20px;
-    color: white;
-}
-
-.sidebar h2 {
-    margin-bottom: 20px;
-}
-
-.sidebar ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.sidebar ul li {
-    padding: 10px 0;
-    cursor: pointer;
-}
-
-.sidebar ul li:hover {
-    background-color: #2852a0;
-    border-radius: 5px;
-}
-
-/* Main content */
 .main {
     flex: 1;
     padding: 20px;

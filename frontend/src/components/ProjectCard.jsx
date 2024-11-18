@@ -55,11 +55,11 @@ const ProjectCard = ({ project, handleDelete,role, handleUpdate }) => {
       <div className="buttons">
         <button className="view-button" onClick={openModal}><FaEye /></button>
         {
-          role === 'manager' && (
+          (role === 'manager'|| role === 'admin') && (
             <button className="view-button" onClick={() => handleUpdate(project)}><FaEdit /> Update</button>
           )}
           {
-          role=='manager' && <button className="delete-button" onClick={() => handleDelete(project.projectId)}><FaTrash /></button>
+          (role=='manager' || role === 'admin') && <button className="delete-button" onClick={() => handleDelete(project.projectId)}><FaTrash /></button>
         }
         
         

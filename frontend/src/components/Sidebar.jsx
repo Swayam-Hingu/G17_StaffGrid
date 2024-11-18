@@ -19,27 +19,41 @@ const Sidebar = ({ menuOpen, toggleMenu }) => {
 
   return (
     <div className={`menu ${menuOpen ? "open" : ""}`}>
-      <div>
+      <div className='closeborder'>
       <button className="close" onClick={toggleMenu}>✖</button>
       </div>
       <ul>
         <li><Link to="/api/profile"><FaUser className="icon" /> Profile</Link></li>
         <li><Link to="/attendance"><FaListAlt className="icon" /> Attendance</Link></li>
-        <li><Link to="/api/project"><FaListAlt className="icon" /> Projects</Link></li>
-        <li><Link to="/apply-leave"><FaListAlt className="icon" /> Apply Leave</Link></li>
+        {
+          role != "hr" && <li><Link to="/api/project"><FaListAlt className="icon" /> Projects</Link></li>
+        }
+        {
+          role != "admin" && <li><Link to="/api/leaveform"><FaListAlt className="icon" /> Apply Leave</Link></li> 
+        }
+        {
+          role != "admin" && <li><Link to="/api/leave"><FaListAlt className="icon" /> View Leave</Link></li> 
+        }
+        {
+          role == "admin" && <li><Link to="/api/approve"><FaListAlt className="icon" />Leave Handle</Link></li> 
+        }
         <li><Link to="/performance"><FaListAlt className="icon" /> Performance</Link></li>
         <li><Link to="/salary"><FaListAlt className="icon" /> Salary</Link></li>
-        <li><Link to="/api/registration"><FaCog className="icon" /> Register Employee</Link></li>
         <li><Link to="/api/login/forgotpassword"><FaCog className="icon" /> Change Password</Link></li>
         {
           role === 'admin' && (
             <li onClick={() => { navigate("/api/registration"); }} className="role-specific">
-              <FaUser className="icon" /><Link to="/api/registration"><FaCog className="icon" /> Register</Link>
+              <FaUser className="icon" /> Register
             </li>
           )
         }
         {
-          role == 'manager' && (
+          role === 'admin' && (
+            <li><Link to="/api/allemployeeview"><FaListAlt className="icon" />All Employee View</Link></li>
+          )
+        }
+        {
+          (role == 'manager' || role == 'admin') && (
             <li><Link to="/api/uploadproject"><FaListAlt className="icon" />Upload Project</Link></li>
           )
         }

@@ -8,13 +8,14 @@ const ProjectPage = () => {
   const id = Cookies.get('employeeID');
   const token = Cookies.get('token');
   const role = Cookies.get('employeeRole');
+  console.log(role)
 
   const [projects, setProjects] = useState([]);
   const [selectedUpdateProject, setSelectedUpdateProject] = useState(null); // Track selected project for update
   const [modalIsOpen, setModalIsOpen] = useState(false); // Modal open state
 
   // Get all projects for manager
-  const getAllManagerProject = async () => {
+  const getAllManagerorAdminProject = async () => {
     try {
       const response = await axios.get(`http://localhost:8000/api/project/${id}`, {
         withCredentials: true,
@@ -52,7 +53,7 @@ const ProjectPage = () => {
           'Authorization': `Bearer ${token}`,
         },
       });
-      getAllManagerProject(); // Re-fetch projects after deletion
+      getAllManagerorAdminProject();  
     } catch (error) {
       console.log('ERROR: ', error.response ? error.response.data : error.message);
     }
@@ -85,7 +86,7 @@ const ProjectPage = () => {
           }
         }
       ); 
-      getAllManagerProject();  
+      getAllManagerorAdminProject();  
       handleCloseModal();  
     } catch (error) {
       console.log('ERROR: ', error.response ? error.response.data : error.message);
@@ -93,13 +94,13 @@ const ProjectPage = () => {
   };
 
   useEffect(() => {
-    if (role === 'manager') {
-      getAllManagerProject();
+    if (role === 'manager' || role === 'admin') {
+      getAllManagerorAdminProject();
     }
     if (role === 'employee') {
       getAllEmployeeProject();
     }
-  }, [role]);
+  }, []);
 
   return (
     <div className="project-page">
@@ -109,8 +110,8 @@ const ProjectPage = () => {
           <div key={project._id}>
             <ProjectCard
               project={project}
-              handleDelete={role === 'manager' ? handleDelete : null}
-              handleUpdate={role === 'manager' ? () => handleUpdate(project) : null}
+              handleDelete={(role === 'manager' || role === 'admin' )? handleDelete : null}
+              handleUpdate={(role === 'manager' || role === 'admin') ? () => handleUpdate(project) : null}
               role={role}
             />
           </div>
