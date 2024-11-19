@@ -92,11 +92,11 @@ button {
   }
   
   button[type="button"] {
-    background-color: #387478;
+    /* background-color: #387478;
     color: white;
     margin-right: 10px;
     align-items: center;
-    width: 100%;
+    width: 100%; */
   }
   
   button.remove-btn {

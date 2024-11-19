@@ -117,10 +117,37 @@ async function handleDeleteLeave(req,res){
     }
 }
 
+async function handleApprovedListDate(req,res){
+    const { senderId } = req.params;
+    console.log("Sender ID is here...",senderId)        
+    try {
+        const approvedLeaves = await leaveModel.find({
+            senderId: senderId,
+            leaveStatus: 'Approved'
+        });
+        console.log("Lengthis:---> ",approvedLeaves.length)
+        if (approvedLeaves.length === 0) {
+            return res.status(404).send({ message: "No approved leaves found." });
+        }
+        const leaveDates = approvedLeaves.map(leave => ({
+            fromDate: leave.fromDate,
+            toDate: leave.toDate
+        }));
+        return res.status(200).send({
+            status: true,
+            leaveDates: leaveDates
+        });
+    } catch (error) {
+        console.error("Error getting approved leave dates:", error);
+        return res.status(500).send({ message: "Server error" });
+    }
+}
+
 module.exports = {
     handleApplyLeave,
     handleGetAllLeaves,
     handleGetSentLeaves,
     handleUpdateLeave,
-    handleDeleteLeave 
+    handleDeleteLeave,
+    handleApprovedListDate 
 };

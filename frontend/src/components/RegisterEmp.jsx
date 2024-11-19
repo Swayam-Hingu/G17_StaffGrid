@@ -5,13 +5,38 @@ import './css/RegisterEmp.css'
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 
+const EMAIL_VALIDATION_API_KEY =  process.env.REACT_APP_EMAIL_VALIDATION_API_KEY; 
+// console.log(EMAIL_VALIDATION_API_KEY)
+
 const RegisterEmp = () => {
   const navigate = useNavigate();
 
   const {register, handleSubmit, formState: { errors }} = useForm();
 
+
+  const validateEmail = async (email) => {
+    
+    try {
+      const response = await axios.get(
+        `https://emailvalidation.abstractapi.com/v1/?api_key=${EMAIL_VALIDATION_API_KEY}&email=${email}`
+      );
+      return response.data.is_valid_format.value && response.data.deliverability === 'DELIVERABLE';
+    } catch (error) {
+      console.error('Email validation error:', error);
+      return false;
+    }
+  };
+
   const submitHandler = async (data) => {
-    const token = localStorage.getItem('token'); 
+    const token = Cookies.get("jwt11");
+
+    const isEmailValid = await validateEmail(data.mail);
+    console.log(isEmailValid)
+    if (!isEmailValid) {
+      alert("The email address is invalid or undeliverable. Please provide a valid email.");
+      return;  
+    }
+
     console.log(token);
     try {
         const response = await axios.post('http://localhost:8000/api/register', {
@@ -21,7 +46,7 @@ const RegisterEmp = () => {
         }, {
             withCredentials: true,
             headers: {
-                'Authorization': `Bearer ${token}` // Set the token in the Authorization header
+                'Authorization': `Bearer ${token}` 
             }
         });
         console.log("User registered successfully:", response.data);

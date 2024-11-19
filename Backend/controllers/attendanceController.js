@@ -8,10 +8,10 @@ const haversine = require('haversine-distance');
 // 23.19101234264276, 72.62629765975367 - basket ball court
 // 23.19062772740272, 72.63004202346438 - sac-2 side
 // 23.185805150133376, 72.62931246262677 - relience chokdi side 
+// 23.1902117,72.6280792 - Girls hostel
 
-
-const companyLocation = { latitude: 23.188260840040723, longitude: 72.62826103671374 };
-const companyRadius = 350;
+const companyLocation = { latitude: 23.1902117, longitude: 72.6280792  };
+const companyRadius = 1350;
 
 async function markAttendance(emp_id, date) {
     try {
@@ -188,11 +188,14 @@ async function handleMarkAttendance(req, res) {
 // }
 
 async function handleGetEmployeeAttendance(req,res){
-    try {
-        const employee = await attendanceModel.findOne({ id: req.params.id });
+    console.log("Enter For Fetch Datas...")
+    const { id } = req.params;  
 
-        if (!employee) {
-            // still not have any attendance
+    try {
+        console.log(id);
+        const employee = await attendanceModel.findOne({id});
+        console.log(employee)
+        if (!employee) { 
             return res.status(200).json({ success: true, attendance: [] });
         }
 
@@ -203,7 +206,48 @@ async function handleGetEmployeeAttendance(req,res){
     }
 }
 
+async function handleGetAbsentList(req,res){
+    const { id } = req.params;
+    console.log("LId IS: ",id)
+
+    const employee = await employeeModel.findOne({ id });
+    if (!employee) {
+        return res.status(404).send({
+            status: false,
+            message: "Employee with this ID not found."
+        });
+    }
+    console.log("EMP",employee)
+    const attendanceRecord = await attendanceModel.findOne({ id });
+    const joiningDate = new Date(employee.createdAt);
+    const today = new Date();
+    const totalDays = Math.floor((today - joiningDate) / (1000 * 60 * 60 * 24));
+    const absentDays = [];  
+    console.log("TotalDays: ",totalDays)
+    for (let i = 0; i <= totalDays; i++) {
+        const checkDate = new Date(joiningDate);
+        checkDate.setDate(checkDate.getDate() + i);
+        const dateStr = checkDate.toISOString().slice(0, 10);  
+
+        const checkdays = attendanceRecord.attendance.find(record => record.date === dateStr);
+        const status = checkdays ? checkdays.status : "absent";
+ 
+        if (status === "absent") {
+            absentDays.push({
+                date: dateStr,
+                status: status
+            });
+        }
+    }
+    console.log(absentDays)
+    return res.status(200).json({
+        status: true, 
+        absentDays: absentDays
+    });
+}
+
 module.exports = {
     handleMarkAttendance,
-    handleGetEmployeeAttendance
+    handleGetEmployeeAttendance,
+    handleGetAbsentList
 };

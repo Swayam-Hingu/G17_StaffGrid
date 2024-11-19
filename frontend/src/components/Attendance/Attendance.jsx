@@ -1,94 +1,170 @@
 // src/components/Attendance/Attendance.js
-
 import React, { useState, useEffect } from 'react';
 import { Typography } from '@mui/material';
 import AttendanceTable from './AttendanceTable';
 import AttendanceSearch from './AttendanceSearch';
-import Calendar from '../calender';
+import Calendar from '../Calendar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import '../css/Attendance.css';
-
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const Attendance = () => {
   const [attendanceData, setAttendanceData] = useState([]);
+  const [leaveData, setLeaveData] = useState([]);
+  const [absData, setAbsData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [month, setMonth] = useState(new Date().toISOString().slice(0, 7));
+  const [longitude, setLongitude] = useState();
+  const [latitude, setLatitude] = useState();
+
+  navigator.geolocation.getCurrentPosition(function (position) {
+    console.log(position.coords.latitude + ', ' + position.coords.longitude);
+    setLatitude(position.coords.latitude);
+    setLongitude(position.coords.longitude);
+  });
+
+  const token = Cookies.get('jwt11');
+  const id = Cookies.get('employeeID');
+
+  const AttendanceHere = async () => {
+    console.log(token);
+    try {
+      const response = await axios.post(
+        'http://localhost:8000/api/attendance',
+        {
+          id: id,
+          latitude: latitude,
+          longitude: longitude,
+        },
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log('User Attendance successfully:', response.data);
+    } catch (error) {
+      console.log('ERROR: ', error);
+    }
+  };
+
+  const getAttendanceDatas = async () => {
+    console.log(id);
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/attendance/${id}`,
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log('User Fetch successfully:', response.data);
+      setAttendanceData(response.data.attendance); // Update state with the fetched attendance data
+    } catch (error) {
+      console.log('ERROR: ', error);
+    }
+  };
+  //Apply Leave
+  const getLeaveDates= async () => {
+    console.log(id);
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/leave/listget/${id}`,
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response.data.leaveDates)
+      setLeaveData(response.data.leaveDates)
+    } catch (error) {
+      console.log('ERROR: ', error);
+    }
+  };
+
+  //Without Apply Leave
+  const getTotalWithoutApplyLeave = async () => {
+    console.log(id);
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/attendance/getabs/${id}`,
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Here Data is: ",response.data.absentDays) 
+      setAbsData(response.data.absentDays);
+    } catch (error) {
+      console.log('ERROR: ', error);
+    }
+  };
 
   useEffect(() => {
-    const data = [
-      { date: '2024-10-01', login: '08:45', logout: '17:00', workHours: '8:15' },
-      { date: '2024-10-02', login: '08:50', logout: '17:05', workHours: '8:15' },
-      { date: '2024-10-03', login: '08:40', logout: '17:00', workHours: '8:20' },
-      { date: '2024-10-04', login: '08:45', logout: '16:50', workHours: '8:05' },
-      { date: '2024-10-05', login: '08:50', logout: '17:10', workHours: '8:20' },
-      { date: '2024-10-06', login: '08:55', logout: '17:05', workHours: '8:10' },
-      { date: '2024-10-07', login: '08:47', logout: '16:55', workHours: '8:08' },
-      { date: '2024-10-08', login: '08:48', logout: '17:00', workHours: '8:12' },
-      { date: '2024-10-09', login: '08:42', logout: '17:00', workHours: '8:18' },
-      { date: '2024-10-10', login: '08:50', logout: '17:05', workHours: '8:15' },
-      { date: '2024-10-11', login: '08:46', logout: '16:58', workHours: '8:12' },
-      { date: '2024-10-12', login: '08:53', logout: '17:03', workHours: '8:10' },
-      { date: '2024-10-13', login: '08:41', logout: '16:56', workHours: '8:15' },
-      { date: '2024-10-14', login: '08:45', logout: '17:00', workHours: '8:15' },
-      { date: '2024-10-15', login: '08:49', logout: '16:57', workHours: '8:08' },
-      { date: '2024-10-16', login: '08:55', logout: '17:02', workHours: '8:07' },
-      { date: '2024-10-17', login: '08:50', logout: '17:05', workHours: '8:15' },
-      { date: '2024-10-18', login: '08:47', logout: '16:53', workHours: '8:06' },
-      { date: '2024-10-19', login: '08:52', logout: '17:06', workHours: '8:14' },
-      { date: '2024-10-20', login: '08:45', logout: '16:59', workHours: '8:14' },
-      { date: '2024-10-21', login: '08:51', logout: '17:03', workHours: '8:12' },
-      { date: '2024-10-22', login: '08:42', logout: '16:57', workHours: '8:15' },
-      { date: '2024-10-23', login: '08:50', logout: '17:00', workHours: '8:10' },
-      { date: '2024-10-24', login: '08:53', logout: '17:05', workHours: '8:12' },
-      { date: '2024-10-25', login: '08:48', logout: '17:01', workHours: '8:13' },
-      { date: '2024-10-26', login: '08:46', logout: '17:00', workHours: '8:14' },
-      { date: '2024-10-27', login: '08:44', logout: '16:58', workHours: '8:14' },
-      { date: '2024-10-28', login: '08:50', logout: '17:04', workHours: '8:14' },
-      { date: '2024-10-29', login: '08:48', logout: '17:02', workHours: '8:14' },
-    
-    
-    ];
-    setAttendanceData(data);
-    setFilteredData(data);
+    getLeaveDates();
+    getAttendanceDatas();
+    getTotalWithoutApplyLeave();
   }, []);
 
   const handleMonthChange = (newMonth) => {
     setMonth(newMonth);
-    const newFilteredData = attendanceData.filter(item => item.date.startsWith(newMonth));
+    const newFilteredData = attendanceData.filter((item) =>
+      item.date.startsWith(newMonth)
+    );
     setFilteredData(newFilteredData);
   };
 
-  const attendanceDates = attendanceData.map(record => record.date);
+  const attendanceDates = attendanceData.map((record) => ({
+    date: new Date(record.date).toDateString(),  
+    status: record.status,  
+  })); 
+  const leaveDatas = leaveData.map((record) => ({
+    fromDate: new Date(record.fromDate).toDateString(),
+    toDate: new Date(record.toDate).toDateString(),
+    type: 'leave',  
+  })); 
+
+const absDatas = absData.map((date) => ({
+  date: new Date(date.date),
+  type: 'absent',
+}));
+
+ 
+  
 
   return (
-    <div className="dashboard-container">
-      {/* Page Heading */}
-      <Typography variant="h3" className="dashboard-heading">
+    <div className='dashboard-container'>
+      <Typography variant='h3' className='dashboard-heading'>
         Attendance Dashboard
       </Typography>
 
-      {/* Fixed Calendar */}
-      <div className='plusicon'>
-      <FontAwesomeIcon icon={faPlus}  />
-    </div>
-      <div className="calendar-fixed">
-        <Calendar attendanceDates={attendanceDates} />
+      <div className='plusicon' onClick={AttendanceHere}>
+        <FontAwesomeIcon icon={faPlus} />
+      </div>
+      <div className='calendar-fixed'>
+        <Calendar attendanceDates={attendanceDates} leaveDatas={leaveDatas} absDatas={absDatas}/>
       </div>
 
-      <div className="dashboard-content">
+      <div className='dashboard-content'>
         {/* Month Selector */}
-        <div className="month-selector">
+        <div className='month-selector'>
           <AttendanceSearch month={month} onMonthChange={handleMonthChange} />
         </div>
 
         {/* Attendance Table */}
-        <div className="card table-card scrollable-table">
+        <div className='card table-card scrollable-table'>
           <AttendanceTable data={filteredData} />
         </div>
       </div>
-
-      
     </div>
   );
 };

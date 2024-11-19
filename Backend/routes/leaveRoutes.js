@@ -8,7 +8,8 @@ const {
     handleGetAllLeaves,
     handleGetSentLeaves,
     handleUpdateLeave,
-    handleDeleteLeave 
+    handleDeleteLeave,
+    handleApprovedListDate
 } = require('../controllers/leaveController');
 
 // apply leave
@@ -25,5 +26,8 @@ router.patch('/update/:leaveID',authmiddleware,adminmiddleware,handleUpdateLeave
 
 // handle delete option available employee if status is panding
 router.delete('/delete/:leaveID',authmiddleware,handleDeleteLeave);
+
+// handle list of approval date list
+router.get('/listget/:senderId',authmiddleware,handleApprovedListDate);
 
 module.exports = router;

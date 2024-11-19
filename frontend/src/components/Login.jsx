@@ -11,7 +11,7 @@ import Cookies from 'js-cookie';
 const Login = () => {
   const navigate = useNavigate();
   useEffect(()=>{
-    const jwt = Cookies.get("jwt");
+    const jwt = Cookies.get("jwt11");
 
     if(jwt) { navigate("/api/homepage"); }
   },);

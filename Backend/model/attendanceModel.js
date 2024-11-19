@@ -8,10 +8,8 @@ const attendanceRecordSchema = new mongoose.Schema({
 
 const attendanceSchema = new mongoose.Schema({ 
     id: {type: String,require: true},
-    name: {type:String,require: true},
-    //profilePhoto:{type:String},
-    attendance: [attendanceRecordSchema],
-    // encodedProfilePhoto: { type: Array }
+    name: {type:String,require: true}, 
+    attendance: [attendanceRecordSchema], 
 })
 
 const attendanceDetail = mongoose.model('attendanceDetail', attendanceSchema);

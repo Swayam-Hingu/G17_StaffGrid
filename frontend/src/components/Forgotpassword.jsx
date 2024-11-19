@@ -60,11 +60,10 @@ const Forgotpassword = () => {
   };
 
   return (
-    <div className="password-reset-container">
+    <div className="password-reset-container forgotpage">
       <div className="password-reset-box">
-      <div class="content-wrapper"> <h1 className="staff-grid">STAFF GRID</h1> 
-          <img src={logo} alt="Staff Grid Logo" className="logo-image" /> 
-        </div>
+       <h1 className="staff-grid">STAFF GRID</h1> 
+         
         <h1 className="password-reset-title">Password Reset</h1>
 
         {/* First Form */}

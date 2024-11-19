@@ -19,8 +19,9 @@ body, html {
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  min-height: 70vh; 
+  height: 100vh;
   width: 100%;  
+
 }
 
 .welcome-content {

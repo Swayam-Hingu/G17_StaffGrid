@@ -7,6 +7,10 @@ const employeeSchema = new mongoose.Schema({
   mail: { type: String, required: true },
   id: {type: String,require: true, unique: true},
   role: { type: String, default: 'employee' },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
   tokens: [{
     token: {
       type: String,
