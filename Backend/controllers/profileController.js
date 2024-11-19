@@ -6,9 +6,9 @@ const attendanceModel = require("../model/attendanceModel");
 const cloudinary = require("cloudinary").v2;
 
 cloudinary.config({ 
-  cloud_name: 'ddwvc5srx', 
-  api_key: '691912233247725', 
-  api_secret: 'aYy8av87-CJhk4Lcre_5kZ7RNyI'
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+  api_key: process.env.CLOUDINARY_API_KEY, 
+  api_secret: process.env.CLOUDINARY_API_SECRET, 
 });
 
 

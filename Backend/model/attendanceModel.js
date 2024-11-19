@@ -14,5 +14,5 @@ const attendanceSchema = new mongoose.Schema({
     // encodedProfilePhoto: { type: Array }
 })
 
-const attendanceDetail = mongoose.model('detailProfile', attendanceSchema);
+const attendanceDetail = mongoose.model('attendanceDetail', attendanceSchema);
 module.exports = attendanceDetail;
