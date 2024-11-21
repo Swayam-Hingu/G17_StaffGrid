@@ -26,7 +26,7 @@ const cookieParser = require('cookie-parser');
 require('./connection.js');
 
 const staticRoutes = require('./routes/authRoutes.js')//adding all datas
-const employeeRoutes = require('./routes/employeeRoutes.js')
+const employeeRoutes = require('./routes/employeeroutes.js')
 const adminRoutes = require('./routes/adminroutes.js');
 const profileRoute = require('./routes/profileroutes.js');
 const attendanceRoute = require('./routes/attendanceRoutes.js');
