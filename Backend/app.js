@@ -37,7 +37,7 @@ const leaveRoute = require('./routes/leaveRoutes.js');
 const _dirname = path.resolve();
 
 const corsOptions = {
-    origin: 'http://localhost:3000',  
+    origin: 'https://staff-grid.vercel.app',  
     credentials: true,  
 };
 
