@@ -17,7 +17,7 @@ const LeaveBalance = () => {
     console.log("Delete This...",leavedata);
     const leaveId = leavedata.leaveID;
     try {
-      const response = await axios.delete(`http://localhost:8000/api/leave/delete/${leaveId}` , {
+      const response = await axios.delete(`${process.env.REACT_APP_BACKEND_BASEURL}/api/leave/delete/${leaveId}` , {
           withCredentials: true,
           headers: {
               'Authorization': `Bearer ${token}`  
@@ -33,7 +33,7 @@ const LeaveBalance = () => {
 
   const getAllListofLeave = async () =>{
     try {
-      const response = await axios.get(`http://localhost:8000/api/leave/getsentleaves/${empid}` , {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASEURL}/api/leave/getsentleaves/${empid}` , {
           withCredentials: true,
           headers: {
               'Authorization': `Bearer ${token}`  

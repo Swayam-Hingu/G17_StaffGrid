@@ -40,7 +40,7 @@ const RegisterEmp = () => {
 
     console.log(token);
     try {
-        const response = await axios.post('http://localhost:8000/api/register', {
+        const response = await axios.post(`${process.env.REACT_APP_BACKEND_BASEURL}/api/register`, {
             name: data.name,
             mail: data.mail,
             role: data.role

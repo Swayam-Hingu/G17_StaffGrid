@@ -24,7 +24,7 @@ function ProfilePage() {
 
   const checkCompOrNot = async () => { 
     try {
-      const response = await axios.get(`http://localhost:8000/profile/api/checkfillornot/${empid}`, {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASEURL}/profile/api/checkfillornot/${empid}`, {
         withCredentials: true,
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -96,7 +96,7 @@ function ProfilePage() {
       }
 
       console.log("Form Data:", formData)
-      const response = await axios.post(`http://localhost:8000/profile/api/add-detailprofile/${empid}`, formData, {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_BASEURL}/profile/api/add-detailprofile/${empid}`, formData, {
         withCredentials: true,
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -113,7 +113,7 @@ function ProfilePage() {
   };
 
   const getDetailFirst = async () =>{
-    const response = await axios.get(`http://localhost:8000/profile/api/getEmpDetailbyid/${empid}`,{
+    const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASEURL}/profile/api/getEmpDetailbyid/${empid}`,{
       withCredentials: true,
       headers: {
           'Authorization': `Bearer ${token}` 

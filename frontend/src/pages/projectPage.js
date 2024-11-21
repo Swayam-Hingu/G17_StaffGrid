@@ -17,7 +17,7 @@ const ProjectPage = () => {
   // Get all projects for manager
   const getAllManagerorAdminProject = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/project/${id}`, {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASEURL}/api/project/${id}`, {
         withCredentials: true,
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -32,7 +32,7 @@ const ProjectPage = () => {
   // Get all projects for employee
   const getAllEmployeeProject = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/project/employee/${id}`, {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASEURL}/api/project/employee/${id}`, {
         withCredentials: true,
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -47,7 +47,7 @@ const ProjectPage = () => {
   // Handle project deletion
   const handleDelete = async (projectId) => {
     try {
-      await axios.delete(`http://localhost:8000/api/project/${projectId}`, {
+      await axios.delete(`${process.env.REACT_APP_BACKEND_BASEURL}/api/project/${projectId}`, {
         withCredentials: true,
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -77,7 +77,7 @@ const ProjectPage = () => {
     console.log(updatedProject)
     try {
       const response = await axios.patch(
-        `http://localhost:8000/api/project/${updatedProject.projectId}`, 
+        `${process.env.REACT_APP_BACKEND_BASEURL}/api/project/${updatedProject.projectId}`, 
         updatedProject, 
         {
           withCredentials: true, 

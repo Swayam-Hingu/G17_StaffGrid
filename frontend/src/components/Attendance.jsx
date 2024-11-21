@@ -24,7 +24,7 @@ const Attendance = () => {
    const AttendanceHere = async (data) => {
     console.log(token);
     try {
-        const response = await axios.post('http://localhost:8000/api/attendance', {
+        const response = await axios.post(`${process.env.REACT_APP_BACKEND_BASEURL}/api/attendance`, {
           id:id,
           latitude:latitude,
           longitude:longitude

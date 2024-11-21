@@ -29,7 +29,7 @@ const LeaveForm = () => {
     }
     console.log(payLoad)
     try {
-        const response = await axios.post("http://localhost:8000/api/leave/apply", payLoad, {
+        const response = await axios.post(`${process.env.REACT_APP_BACKEND_BASEURL}/api/leave/apply`, payLoad, {
           withCredentials: true,
           headers: {
               'Authorization': `Bearer ${token}`  

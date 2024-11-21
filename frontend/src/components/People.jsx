@@ -20,7 +20,7 @@ const People = () => {
   const handleDelete = async (id) => {
     console.log("ID is: ", id)
     try {
-      const response = await axios.delete(`http://localhost:8000/api/login/delete/${id}`, {
+      const response = await axios.delete(`${process.env.REACT_APP_BACKEND_BASEURL}/api/login/delete/${id}`, {
         withCredentials: true,
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -35,7 +35,7 @@ const People = () => {
   const getAllEmployeeView = async () => {
    
     try {
-      const response = await axios.get('http://localhost:8000/api/login/viewAllemployee', {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASEURL}/api/login/viewAllemployee`, {
         withCredentials: true,
         headers: {
           'Authorization': `Bearer ${token}`,

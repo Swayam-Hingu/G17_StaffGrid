@@ -33,7 +33,7 @@ const Attendance = () => {
     console.log(token);
     try {
       const response = await axios.post(
-        'http://localhost:8000/api/attendance',
+        `${process.env.REACT_APP_BACKEND_BASEURL}/api/attendance`,
         {
           id: id,
           latitude: latitude,
@@ -58,7 +58,7 @@ const Attendance = () => {
     console.log(id);
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/attendance/${id}`,
+        `${process.env.REACT_APP_BACKEND_BASEURL}/api/attendance/${id}`,
         {
           withCredentials: true,
           headers: {
@@ -77,7 +77,7 @@ const Attendance = () => {
     console.log(id);
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/leave/listget/${id}`,
+        `${process.env.REACT_APP_BACKEND_BASEURL}/api/leave/listget/${id}`,
         {
           withCredentials: true,
           headers: {
@@ -97,7 +97,7 @@ const Attendance = () => {
     console.log(id);
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/attendance/getabs/${id}`,
+        `${process.env.REACT_APP_BACKEND_BASEURL}/api/attendance/getabs/${id}`,
         {
           withCredentials: true,
           headers: {

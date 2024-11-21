@@ -15,7 +15,7 @@ function ViewAnnouncement() {
 
   const getAllMessages = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/login/viewannouncement', {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASEURL}/api/login/viewannouncement`, {
         withCredentials: true,
         headers: {
           'Authorization': `Bearer ${token}`
@@ -30,7 +30,7 @@ function ViewAnnouncement() {
   const getMessagesSentByMe = async () => {
     if (role !== "Employee") {
       try {
-        const response = await axios.get('http://localhost:8000/api/login/viewannouncementsendbyme', {
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASEURL}/api/login/viewannouncementsendbyme`, {
           withCredentials: true,
           headers: {
             'Authorization': `Bearer ${token}`

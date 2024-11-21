@@ -56,7 +56,7 @@ function SendAnnouncement() {
         const estart = "2024030001";
         
         try {
-          const response = await axios.get('http://localhost:8000/api/login/alllastcnt', 
+          const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASEURL}/api/login/alllastcnt`, 
           {
             withCredentials: true,
             headers: {
@@ -126,7 +126,7 @@ function SendAnnouncement() {
     }
 
     try {
-      const response = await axios.post('http://localhost:8000/api/login/announcement', {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_BASEURL}/api/login/announcement`, {
         senderID: empid,
         senderRole: emprole,
         receiverIDs: empIDS,

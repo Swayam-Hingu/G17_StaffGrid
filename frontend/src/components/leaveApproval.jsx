@@ -40,7 +40,7 @@ function LeaveApproval() {
 
   const getAllListFirst = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/leave/getallleavedetails` , {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASEURL}/api/leave/getallleavedetails` , {
           withCredentials: true,
           headers: {
               'Authorization': `Bearer ${token}`  
@@ -61,7 +61,7 @@ function LeaveApproval() {
     const leaveId = selectedEmployee.leaveID;
     console.log("leave id: ",leaveId)
     try {
-      const response = await axios.patch(`http://localhost:8000/api/leave/update/${leaveId}`, {
+      const response = await axios.patch(`${process.env.REACT_APP_BACKEND_BASEURL}/api/leave/update/${leaveId}`, {
         leaveStatus: selectedEmployee.leaveStatus,
         comment: selectedEmployee.comment
       }, {

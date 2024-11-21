@@ -21,7 +21,7 @@ const Nav = ({ toggleMenu }) => {
   const logoutsystem = async () => {
     try { 
       console.log(token)
-      const response = await axios.get('http://localhost:8000/api/logout',{
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASEURL}/api/logout`,{
         withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}` 

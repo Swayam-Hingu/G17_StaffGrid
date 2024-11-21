@@ -25,7 +25,7 @@ const Forgotpassword = () => {
       console.log(data.id);
       setuserId(data.id);
 
-      const response = await axios.patch('http://localhost:8000/api/login/sendmailforpasschange', {
+      const response = await axios.patch(`${process.env.REACT_APP_BACKEND_BASEURL}/api/login/sendmailforpasschange`, {
         id: data.id
       }, {
         withCredentials: true,
@@ -44,7 +44,7 @@ const Forgotpassword = () => {
     try { 
       console.log(userId, data.currpassword);
 
-      const response = await axios.patch('http://localhost:8000/api/login/changepassword', {
+      const response = await axios.patch(`${process.env.REACT_APP_BACKEND_BASEURL}/api/login/changepassword`, {
         id: userId,
         currpassword: data.currpassword,
         newpassword: data.newpassword
