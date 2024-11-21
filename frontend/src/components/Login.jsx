@@ -10,11 +10,6 @@ import Cookies from 'js-cookie';
 
 const Login = () => {
   const navigate = useNavigate();
-  useEffect(()=>{
-    const jwt = Cookies.get("jwt11");
-
-    if(jwt) { navigate("/api/homepage"); }
-  },);
 
   const {register,handleSubmit,formState: { errors },reset} = useForm();
 
@@ -27,9 +22,7 @@ const Login = () => {
       },{
         withCredentials: true
       }); 
-      console.log("Data is: ", response.data);
-      // console.log("EmployeeID: ",response.data.emp.id)
-      // console.log("EmployeeRole: ",response.data.emp.role)
+      console.log("Data is: ", response.data); 
       Cookies.set('jwt11', response.data.token); 
       Cookies.set('employeeID', response.data.emp.id);
       Cookies.set('employeeRole',response.data.emp.role);

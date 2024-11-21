@@ -6,7 +6,7 @@ import Modal from 'react-modal'; // Import Modal component
 
 const ProjectPage = () => {
   const id = Cookies.get('employeeID');
-  const token = Cookies.get('token');
+  const token = Cookies.get("jwt11");
   const role = Cookies.get('employeeRole');
   console.log(role)
 

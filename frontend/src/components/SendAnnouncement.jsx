@@ -16,7 +16,7 @@ function SendAnnouncement() {
   }, []);
 
   const submitHandler = async (data) => { 
-    const token = Cookies.get('token');
+    const token = Cookies.get("jwt11");
     const empid = Cookies.get('employeeID');
     let empIDS = [];
 

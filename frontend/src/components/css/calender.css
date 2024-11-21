@@ -1,3 +1,15 @@
+/* Global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  /* font-family: Arial, sans-serif; */
+}
+
+/* Calendar Container */
 .calendar-container {
   display: flex;
   justify-content: center;
@@ -8,50 +20,46 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 150px;
 }
- 
-.highlight-green {
-  background-color: #4caf50 !important;  
-  color: white !important;
-  border-radius: 50%; 
-  padding: 5px;
-}
- 
-.highlight-red {
-  background-color: #f44336 !important;  
-  color: white !important;
-  border-radius: 50%;  
-  padding: 5px;
-}
- 
-.highlight-yellow {
-  background-color: #ffeb3b !important;  
-  color: black !important;
-  border-radius: 50%; 
-  padding: 5px;
-}
- 
+
+/* Highlight styles for calendar events */
+.highlight-green,
+.highlight-red,
+.highlight-yellow,
 .highlight-purple {
-  background-color: #9c27b0 !important;  
-  color: white !important;
-  border-radius: 50%; 
+  border-radius: 50%;
   padding: 5px;
+  color: white;
 }
- 
+
+.highlight-green {
+  background-color: #4caf50 !important;
+}
+
+.highlight-red {
+  background-color: #f44336 !important;
+}
+
+.highlight-yellow {
+  background-color: #ffeb3b !important;
+  color: black !important;
+}
+
+.highlight-purple {
+  background-color: #9c27b0 !important;
+}
+
+/* Navigation Arrow styles */
 .react-datepicker__navigation {
   top: 10px;
 }
 
-.react-datepicker__navigation--previous {
-  left: 10px;
-  border-color: #4caf50 !important;  
+.react-datepicker__navigation--previous,
+.react-datepicker__navigation--next {
+  border-color: #4caf50 !important;
 }
 
-.react-datepicker__navigation--next {
-  right: 10px;
-  border-color: #4caf50 !important;  
-}
- 
 .react-datepicker__current-month {
   font-size: 1.2em;
   font-weight: bold;
@@ -60,11 +68,10 @@
 }
 
 .react-datepicker__day--selected {
-  background-color: #2196f3 !important;  
+  background-color: #2196f3 !important;
   color: white !important;
 }
 
-  
 .react-datepicker__day {
   display: inline-block;
   width: 2.5rem;
@@ -73,9 +80,10 @@
   text-align: center;
   margin: 2px;
   font-weight: bold;
-  border-radius: 50%;  
+  border-radius: 50%;
 }
- 
+
+/* Dropdown styles */
 .react-datepicker__year-dropdown,
 .react-datepicker__month-dropdown {
   background-color: #fff;
@@ -83,11 +91,147 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
 }
- 
+
 .react-datepicker__dropdown {
   z-index: 10;
 }
 
 .react-datepicker__dropdown--select {
   padding: 5px;
+}
+
+/* Attendance Page */
+.dashboard-container {
+  width: 100%;
+  padding: 20px;
+  background-color: #fafafa;
+}
+
+.dashboard-heading {
+  font-size: 2em;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.plusicon {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  background-color: #4caf50;
+  padding: 10px;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.calendar-fixed {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.dashboard-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.month-selector {
+  display: flex;
+  justify-content: center;
+}
+
+.table-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+/* Responsive Media Queries */
+
+/* Small screens */
+@media (max-width: 600px) {
+  .calendar-container {
+    min-width: 300px;
+    padding: 10px;
+  }
+
+  .dashboard-heading {
+    font-size: 1.5em;
+  }
+
+  .plusicon {
+    top: 5px;
+    right: 10px;
+    font-size: 1.2rem;
+  }
+
+  .dashboard-content {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .table-card {
+    padding: 10px;
+  }
+
+  .month-selector {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* Medium screens */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .calendar-container {
+    min-width: 400px;
+    padding: 15px;
+  }
+
+  .dashboard-heading {
+    font-size: 1.8em;
+  }
+
+  .plusicon {
+    top: 5px;
+    right: 20px;
+    font-size: 1.4rem;
+  }
+
+  .dashboard-content {
+    gap: 15px;
+  }
+
+  .table-card {
+    padding: 15px;
+  }
+}
+
+/* Large screens */
+@media (min-width: 1025px) {
+  .calendar-container {
+    min-width: 500px;
+    padding: 20px;
+  }
+
+  .dashboard-heading {
+    font-size: 2em;
+  }
+
+  .plusicon {
+    top: 10px;
+    right: 20px;
+    font-size: 1.5rem;
+  }
+
+  .dashboard-content {
+    gap: 20px;
+  }
+
+  .table-card {
+    padding: 20px;
+  }
 }

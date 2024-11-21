@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './css/Forgotpassword.css'
+import Cookies from 'js-cookie'; 
 
 import logo from './images/emslogo.png'
 
@@ -14,10 +15,13 @@ const Forgotpassword = () => {
   const { register: register2, handleSubmit: handleSubmit2, formState: { errors: errors2 } } = useForm();
   const [userId, setuserId] = useState();
   const navigate = useNavigate(); 
-  
+  const token = Cookies.get("jwt11");
+
+
+
   const submitHandler1 = async (data) => {
-    try {
-      const token = localStorage.getItem('token');
+    try { 
+      
       console.log(data.id);
       setuserId(data.id);
 
@@ -37,8 +41,7 @@ const Forgotpassword = () => {
   };
 
   const submitHandler2 = async (data) => {
-    try {
-      const token = localStorage.getItem('token');
+    try { 
       console.log(userId, data.currpassword);
 
       const response = await axios.patch('http://localhost:8000/api/login/changepassword', {

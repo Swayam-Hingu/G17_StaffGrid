@@ -30,6 +30,7 @@ const RegisterEmp = () => {
   const submitHandler = async (data) => {
     const token = Cookies.get("jwt11");
 
+
     const isEmailValid = await validateEmail(data.mail);
     console.log(isEmailValid)
     if (!isEmailValid) {

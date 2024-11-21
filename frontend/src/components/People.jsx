@@ -10,7 +10,8 @@ const People = () => {
   const navigate = useNavigate();  
   const [peopledata, setPeopleData] = useState([]);
   const [profileImages, setProfileImages] = useState([]); 
-  const token = Cookies.get('jwt11'); 
+  const token = Cookies.get("jwt11");
+
 
   const handleAddPerson = () => {
     navigate('/api/registration');  

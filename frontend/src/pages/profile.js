@@ -8,10 +8,11 @@ function ProfilePage() {
  
   const { register, handleSubmit, formState: { errors },setValue} = useForm();
   const empid = Cookies.get('employeeID');
-  const jwtToken = Cookies.get('jwt11');
+  const token = Cookies.get("jwt11");
+  ;
   const imageRef = useRef();
   
-  console.log(jwtToken,empid)
+  console.log("TIS: ",token)
 
   const [detail,setDetail] = useState({});
   const [profile,setProfile] = useState({});
@@ -26,7 +27,7 @@ function ProfilePage() {
       const response = await axios.get(`http://localhost:8000/profile/api/checkfillornot/${empid}`, {
         withCredentials: true,
         headers: {
-          'Authorization': `Bearer ${jwtToken}`,
+          'Authorization': `Bearer ${token}`,
         },
       });
       console.log("GETORNOT::: >",response.data.detailemployee);
@@ -57,7 +58,7 @@ function ProfilePage() {
   const submitHandler = async (data) => { 
     try {
       console.log("Data is:: ", data);
-      console.log("TOKEN::", jwtToken);
+      console.log("TOKEN::", token);
 
       const formData = new FormData();
       console.log(detail.name,data.firstName)
@@ -98,33 +99,39 @@ function ProfilePage() {
       const response = await axios.post(`http://localhost:8000/profile/api/add-detailprofile/${empid}`, formData, {
         withCredentials: true,
         headers: {
-          'Authorization': `Bearer ${jwtToken}`,
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
         },
       });
 
       console.log(response.data); 
-      checkCompOrNot()  
+      await checkCompOrNot()  
     } catch (error) {
       console.error("Error in form submission:", error);
       alert("ERROR {Form Submission}");
     }
   };
 
-  useEffect(() => {
-    checkCompOrNot();
-    getDetailFirst();
-   
-  }, []);
-
   const getDetailFirst = async () =>{
     const response = await axios.get(`http://localhost:8000/profile/api/getEmpDetailbyid/${empid}`,{
       withCredentials: true,
       headers: {
-          'Authorization': `Bearer ${jwtToken}` 
+          'Authorization': `Bearer ${token}` 
       }}); 
     setDetail(response.data);
   }
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await checkCompOrNot();  
+      await getDetailFirst();   
+    };
+
+    fetchData();
+   
+  }, []);
+
 
   
 

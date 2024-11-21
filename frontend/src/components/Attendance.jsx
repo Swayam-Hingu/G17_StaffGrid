@@ -46,9 +46,11 @@ const Attendance = () => {
       </div>
       
 
-      <Typography variant="h4" gutterBottom>
-        Attendance Dashboard
-      </Typography>
+      <div>
+        <Typography variant="h4" gutterBottom style={{ marginTop: '20px' }}>
+          Attendance Dashboard
+        </Typography>
+      </div>
       <AttendanceSearch />
       <Grid container spacing={3} style={{ marginTop: '20px' }}>
         <Grid item xs={12} md={4}>

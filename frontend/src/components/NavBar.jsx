@@ -8,6 +8,8 @@ import './css/Navbar.css'
 const Nav = ({ toggleMenu }) => {
   const navigate = useNavigate();
   const [ID, setID] = useState("");
+  const token = Cookies.get("jwt11");
+
 
   useEffect(() => {
     const ID = Cookies.get("employeeID");
@@ -18,10 +20,14 @@ const Nav = ({ toggleMenu }) => {
 
   const logoutsystem = async () => {
     try { 
+      console.log(token)
       const response = await axios.get('http://localhost:8000/api/logout',{
-        withCredentials: true,  
-      });  
-      Cookies.remove("jwt");
+        withCredentials: true,
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    },);  
+      Cookies.remove("jwt11");
       console.log("Logout Done")
       navigate("/api/login");
     } catch (error) {

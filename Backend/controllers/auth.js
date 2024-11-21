@@ -273,7 +273,7 @@ async function handleUserLogout(req,res){
         req.employee.tokens = [];
         //console.log(req.employee);
         await req.employee.save();  
-        res.clearCookie("jwt");
+        res.clearCookie("jwt11");
         res.send({ message: "Logged out successfully" });
 
     } catch (error) {

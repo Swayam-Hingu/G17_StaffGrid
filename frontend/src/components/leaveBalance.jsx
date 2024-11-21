@@ -9,7 +9,8 @@ const LeaveBalance = () => {
     { id: 1, applied: '2024-11-01', type: 'Sick Leave', from: '2024-11-01', to: '2024-11-02', days: 2, status: 'Pending' },
   ]);
   const empid = Cookies.get("employeeID");
-  const token = Cookies.get("jwt11")
+  const token = Cookies.get("jwt11");
+
 
   // Function to handle the cancellation of leave directly
   const handleCancelClick = async (leavedata) => {

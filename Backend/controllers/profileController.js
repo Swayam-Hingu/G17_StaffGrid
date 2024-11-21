@@ -177,6 +177,7 @@ async function handleUserProfileGetDetailed(req, res){
 
 async function handleUserProfileViewOrNot(req, res) {
   try {
+    console.log("Enter HERE...FOR CHECK")
     const { id } = req.params;
     // console.log(id)
     const detailemployee = await detailedProfile.findOne({id}); 

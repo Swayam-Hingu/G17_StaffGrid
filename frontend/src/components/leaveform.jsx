@@ -9,7 +9,7 @@ const LeaveForm = () => {
   const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const empid = Cookies.get("employeeID");
-  const token = Cookies.get("jwt11")
+  const token = Cookies.get("jwt11");
   const navigate = useNavigate();
   const fromDate = watch('fromDate');
   const toDate = watch('toDate');

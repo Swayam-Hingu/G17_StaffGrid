@@ -25,7 +25,8 @@ const Attendance = () => {
     setLongitude(position.coords.longitude);
   });
 
-  const token = Cookies.get('jwt11');
+  const token = Cookies.get("jwt11");
+
   const id = Cookies.get('employeeID');
 
   const AttendanceHere = async () => {
@@ -46,7 +47,9 @@ const Attendance = () => {
         }
       );
       console.log('User Attendance successfully:', response.data);
+      alert('Mark Your Attendance Successfully');
     } catch (error) {
+      alert('Mark Your Attendance Already Or Any Error');
       console.log('ERROR: ', error);
     }
   };
@@ -64,7 +67,7 @@ const Attendance = () => {
         }
       );
       console.log('User Fetch successfully:', response.data);
-      setAttendanceData(response.data.attendance); // Update state with the fetched attendance data
+      setAttendanceData(response.data.attendance); 
     } catch (error) {
       console.log('ERROR: ', error);
     }
@@ -110,9 +113,12 @@ const Attendance = () => {
   };
 
   useEffect(() => {
-    getLeaveDates();
-    getAttendanceDatas();
-    getTotalWithoutApplyLeave();
+    const fetchData = async () => {
+    await getLeaveDates();
+   await getAttendanceDatas();
+   await getTotalWithoutApplyLeave();
+   }
+   fetchData();
   }, []);
 
   const handleMonthChange = (newMonth) => {
@@ -143,28 +149,21 @@ const absDatas = absData.map((date) => ({
 
   return (
     <div className='dashboard-container'>
-      <Typography variant='h3' className='dashboard-heading'>
-        Attendance Dashboard
-      </Typography>
-
-      <div className='plusicon' onClick={AttendanceHere}>
-        <FontAwesomeIcon icon={faPlus} />
+      <div>
+        <Typography variant='h3' className='dashboard-heading'>
+          Attendance Dashboard
+        </Typography>
       </div>
+
+      
       <div className='calendar-fixed'>
         <Calendar attendanceDates={attendanceDates} leaveDatas={leaveDatas} absDatas={absDatas}/>
       </div>
 
-      <div className='dashboard-content'>
-        {/* Month Selector */}
-        <div className='month-selector'>
-          <AttendanceSearch month={month} onMonthChange={handleMonthChange} />
-        </div>
-
-        {/* Attendance Table */}
-        <div className='card table-card scrollable-table'>
-          <AttendanceTable data={filteredData} />
-        </div>
+      <div className=' '>
+         <button  onClick={AttendanceHere}>MARK_Attendance</button>
       </div>
+ 
     </div>
   );
 };

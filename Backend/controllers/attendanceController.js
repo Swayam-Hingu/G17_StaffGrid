@@ -207,6 +207,8 @@ async function handleGetEmployeeAttendance(req,res){
 }
 
 async function handleGetAbsentList(req,res){
+
+    console.log("------------------------------------------------------------------ABS COME HERE---------------------------")
     const { id } = req.params;
     console.log("LId IS: ",id)
 
@@ -222,13 +224,16 @@ async function handleGetAbsentList(req,res){
     const joiningDate = new Date(employee.createdAt);
     const today = new Date();
     const totalDays = Math.floor((today - joiningDate) / (1000 * 60 * 60 * 24));
+
+    console.log(totalDays)
+
     const absentDays = [];  
     console.log("TotalDays: ",totalDays)
     for (let i = 0; i <= totalDays; i++) {
         const checkDate = new Date(joiningDate);
         checkDate.setDate(checkDate.getDate() + i);
         const dateStr = checkDate.toISOString().slice(0, 10);  
-
+        console.log(attendanceRecord)
         const checkdays = attendanceRecord.attendance.find(record => record.date === dateStr);
         const status = checkdays ? checkdays.status : "absent";
  
@@ -239,7 +244,7 @@ async function handleGetAbsentList(req,res){
             });
         }
     }
-    console.log(absentDays)
+    console.log("AbDASYS:---->", absentDays)
     return res.status(200).json({
         status: true, 
         absentDays: absentDays

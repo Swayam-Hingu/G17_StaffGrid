@@ -7,7 +7,7 @@ function ViewAnnouncement() {
   const [announcements, setAnnouncements] = useState([]);
   const [announcementByMe, setAnnouncementByMe] = useState([]);
   const [activeTab, setActiveTab] = useState("Sent by Me");
-  const token = Cookies.get('token');
+  const token = Cookies.get("jwt11");
   const empid = Cookies.get('employeeID');
   const role = Cookies.get('employeeRole'); 
   console.log("ROLE:",role)

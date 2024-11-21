@@ -74,7 +74,7 @@ button {
     text-align: center;
     display: block;
     align-items: center;
-    width: 50%;
+    width: 100%;
     margin: 20px auto;
   }
   
@@ -83,7 +83,7 @@ button {
     color: white;
     transition: background-color 0.3s;
     display: block;
-    width: 50%;
+    width: 100%;
     margin: 20px auto;
   }
   

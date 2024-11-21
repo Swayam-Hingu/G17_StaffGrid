@@ -12,7 +12,8 @@ function LeaveApproval() {
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const empid = Cookies.get("employeeID");
-  const token = Cookies.get("jwt11")
+  const token = Cookies.get("jwt11");
+
  
 
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
