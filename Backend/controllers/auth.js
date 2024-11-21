@@ -134,6 +134,8 @@ async function  handleUserLogin(req,res){
         res.cookie("jwt",token,{
             expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
             httpOnly:true,
+            secure: true, // Required for HTTPS
+            sameSite: 'None', // Required for cross-origin requests
         })
 
         return res.status(200).send({
@@ -194,6 +196,8 @@ async function handleChangePassword(req,res){
         res.cookie("jwt",token,{
           expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
           httpOnly:true,
+          secure: true, // Required for HTTPS
+          sameSite: 'None', // Required for cross-origin requests
         })
 
         emp.pass =  await bcrypt.hash(newpassword,10);;
