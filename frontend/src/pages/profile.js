@@ -3,13 +3,16 @@ import { useForm } from "react-hook-form";
 import "../components/css/profile.css";
 import axios from 'axios';
 import Cookies from 'js-cookie'; 
+import { Link ,useNavigate } from 'react-router-dom';
+
 
 function ProfilePage() {
  
   const { register, handleSubmit, formState: { errors },setValue} = useForm();
   const empid = Cookies.get('employeeID');
   const token = Cookies.get("jwt11");
-  ;
+  const navigate = useNavigate();
+  
   const imageRef = useRef();
   
   console.log("TIS: ",token)
@@ -36,7 +39,10 @@ function ProfilePage() {
       setImgset(response.data.detailemployee.profileImage)
       console.log("IMG RES:> ",response.data.detailemployee.profileImage)
     } catch (error) {
-      console.error("Error in checkCompOrNot:", error.response || error.message);
+      console.error("Error in checkCompOrNot:", error.response.data.error);
+      if(error.response.data.error=="jwt malformed"){
+        navigate("/api/login");
+      }
     }
   };
   
@@ -109,16 +115,25 @@ function ProfilePage() {
     } catch (error) {
       console.error("Error in form submission:", error);
       alert("ERROR {Form Submission}");
+      if(error.response.data.error=="jwt malformed"){
+        navigate("/api/login");
+      }
     }
   };
 
   const getDetailFirst = async () =>{
-    const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASEURL}/profile/api/getEmpDetailbyid/${empid}`,{
-      withCredentials: true,
-      headers: {
-          'Authorization': `Bearer ${token}` 
-      }}); 
-    setDetail(response.data);
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASEURL}/profile/api/getEmpDetailbyid/${empid}`,{
+        withCredentials: true,
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }}); 
+      setDetail(response.data);
+    } catch (error) { 
+      if(error.response.data.error=="jwt malformed"){
+        navigate("/api/login");
+      }
+    }
   }
 
 

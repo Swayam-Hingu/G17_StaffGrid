@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import './css/viewannouncement.css';
+import { Link ,useNavigate } from 'react-router-dom';
 
 function ViewAnnouncement() {
   const [announcements, setAnnouncements] = useState([]);
   const [announcementByMe, setAnnouncementByMe] = useState([]);
   const [activeTab, setActiveTab] = useState("Sent by Me");
+  const navigate = useNavigate();
   const token = Cookies.get("jwt11");
   const empid = Cookies.get('employeeID');
   const role = Cookies.get('employeeRole'); 
@@ -24,6 +26,9 @@ function ViewAnnouncement() {
       setAnnouncements(response.data.announcements);
     } catch (error) {
       console.log(error);
+      if(error.response.data.error=="jwt malformed"){
+        navigate("/api/login");
+      }
     }
   };
 
@@ -39,6 +44,9 @@ function ViewAnnouncement() {
         setAnnouncementByMe(response.data.announcements);
       } catch (error) {
         console.log(error);
+        if(error.response.data.error=="jwt malformed"){
+          navigate("/api/login");
+        }
       }
     }
   };

@@ -3,12 +3,14 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Cookies from 'js-cookie';
 import './css/sendannouncement.css';
+import { Link ,useNavigate } from 'react-router-dom';
 
 function SendAnnouncement() {
   const { register, handleSubmit, reset } = useForm(); 
   const [responseMessage, setResponseMessage] = useState("");
   const [rangeOption, setRangeOption] = useState("Specific");
   const [emprole, setemprole] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => { 
     const role = Cookies.get('employeeRole');
@@ -86,6 +88,9 @@ function SendAnnouncement() {
           }
         } catch(error){
           console.log(error);
+          if(error.response.data.error=="jwt malformed"){
+            navigate("/api/login");
+          }
         }
       } else { 
         const start = data.rangeStart;
@@ -141,6 +146,9 @@ function SendAnnouncement() {
     } catch (error) {
       console.error("Error sending announcement", error);
       setResponseMessage("Failed to send announcement.");
+      if(error.response.data.error=="jwt malformed"){
+        navigate("/api/login");
+      }
     }
   };
 

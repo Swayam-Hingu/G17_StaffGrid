@@ -29,6 +29,9 @@ const People = () => {
       getAllEmployeeView(); 
     } catch (error) {
       console.log("ERROR: ",error);  
+      if(error.response.data.error=="jwt malformed"){
+        navigate("/api/login");
+      }
     }
   }
 
@@ -52,6 +55,9 @@ const People = () => {
       setProfileImages(images);  
     } catch (error) {
       console.log("ERROR: ", error);  
+      if(error.response.data.error=="jwt malformed"){
+        navigate("/api/login");
+      }
     }
   };
   useEffect(() => {

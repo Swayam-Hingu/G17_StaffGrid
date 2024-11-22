@@ -3,11 +3,13 @@ import ProjectCard from '../components/ProjectCard';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Modal from 'react-modal'; // Import Modal component
+import { Link ,useNavigate } from 'react-router-dom';
 
 const ProjectPage = () => {
   const id = Cookies.get('employeeID');
   const token = Cookies.get("jwt11");
   const role = Cookies.get('employeeRole');
+  const navigate = useNavigate();
   console.log(role)
 
   const [projects, setProjects] = useState([]);
@@ -25,7 +27,10 @@ const ProjectPage = () => {
       });
       setProjects(response.data.projects);
     } catch (error) {
-      console.log('ERROR: ', error.response ? error.response.data : error.message);
+      console.log('ERROR: ', error);
+      if(error.response.data.error=="jwt malformed"){
+        navigate("/api/login");
+      }
     }
   };
 
@@ -40,7 +45,10 @@ const ProjectPage = () => {
       });
       setProjects(response.data.projects);
     } catch (error) {
-      console.log('ERROR: ', error.response ? error.response.data : error.message);
+      console.log('ERROR: ',error);
+      if(error.response.data.error=="jwt malformed"){
+        navigate("/api/login");
+      }
     }
   };
 
@@ -55,7 +63,10 @@ const ProjectPage = () => {
       });
       getAllManagerorAdminProject();  
     } catch (error) {
-      console.log('ERROR: ', error.response ? error.response.data : error.message);
+      console.log('ERROR: ', error);
+      if(error.response.data.error=="jwt malformed"){
+        navigate("/api/login");
+      }
     }
   };
 
@@ -89,7 +100,10 @@ const ProjectPage = () => {
       getAllManagerorAdminProject();  
       handleCloseModal();  
     } catch (error) {
-      console.log('ERROR: ', error.response ? error.response.data : error.message);
+      console.log('ERROR: ', error);
+      if(error.response.data.error=="jwt malformed"){
+        navigate("/api/login");
+      }
     }
   };
 

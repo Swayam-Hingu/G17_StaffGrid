@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './css/leaveBalance.css';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import axios from 'axios';
+import axios from 'axios'; 
 
 const LeaveBalance = () => {
   const [leaveRecords, setLeaveRecords] = useState([
@@ -10,6 +10,7 @@ const LeaveBalance = () => {
   ]);
   const empid = Cookies.get("employeeID");
   const token = Cookies.get("jwt11");
+  const navigate = useNavigate();
 
 
   // Function to handle the cancellation of leave directly
@@ -28,6 +29,9 @@ const LeaveBalance = () => {
 
     } catch (error) {
         console.log("ERROR IS: ",error)
+        if(error.response.data.error=="jwt malformed"){
+          navigate("/api/login");
+        }
     }
   };
 
@@ -44,6 +48,9 @@ const LeaveBalance = () => {
 
     } catch (error) {
         console.log("ERROR IS: ",error)
+        if(error.response.data.error=="jwt malformed"){
+          navigate("/api/login");
+        }
     }
   }
   useEffect(()=>{

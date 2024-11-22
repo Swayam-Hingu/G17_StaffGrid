@@ -53,6 +53,9 @@ const RegisterEmp = () => {
         console.log("User registered successfully:", response.data);
     } catch (error) {
         console.log("ERROR: ", error.response ? error.response.data : error.message); // Log error response
+        if(error.response.data.error=="jwt malformed"){
+          navigate("/api/login");
+        }
     }
   };
 

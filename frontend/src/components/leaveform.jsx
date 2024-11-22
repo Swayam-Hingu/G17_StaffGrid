@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+
 const LeaveForm = () => {
   const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -39,6 +40,9 @@ const LeaveForm = () => {
       navigate('/api/leave'); 
     } catch (error) {
         console.log("ERROR IS: ",error)
+        if(error.response.data.error=="jwt malformed"){
+          navigate("/api/login");
+        }
     }
   };
 

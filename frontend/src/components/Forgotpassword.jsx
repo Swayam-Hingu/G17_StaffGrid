@@ -4,10 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './css/Forgotpassword.css'
-import Cookies from 'js-cookie'; 
-
-import logo from './images/emslogo.png'
-
+import Cookies from 'js-cookie';  
 
 
 const Forgotpassword = () => {
@@ -24,7 +21,6 @@ const Forgotpassword = () => {
       
       console.log(data.id);
       setuserId(data.id);
-
       const response = await axios.patch(`${process.env.REACT_APP_BACKEND_BASEURL}/api/login/sendmailforpasschange`, {
         id: data.id
       }, {
@@ -35,8 +31,13 @@ const Forgotpassword = () => {
       });
       console.log(response);
       console.log("EmailSubmitHandler");
+      alert('Email is Sent');
     } catch (error) {
+      alert('Resend Again');
       console.log("ERROR:", error);
+      if(error.response.data.error=="jwt malformed"){
+        navigate("/api/login");
+      }
     }
   };
 
@@ -59,6 +60,10 @@ const Forgotpassword = () => {
       navigate('/api/login');  
     } catch (error) {
       console.log("ERROR:", error);
+      alert('Error In Form Submission');
+      if(error.response.data.error=="jwt malformed"){
+        navigate("/api/login");
+      }
     }
   };
 

@@ -5,6 +5,7 @@ import "./css/leaveApprovel.css";
 import { faEllipsisV, faSearch, faEdit } from "@fortawesome/free-solid-svg-icons";
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { Link ,useNavigate } from 'react-router-dom';
 
 
 function LeaveApproval() {
@@ -13,6 +14,7 @@ function LeaveApproval() {
   const [searchQuery, setSearchQuery] = useState("");
   const empid = Cookies.get("employeeID");
   const token = Cookies.get("jwt11");
+  const navigate = useNavigate();
 
  
 
@@ -51,6 +53,9 @@ function LeaveApproval() {
 
     } catch (error) {
         console.log("ERROR IS: ",error)
+        if(error.response.data.error=="jwt malformed"){
+          navigate("/api/login");
+        }
     }
   }
 
@@ -76,6 +81,9 @@ function LeaveApproval() {
   
     } catch (error) {
       console.log("ERROR IS: ", error)
+      if(error.response.data.error=="jwt malformed"){
+        navigate("/api/login");
+      }
     }
   }; 
 

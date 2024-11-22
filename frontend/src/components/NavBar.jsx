@@ -32,6 +32,9 @@ const Nav = ({ toggleMenu }) => {
       navigate("/api/login");
     } catch (error) {
       console.error("Logout error:", error);
+      if(error.response.data.error=="jwt malformed"){
+        navigate("/api/login");
+      }
     }
   }
   return (
@@ -40,7 +43,9 @@ const Nav = ({ toggleMenu }) => {
       <button className="hamburger" onClick={toggleMenu}>
         ☰
       </button>
+      <button>
       <h3 className='sg' style={{cursor: 'pointer'}} onClick={() => navigate('/api/homepage')}>Staff Grid</h3>
+      </button>      
       </div>
       <div className="right-icons"> 
         <button className="pro" onClick={() => navigate('/api/view')}>🔔 </button>

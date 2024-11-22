@@ -1,204 +1,32 @@
-.navbar {
+.navbar{ 
+  width:100%;
+  /* border:1px solid red; */
   display: flex;
   justify-content: space-between;
-  align-items: center; 
-  background-color: #387478;  
-  color: white; 
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  position: fixed;  
-  top: 0;
-  left: 0;
-  z-index: 1000;  
+  background-color: #387478;
 }
 
-.navbar h3.sg {
-  font-size: 1.5rem;
-  color: #fff;  
-}
-
-.hamburger {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 30px;
-  cursor: pointer; 
-  width: fit-content;
-}
-
-.right-icons {
+.pr{
   display: flex;
-  align-items: center;
+  width: 30%;
+  font-size: 20px;
 }
-.pr {
-  display: flex; 
-  width: 50%;
-  justify-content:space-around;
+.right-icons{
+  /* border: 1px solid red; */
+  width:50%;
+  display: flex;
+  justify-content: flex-end; 
+  font-size: 20px;
 }
-.search,
-.pro {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 18px;
-  margin-left: 15px;
-  cursor: pointer;
-} 
-button{
-  background-color: transparent;
-  color: white;
-  border: 1px solid transparent;
-  padding: 10px 20px;
-  margin-left: 15px;
-  font-size: 14px;
-  border-radius: 5px;
-  cursor: pointer;
-} 
-button:hover {
-  background-color: #484a4f5e;  
-  border-color: #484a4f5e;
+.hamburger{
+  font-size: 20px;
 }
 .sg{
-  padding: 10px 20px; 
+  font-size: 20px;
+  color:white;
 }
- 
-.pro {
-  font-size: 23px;
-}
-
-.pro:hover {
-  background-color: #484a4f5e;  
-}
- 
-button:active {
-  background-color: #cc0000;  
-}  
-@media (max-width: 768px) {
-  .navbar {
-    flex-direction: column; 
-    align-items: flex-start;
-  } 
-  .navbar h3 {
-    font-size: 1.2rem;
-    margin-bottom: 10px; 
-  }
-
-  .hamburger {
-    font-size: 28px;
-  }
-
-  .right-icons {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;  
-    margin-top: 10px;
-  }
-  .pr{
-    display: flex;
-    justify-content: space-between;
-    width: 100%; 
-    margin-top: 10px; 
-  }
-
-  .search,
-  .pro,
-  button {
-    font-size: 16px;
-    margin-left: 10px;
-  }
-
-  button {
-    padding: 8px 15px;
-  }
-
-  .pro {
-    font-size: 20px;
-  }
-}
- 
-@media (max-width: 480px) {
-  .navbar {
-    flex-direction: column;  
-    align-items: flex-start;
-    padding: 10px;
-  } 
-  .navbar h3 {
-    font-size: 1rem;
-    margin-bottom: 5px; 
-  }
-
-  .hamburger {
-    font-size: 25px;
-  }
-
-  .right-icons {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-top: 10px;
-  }
-  .pr {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-top: 10px;
-  }
-
-  .search,
-  .pro,
-  button {
-    font-size: 14px;
-    margin-left: 5px;
-  }
-
-  button {
-    padding: 6px 12px;
-  }
-
-  .pro {
-    font-size: 18px;
-  }
-} 
-@media (max-width: 320px) {
-  .navbar {
-    padding: 8px;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .navbar h3 {
-    font-size: 0.9rem;
-    margin-bottom: 5px;  
-  }
-
-  .hamburger {
-    font-size: 22px;
-  }
-
-  .right-icons {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-  .pr {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-
-
-  .search,
-  .pro,
-  button {
-    font-size: 12px;
-    margin-left: 5px;
-  }
-
-  button {
-    padding: 5px 10px;
-  }
-
-  .pro {
-    font-size: 16px;
+@media (max-width:750px) {
+  .sg{
+    display: none;
   }
 }

@@ -6,12 +6,14 @@ import AttendanceStats from './Attendance/AttendanceStats';
 import AttendanceSearch from './Attendance/AttendanceSearch';
 import Calendar from './Calender';
 import Cookies from 'js-cookie'; 
+import { Link ,useNavigate } from 'react-router-dom';
 
 
 const Attendance = () => {
 
   const [longitude,setLongitude] = useState();
   const [latitude,setLatitude] = useState();
+  const navigate = useNavigate();
 
   navigator.geolocation.getCurrentPosition(function(position){
     console.log(position.coords.latitude + ", " +position.coords.longitude);
@@ -36,7 +38,10 @@ const Attendance = () => {
         });
         console.log("User registered successfully:", response.data);
     } catch (error) {
-        console.log("ERROR: ", error.response ? error.response.data : error.message); 
+        console.log("ERROR: ", error.response ? error.response.data : error.message);
+        if(error.response.data.error=="jwt malformed"){
+          navigate("/api/login");
+        } 
     }
   };
   return (

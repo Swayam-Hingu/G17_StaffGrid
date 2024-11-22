@@ -158,6 +158,7 @@ async function  handleUserLogin(req,res){
  
 
 async function handleChangePassword(req,res){
+    console.log("----------COME FOR CHANGE-------------")
 
     try{
         // first get user from the data base
