@@ -1,32 +1,180 @@
-.navbar{ 
-  width:100%;
-  /* border:1px solid red; */
+.navbar {
+  width: 100%;
+  height: 60px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  gap: 10px;
+  background-color: #243642;
+}
+
+.pr {
+  margin-left: 60px;
+  display: flex;
+  width: 30%;
+  gap: 10px;
+}
+
+.pr .hamburger {
+  font-size: 30px;
+  font-weight: bold;
+  color: aliceblue;
+  cursor: pointer;
+}
+
+.right-icons {
+  width: 70%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 40px;
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.right-icons .pro {
+  margin-top: 10px;
+  font-size: 20px;
+  padding: 3px;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+}
+
+.right-icons .pro:hover {
   background-color: #387478;
 }
 
-.pr{
+.right-icons .p1 {
   display: flex;
-  width: 30%;
+  flex-direction: row;
+  gap: 5px;
+  font-size: 22px;
+  color: white;
+  margin-top: 6px;
+}
+
+.logochange {
+  font-family: "Zen Tokyo Zoo", system-ui;
+  font-size: 25px;
+  margin-top: 5px;
+  width: 200px;
+  height: 43px;
+  color: white;
+  margin-left:20px ;
+  margin-top: 20px;
+}
+.right-icons .logout {
+  background-color: #387478;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 5px;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+}
+
+.right-icons .logout:hover {
+  background-color: #E2F1E7;
+  color: #243642;
+}
+
+.n {
+  margin: 3px;
+}
+
+.n:hover {
+  color: #387478;
+}
+
+.hamburger {
   font-size: 20px;
 }
-.right-icons{
-  /* border: 1px solid red; */
-  width:50%;
-  display: flex;
-  justify-content: flex-end; 
+
+.sg {
   font-size: 20px;
+  color: white;
 }
-.hamburger{
-  font-size: 20px;
+
+@media (max-width: 1024px) {
+  .pr {
+    margin-left: 20px;
+    width: 50%;
+  }
+
+  .right-icons {
+    gap: 20px;
+    font-size: 18px;
+  }
+
+  .logochange {
+    font-size: 22px;
+  }
 }
-.sg{
-  font-size: 20px;
-  color:white;
+
+@media (max-width: 700px) {
+  .sg {
+    display: none;
+  }
+
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+  }
+
+  .pr {
+    margin-left: 0;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .right-icons {
+    
+    display: none;
+  }
+
+  .hamburger {
+    font-size: 24px;
+    display: inline-block;
+  }
+
+  .right-icons .logout {
+    padding: 3px 8px;
+    font-size: 16px;
+  }
+
+  .right-icons .pro {
+    font-size: 16px;
+  }
+
+  .right-icons .p1 {
+    font-size: 16px;
+  }
+
+  .logochange {
+    
+    display: none;
+  }
 }
-@media (max-width:750px) {
-  .sg{
+
+@media (max-width: 480px) {
+  .hamburger {
+    font-size: 20px;
+  }
+
+ 
+  .right-icons {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 5px;
+  }
+
+  .logochange {
+    font-size: 18px;
+    display: none;
+  }
+
+  .right-icons{
     display: none;
   }
 }

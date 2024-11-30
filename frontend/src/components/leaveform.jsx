@@ -60,17 +60,17 @@ const LeaveForm = () => {
  
 
   return (
-    <div className="container">
-      <div className="main">
-        <div className="form-container">
+    <div className="container1">
+      <div className="main1">
+        <div className="form-container1">
           <h3>Apply Leave</h3>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="form-group">
+            <div className="form-group1">
               <label>Employee ID</label>
               <input type="text" value={empid} readOnly />
             </div>
 
-            <div className="form-group">
+            <div className="form-group1">
               <label>Leave Type</label>
               <select {...register('leaveType', { required: 'Leave type is required.' })}>
                 <option value="Sick Leave">Sick Leave</option>
@@ -82,7 +82,7 @@ const LeaveForm = () => {
             </div>
 
             {watch('leaveType') === 'Other Reason' && (
-              <div className="form-group">
+              <div className="form-group1">
                 <label>Specify Reason</label>
                 <input
                   type="text"
@@ -93,7 +93,7 @@ const LeaveForm = () => {
               </div>
             )}
 
-            <div className="form-group">
+            <div className="form-group1">
               <label>From</label>
               <input
                 type="date"
@@ -102,7 +102,7 @@ const LeaveForm = () => {
               {errors.from && <small className="error">{errors.from.message}</small>}
             </div>
 
-            <div className="form-group">
+            <div className="form-group1">
               <label>To</label>
               <input
                 type="date"
@@ -111,7 +111,7 @@ const LeaveForm = () => {
               {errors.to && <small className="error">{errors.to.message}</small>}
             </div>
 
-            <div className="form-group">
+            <div className="form-group1">
               <label>Total Day(s)</label>
               <input type="text" value={calculateTotalDays()} readOnly />
             </div>

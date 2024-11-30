@@ -1,21 +1,25 @@
 /* Container */
-.container {
+.container1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top:100px; 
+    /* margin-top:100px;  */
+    background-color: #e2f1e7;
+    margin: 0px;
+    
 }
 
-.main {
+.main1 {
     flex: 1;
     padding: 20px;
     display: flex;
     justify-content: center;
+    
 }
 
 /* Form container with fade-in effect */
-.form-container {
-    background-color: #E4F0F4;
+.form-container1 {
+    background-color: #bcd9c6;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -24,7 +28,7 @@
     animation: fadeIn 2s forwards;
 }
 
-.form-container h3 {
+.form-container1 h3 {
     margin-bottom: 20px;
     text-align: left; /* Align header to the left */
     font-size: 24px; /* Increase header font size */
@@ -32,22 +36,22 @@
 }
 
 /* Form groups and input fields */
-.form-group {
+.form-group1 {
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
     align-items: flex-start; /* Align items to the left */
 }
 
-.form-group label {
+.form-group1 label {
     font-weight: bold;
     margin-bottom: 5px;
     font-size: 16px;
 }
 
-.form-group input[type="text"],
-.form-group select,
-.form-group input[type="date"] {
+.form-group1 input[type="text"],
+.form-group1 select,
+.form-group1 input[type="date"] {
     width: 100%; /* Ensure input takes full width */
     padding: 10px;
     border-radius: 5px;
