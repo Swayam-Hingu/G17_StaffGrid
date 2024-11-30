@@ -156,9 +156,9 @@ function SendAnnouncement() {
     <div className="send-announcement-container">
       <h2 className="title">Send Announcement</h2>
       <form onSubmit={handleSubmit(submitHandler)}>
-        <label className="form-label">Message:</label>
+        <label className="announcement-formlabel">Message:</label>
         <input
-          className="form-input"
+          className="announcement-forminput"
           type="text"
           placeholder="Enter your message here"
           {...register('message', { required: true })}
@@ -176,7 +176,7 @@ function SendAnnouncement() {
         </label>
         {rangeOption === "Specific" && (
           <input
-            className="form-input"
+            className="announcement-forminput"
             type="text"
             placeholder="Enter Employee ID"
             {...register('specificEmployeeId', { required: rangeOption === "Specific" })}
@@ -196,13 +196,13 @@ function SendAnnouncement() {
         {rangeOption === "Range" && (
           <>
             <input
-              className="form-input"
+              className="announcement-forminput"
               type="text"
               placeholder="Enter Start ID"
               {...register('rangeStart', { required: rangeOption === "Range" })}
             />
             <input
-              className="form-input"
+              className="announcement-forminput"
               type="text"
               placeholder="Enter End ID"
               {...register('rangeEnd', { required: rangeOption === "Range" })}
@@ -223,7 +223,7 @@ function SendAnnouncement() {
           </label>
         )}
 
-        <button type="submit" className="submit-button">
+        <button type="submit" className="announcement-submitbuttonn">
           Send
         </button>
       </form>

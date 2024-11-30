@@ -9,12 +9,16 @@ function Announcement() {
   const role = Cookies.get('employeeRole');
   return (
     <div className="announcement-container">
-      <div className="content-grid">
+      <div className={(role=='manager' || role== 'hr' || role=='admin') ? "content-grid" : "role-grid"}>
+        <div>
+
+        </div>
         <div>
           <ViewAnnouncements />
         </div>
         <div>
           {(role=='manager' || role== 'hr' || role=='admin')? <SendAnnouncement /> : null}
+           {/* <SendAnnouncement />  */}
         </div>
       </div>
     </div>

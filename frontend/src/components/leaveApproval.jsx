@@ -189,7 +189,7 @@ function LeaveApproval() {
                 </tr>
               </tbody>
             </table>
-            <button onClick={() => setShowPopup(false)}>Close</button>
+            <button className="close" onClick={() => setShowPopup(false)}>Close</button>
           </div>
         </div>
       )}

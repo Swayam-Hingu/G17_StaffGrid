@@ -21,36 +21,36 @@ const UploadProject = () => {
   };
 
   return (
-    <>
-      <div className="form-container">
+    <div className="project-upload">
+      <div className="form-container1">
         <h2>Project Details Form</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
 
           {/* Title */}
-          <div className="form-group">
+          <div className="form-group1">
             <label htmlFor="title">Title</label>
             <input
               type="text"
               id="title"
-              className="form-control"
+              className="form-control1"
               {...register("title", { required: "Title is required" })}
             />
             {errors.title && <p className="error-message">{errors.title.message}</p>}
           </div>
 
           {/* Description */}
-          <div className="form-group">
+          <div className="form-group1">
             <label htmlFor="description">Description</label>
             <textarea
               id="description"
-              className="form-control"
+              className="form-control1"
               {...register("description", { required: "Description is required" })}
             />
             {errors.description && <p className="error-message">{errors.description.message}</p>}
           </div>
 
           {/* Team Members */}
-          <div className="form-group">
+          <div className="form-group1">
           <label htmlFor="Team Member">Team Member</label>
           {teamMembersFields.map((item, index) => (
               <div key={item.id} className="team-member">
@@ -64,14 +64,14 @@ const UploadProject = () => {
                   <p className="error-message">{errors.teamMembers[index].id.message}</p>
                 )}
 
-                <button type="button" onClick={() => removeTeamMember(index)} style={{ color: "white" }}>Remove Member</button>
+                <button className="remove-btn" type="button" onClick={() => removeTeamMember(index)} style={{ color: "white" }}>Remove Member</button>
               </div>
             ))}
             <button type="button" onClick={() => appendTeamMember({ id: "" })} style={{ color: "white" }}>Add Team Member</button>
           </div>
 
           {/* Tasks */}
-          <div className="form-group">
+          <div className="form-group1">
           <label htmlFor="Tasks">Tasks</label>
 
             {tasksFields.map((item, index) => (
@@ -113,14 +113,14 @@ const UploadProject = () => {
                   <option value="Blocked">Blocked</option>
                 </select>
 
-                <button type="button" onClick={() => removeTask(index)} style={{ color: "white" }}>Remove Task</button>
+                <button className="remove-btn" type="button" onClick={() => removeTask(index)} style={{ color: "white" }}>Remove Task</button>
               </div>
             ))}
             <button type="button" onClick={() => appendTask({ taskTitle: "", taskDescription: "", assignedTo: { id: "" }, dueDate: "", status: "Not Started" })} style={{ color: "white" }}>Add Task</button>
           </div>
 
           {/* Start and End Dates */}
-          <div className="form-group">
+          <div className="form-group1">
             <label htmlFor="startDate">Start Date</label>
             <input
               type="date"
@@ -139,13 +139,13 @@ const UploadProject = () => {
           </div>
 
           {/* Submit Button */}
-          <div className="form-group">
+          <div className="form-group1">
             <button type="submit" className="btn">Submit</button>
           </div>
 
         </form>
       </div>
-    </>
+    </div>
   );
 };
 

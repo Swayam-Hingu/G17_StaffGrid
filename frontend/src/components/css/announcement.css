@@ -16,8 +16,20 @@
     gap: 1.5rem;
 }
 
+.role-grid {
+    width: 100%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr ;
+    gap: 1.5rem;
+}
+
 @media (min-width: 768px) {
     .content-grid {
-        grid-template-columns: 2fr 1fr;
+        grid-template-columns: 0fr 2fr 1fr;
+    }
+
+    .role-grid{
+        grid-template-columns: 1fr 3fr 1fr;
     }
 }

@@ -4,36 +4,59 @@
   left: 0;
   width: 250px;
   height: 100%;
-  background-color: #243642;
-  color: white;
+  background-color:#243642;
+  /* //background-color: #357463;  */
+  color: white; /* Light tone for text */
   padding: 20px;
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s ease; 
+  transition: transform 0.3s ease;
   z-index: 2000;
-  transform: translateX(-100%);  
+  transform: translateX(-100%);
   overflow-y: auto;
+  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+}
+
+.menu::-webkit-scrollbar {
+    width: 0px;
+}
+
+.menu::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.menu::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
 }
 
 .menu.open {
   transform: translateX(0);  
 }
 
- .close {
-  background: none;
+.closeborder .close {
+  /* background: none; */
   border: none;
-  color: white;
-  font-size: 25px;
+  background-color: #fa2626;
+  color: #243642; /* Light text color */
+  font-size: 15px;
   cursor: pointer;
+  margin-left: 70%;
   margin-bottom: 0px; 
-  width:fit-content; 
-} 
+  width: fit-content; 
+}
+.closeborder .close:hover {
+  background-color: #fa5826; /* Light text for contrast */
+  color: #243642;
+}
 .closeborder { 
   display: flex;
   justify-content: flex-end;  
   padding: 5px;
+  margin-top: -30px;
+  /* padding-top: -15px; */
 }
-
 
 .menu ul {
   list-style-type: none;
@@ -47,43 +70,56 @@
 
 .menu ul li a {
   text-decoration: none;
-  color: white;
+  color:white; /* Light text color */
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 8px;
   font-size: 16px;
   border-radius: 5px;
   transition: background-color 0.3s ease;
 }
 
 .menu ul li a:hover {
-  background-color: #E2F1E7;
-  color:black;
+  background-color: #387478; /* Medium green on hover */
+  color: #e2f1e7; /* Light text for contrast */
 }
 
 .menu ul li:hover {
   cursor: pointer;
 }
 
-.role-specific {
-  background-color: #4caf50;
-  color: white;
+.role-specific .register-icon
+{
+ display: flex;
+ flex-direction: row;
+ align-items:center;
+ padding: 8px 8px;
+  justify-content: left;
+  gap: 10px;
+  border-radius: 5px;
+  font-size: 18px;
+  background-color: #629584; /* Soft green for role-specific sections */
+  color: white; 
 }
 
+.role-specific .register-icon p {
+  margin: 0px;
+}
+.role-specific .register-icon:hover {
+  background-color: #387478; /* Medium green on hover */
+  color: #e2f1e7; /* Light text for contrast */
+}
 .menu ul li .icon {
   margin-right: 10px;
   font-size: 20px;
 }
- 
 
-.menu ul li{
-  padding:5px;
+.menu ul li {
+  padding: 5px;
 }
 
 @media (max-width: 450px) {
-
   .menu {
-      width:100%;
-    }
-
+    width: 100%;
+  }
 }

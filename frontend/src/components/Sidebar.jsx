@@ -43,7 +43,8 @@ const Sidebar = ({ menuOpen, toggleMenu }) => {
         {
           role === 'admin' && (
             <li onClick={() => { navigate("/api/registration"); }} className="role-specific">
-              <FaUser className="icon" /> Register
+              <div className="register-icon"><FaUser /><p>Register</p></div> 
+              {/* <FaUser className="icon" /> Register */}
             </li>
           )
         }

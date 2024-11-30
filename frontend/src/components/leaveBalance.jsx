@@ -66,6 +66,7 @@ const LeaveBalance = () => {
   };
 
   return (
+    <div className='leave-container'>
     <div className="leave-balance-container">
       <h2 className="leave-title">Your Leave</h2>
 
@@ -131,6 +132,7 @@ leaveStatus
         </tbody>
       </table>
     </div>
+  </div>
   );
 };
 

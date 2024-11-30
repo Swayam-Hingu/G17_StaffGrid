@@ -1,29 +1,44 @@
+.salary-main-container
+{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+    width: 100%;
+    background-color: #e2f1e7;
+    padding-bottom: 100px;
+    padding-top: 100px;
+}
+
 .salary-form-container {
     width: 65%;
-    margin: 30px auto;
-    background-color: #e0f7fa;
+    margin: 50px auto;
+    background-color: #bcd9c6;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    color: 004d40;
 }
 
 h2 {
     font-size: 1.8em;
     margin-top: 50px;
     margin-bottom: 20px;
-    color: #004d40;
+    /* //color: #004d40; */
     text-align: center;
 }
 
-h3 {
+.form-group h3 {
     text-align: center;
-    color: #004d40;
+ /* color: #004d40; */
     font-size: medium;
 }
 
 .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 20px;
     align-items: center;
 }
@@ -53,7 +68,7 @@ h3 {
 }
 
 .employee-detail {
-    background-color: #f9f9f9;
+    background-color: #e2f1e7;
     padding: 15px;
     border-radius: 4px;
     margin-bottom: 15px;
@@ -91,13 +106,7 @@ button {
     background-color: #2f5e63;
   }
   
-  button[type="button"] {
-    /* background-color: #387478;
-    color: white;
-    margin-right: 10px;
-    align-items: center;
-    width: 100%; */
-  }
+  
   
   button.remove-btn {
     align-self: center;

@@ -65,7 +65,7 @@ const RegisterEmp = () => {
       <h1 className="register-header">Register User</h1>
       <form className="register-form" onSubmit={handleSubmit(submitHandler)}>
         <div className="form-group">
-          <label htmlFor="name">Name</label>
+          <label className='l1'  htmlFor="name">Name :</label>
           <input
             type="text"
             name="name"
@@ -88,12 +88,13 @@ const RegisterEmp = () => {
         {errors.name && <p className="error-message">{errors.name.message}</p>}
 
         <div className="form-group">
-          <label htmlFor="mail">Email</label>
+          <label className='l1' htmlFor="mail">Email :</label>
           <input
-            type="email"
+            className="form-control"
+            type="text"
             name="mail"
             id="mail"
-            className="form-control"
+            
             {...register("mail", {
               required: "Email is required",
               pattern: {
@@ -107,7 +108,7 @@ const RegisterEmp = () => {
         {errors.mail && <p className="error-message">{errors.mail.message}</p>}
 
         <div className="form-group">
-          <label htmlFor="role">Role</label>
+          <label className='l1'  htmlFor="role">Role :</label>
           <input
             type="text"
             name="role"
@@ -122,7 +123,7 @@ const RegisterEmp = () => {
         </div>
         {errors.role && <p className="error-message">{errors.role.message}</p>}
         <div className="form-submit">
-          <input type="submit" value="Submit" className="submit-button" />
+          <input  type="submit" value="Submit" className="submitbut" />
         </div>
       </form>
     </div>

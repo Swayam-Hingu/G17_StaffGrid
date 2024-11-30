@@ -1,7 +1,20 @@
-.form-container {
-  width: 65%;
+.project-upload {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  /* margin-top: 150px; */
+  background-color: #e2f1e7;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.form-container1 {
+  width: 50%;
   margin: 50px auto;
-  background-color: #e0f2f1;
+  background-color: #bcd9c6;
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -15,7 +28,7 @@ h2 {
   text-align: center;
 }
 
-.form-group {
+.form-group1 {
   margin-bottom: 20px;
   font-size: 1.2em;
 }
@@ -26,7 +39,7 @@ h2 {
   font-size: 20px;
 } */
 
-.form-group label {
+.form-group1 label {
   font-size: 1.2em;
   font-weight: 600;
   color: #333;
@@ -34,7 +47,7 @@ h2 {
   display: block;
 }
 
-.form-control {
+.form-control1 {
   width: 100%;
   padding: 8px;
   font-size: 1em;
@@ -105,13 +118,6 @@ button[type="submit"]:hover, .add-btn:hover {
   background-color: #2f5e63;
 }
 
-button[type="button"] {
-  /* background-color: #387478;
-  color: white;
-  margin-right: 10px;
-  align-items: center;
-  width: 100%; */
-}
 
 button.remove-btn {
   align-self: center;
@@ -124,6 +130,7 @@ button.remove-btn:hover {
 }
 
 input[type="text"], input[type="date"], textarea, select {
+  background-color: #e2f1e7;
   width: 100%;
   padding: 8px;
   font-size: 1em;
@@ -153,7 +160,7 @@ input[type="text"], input[type="date"], textarea, select {
     font-size: 1.2em;
   }
 
-  .form-control {
+  .form-control1 {
     font-size: 0.9em;
   }
 
@@ -189,7 +196,7 @@ input[type="text"], input[type="date"], textarea, select {
     font-size: 1em;
   }
 
-  .form-control {
+  .form-control1 {
     font-size: 0.8em;
   }
 
@@ -212,7 +219,7 @@ input[type="text"], input[type="date"], textarea, select {
 }
 
 @media (min-height: 800px) {
-  .form-container {
+  .form-container1 {
     margin: 70px auto;
   }
 
@@ -221,7 +228,7 @@ input[type="text"], input[type="date"], textarea, select {
     margin-bottom: 20px;
   }
 
-  .form-group {
+  .form-group1 {
     margin-bottom: 25px;
   }
 

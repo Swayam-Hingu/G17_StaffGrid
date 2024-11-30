@@ -15,6 +15,7 @@ const Salary = () => {
   };
 
   return (
+    <div className="salary-main-container">
     <div className="salary-form-container">
       <h2>Salary Management Form</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -32,6 +33,7 @@ const Salary = () => {
                 placeholder="Employee ID"
                 className="form-control"
               />
+              
               {errors.employees?.[index]?.employeeId && (
                 <p className="error-message">{errors.employees[index].employeeId.message}</p>
               )}
@@ -82,6 +84,7 @@ const Salary = () => {
           <button type="submit" className="btn-primary">Submit</button>
         </div>
       </form>
+    </div>
     </div>
   );
 };

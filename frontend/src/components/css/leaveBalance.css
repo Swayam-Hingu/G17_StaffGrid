@@ -10,14 +10,23 @@
   }
 }
 
+.leave-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin: 0;;
+  background: #e2f1e7;
+}
+
 /* Container styling with fade-in animation */
 .leave-balance-container {
   width: 100%;
   max-width: 800px;
-  margin: 40px auto;
+  margin: 30px auto;
   padding: 20px;
   border-radius: 12px;
-  background: #f3f7fa;
+  background: #bcd9c6;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
   opacity: 0;
@@ -110,7 +119,7 @@
 
 /* Apply leave button styling */
 .apply-leave-button {
-  background-color: #2196f3;
+  background-color: #387478;
   color: white;
   font-size: 16px;
   padding: 10px 20px;
@@ -123,8 +132,13 @@
   animation-delay: 2.5s;
 }
 
+.apply-leave-button a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .apply-leave-button:hover {
-  background-color: #1976d2;
+  background-color: #284b4f;
 }
 
 /* Leave Records Table Styling */

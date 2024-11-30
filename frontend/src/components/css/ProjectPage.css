@@ -1,5 +1,7 @@
 .project-card {
-  background-color: #E2F1E7;
+  background-color: #bcd9c6;
+  width: 800px;
+  height: 450px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -8,7 +10,15 @@
   font-family: Arial, sans-serif; 
 }
 .project-page{
-  margin-top:150px;
+  /* margin-top:150px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-color: #e2f1e7;
+  flex-direction: column;
+
 }
 
 .project-card .header {
