@@ -10,6 +10,7 @@ body {
   gap: 20px;
   justify-content: center;
   padding: 20px;
+  background-color: #e2f1e7;
 }
  
 .cardpeople {
@@ -18,7 +19,7 @@ body {
   border-radius: 15px;
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  background: #97b2b4;
+  background: #bcd9c6;
   text-align: center;
   cursor: pointer;
   border: 1px solid #ddd;  

@@ -23,15 +23,14 @@ input[type="radio"]:checked {
     color: #243642;
 }
 
-.form-label {
-    display: block;
+.announcement-formlabel {
     color: #243642;
     font-weight: 600;
     font-size: medium;
     margin-bottom: 0.5rem;
 }
 
-.form-input {
+.announcement-forminput {
     width: 100%;
     padding: 0.5rem;
     border: 1px solid #629584;
@@ -42,21 +41,21 @@ input[type="radio"]:checked {
 
 .form-input:focus {
     outline: none;
-    box-shadow: 0 0 0 2px #387478;
+    box-shadow: 0 0 0 2px #4A4947;
     background-color: #E2F1E7;
 }
 
 .radio-label {
-    display: block;
     color: #243642;
     font-weight: 600;
     font-size: medium;
     margin-bottom: 0.5rem;
+    margin-right: 1.5rem;
 }
 
-.submit-button {
+.announcement-submitbuttonn {
   width: 40%;
-  background-color: #387478;
+  background-color: #4A4947;
   color: white;
   font-weight: 600;
   padding: 0.5rem;
@@ -64,12 +63,12 @@ input[type="radio"]:checked {
   border: none;
   cursor: pointer;
   margin-top: 1rem;
-  display: block;
+  /* display: block; */
   margin-left: auto;
   margin-right: auto;
 }
 
-.submit-button:hover {
+.announcement-submitbuttonn:hover {
     background-color: #243642;
 }
 
