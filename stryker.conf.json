@@ -1,0 +1,12 @@
+{
+    "testRunner": "mocha",
+    "coverageAnalysis": "perTest",
+    "mochaOptions": {
+        "spec": [ "./Documents/testing-documents/unit-test-backend/test/*.js" ],
+        "package": "package.json",
+        "grep": ".*"
+    },
+    "mutate": [
+        "Backend/controllers/*.js"
+    ]
+}

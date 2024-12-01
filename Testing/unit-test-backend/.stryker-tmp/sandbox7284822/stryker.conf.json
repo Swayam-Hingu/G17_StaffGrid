@@ -1,0 +1,12 @@
+{
+    "testRunner": "mocha",
+    "coverageAnalysis": "perTest",
+    "mochaOptions": {
+        "spec": [ "test/*.js" ],
+        "package": "package.json",
+        "grep": ".*"
+    },
+    "mutate": [
+        "C:/Users/Swayam/G17_StaffGrid/Backend/controllers/*.js"
+    ]
+}
