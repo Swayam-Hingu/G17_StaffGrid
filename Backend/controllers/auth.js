@@ -57,7 +57,7 @@ async function handleUserRegistration(req, res){
 
       //Encoding password for purpose of the security
       emailpass = pass
-      pass = await bcrypt.hash(pass,10);
+      pass = await bcrypt.hash(pass,5);
         
       // Create new employee with this given details
       const employee = new employeeModel({ name, pass, mail, role, id}); 
@@ -107,7 +107,7 @@ async function  handleUserLogin(req,res){
 
     try{
         const emp = await employeeModel.findOne({id:req.body.id});
-        //console.log(emp)
+        console.log(emp)
 
         if(emp==undefined){
             return res.status(404).send({
@@ -156,9 +156,9 @@ async function  handleUserLogin(req,res){
 };
 
  
-
+//update the password
 async function handleChangePassword(req,res){
-    console.log("----------COME FOR CHANGE-------------")
+    // console.log("----------COME FOR CHANGE-------------")
 
     try{
         // first get user from the data base
@@ -175,13 +175,13 @@ async function handleChangePassword(req,res){
         const newpassword = req.body.newpassword; 
         
     
-        console.log(currpassword,newpassword)
-        console.log(currpassword,emp.pass);
+        // console.log(currpassword,newpassword)
+        // console.log(currpassword,emp.pass);
 
 
         const statusofchange = await bcrypt.compare(req.body.currpassword,emp.pass)
 
-        console.log(statusofchange,currpassword)
+        // console.log(statusofchange,currpassword)
 
         if(!statusofchange){
             return res.status(500).send({
@@ -201,7 +201,7 @@ async function handleChangePassword(req,res){
           sameSite: 'None', // Required for cross-origin requests
         })
 
-        emp.pass =  await bcrypt.hash(newpassword,10);;
+        emp.pass =  await bcrypt.hash(newpassword,5);;
         await emp.save();
 
         return res.status(200).send({
@@ -220,6 +220,8 @@ async function handleChangePassword(req,res){
         });
     }
 };
+
+//Send OPT password
 async function handleSendEmailForChangePassword(req,res){
 
     try{
@@ -247,9 +249,9 @@ async function handleSendEmailForChangePassword(req,res){
             Admin Team
             StaffGrid\n`,
           }
-          pass = await bcrypt.hash(pass,10) 
+          pass = await bcrypt.hash(pass,5) 
           emp.pass = pass;
-          console.log(pass,"hashPassW: ",emp.pass)
+        //   console.log(pass,"hashPassW: ",emp.pass)
           await emp.save();
 
         adminSendeMail.sendMail(mailSendToEmployee,(error,info)=>{
@@ -278,7 +280,7 @@ async function handleUserLogout(req,res){
         req.employee.tokens = [];
         //console.log(req.employee);
         await req.employee.save();  
-        res.clearCookie("jwt11");
+        res.clearCookie("jwt");
         res.send({ message: "Logged out successfully" });
 
     } catch (error) {

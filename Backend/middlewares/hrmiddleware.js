@@ -1,52 +1,43 @@
 const jwt = require('jsonwebtoken');
 const employeeModel = require('../model/employee');
+const cookieParser = require('cookie-parser')
 
-// Check User is HR
+// Check User is hr
 module.exports = async (req, res, next) => {
     try { 
 
-        //check token is provied by the postman or not
-        const authHeader = req.headers['authorization'];
-        if (!authHeader) {
-            return res.status(401).send({
-                success: false,
-                message: 'No token provided. Authorization denied.',
-            });
-        }
-
-        // Extract the token from the Authorization header
-        const token = authHeader.split(' ')[1]; // The token is the second part after "Bearer"
+        const token = req.cookies.jwt;
         if (!token) {
             return res.status(401).send({
                 success: false,
-                message: 'Invalid token format. Authorization denied.',
+                message: 'Authorization denied.',
             });
         }
 
         // Verify the token
-        const verifyUser = jwt.verify(token, process.env.SECRET_KEY);
-        console.log("Verified hr ID:", verifyhr._id);
+        const verifyhr = jwt.verify(token, process.env.SECRET_KEY);
+        // console.log("Verified hr ID:", verifyhr._id);
 
-        // Find the user in the database
-        const user = await employeeModel.findById(verifyUser._id);
-        if (!user) {
+        // Find the hr in the database
+        const hr = await employeeModel.findById(verifyhr._id); 
+        if (!hr) {
             return res.status(401).send({
                 success: false,
-                message: 'User not found.',
+                message: 'hr not found.',
             });
         }
 
-        // Check if the user is an admin
-        if (user.role !== 'hr') {
+        // Check if the login is an hr  
+        if (hr.id.substr(0,6)!="202403") {
             return res.status(403).send({
                 success: false,
-                message: 'Authorization failed: Admin privileges required.',
+                message: 'Authorization failed: hr privileges required.',
             });
         }
 
-        // Attach user and token to the request object
+        // Attach hr and token to the request object
         req.token = token;
-        req.user = user;
+        req.hr = hr;
 
         // Proceed to the next middleware or route handler
         next();
@@ -55,7 +46,7 @@ module.exports = async (req, res, next) => {
         console.error("Authorization error:", error);
         return res.status(401).send({
             success: false,
-            message: 'Authorization failed. Admin API access denied.',
+            message: 'Authorization failed. hr API access denied.',
             error: error.message,
         });
     }

@@ -4,9 +4,9 @@ import axios from 'axios';
 import { Link ,useNavigate } from 'react-router-dom';
 import './css/login.css';
 import logo from './images/emslogo.png' 
-// import ForgetPassword from './forgetpassword.jsx'
 import Cookies from 'js-cookie'; 
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -28,13 +28,18 @@ const Login = () => {
       Cookies.set('employeeRole',response.data.emp.role);
       Cookies.set('employeeName',response.data.emp.name);
 
-      console.log("Login Token:: ",response.data.token);
+      // console.log("Login Token:: ",response.data.token);
 
-      navigate("/api/homepage");
+      toast.success('Login successful!');
+
+      setTimeout(() => {
+        navigate("/api/homepage");
+      }, 2000);
 
     }catch(error){
       reset();
-      alert("Login Error { Check ID & Password :<}")
+      toast.error('Login failed. Please check ID & Password.');
+      // alert("Login Error { Check ID & Password :<}")
 
       console.log("ERROR:" , error);
     }
@@ -85,38 +90,22 @@ const Login = () => {
           </Link> 
       </div>
 
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      
+
 
 
       </div>
-        {/* <h1 >Login Page</h1> */}
-        {/* <form onSubmit={handleSubmit(submitHandler)}>
-            <div>
-                <label htmlFor="id">ID</label>
-                <input type="text" name="id" id="id" 
-                {...register("id", {
-                  required: "ID is required",
-                  minLength: {
-                    value: 10,
-                    message: "ID must be at least 10 characters long"
-                  }
-                })}
-                />
-                {errors.id && <p style={{ color: 'red' }}>{errors.id.message}</p>}
-            </div>
-            <div>
-                <label htmlFor="password">password</label>
-                <input type="password" name="password" id="password" 
-                {...register("pass", {
-                  required: "Password is required",
-                })}
-                />
-                {errors.pass && <p style={{ color: 'red' }}>{errors.pass.message}</p>}
-            </div> 
-            <div>
-                <input type="submit" value="Submit" className="btn btn-dark"/>
-            </div>
-        </form> */}
-        {/* <Link to="/api/login/chcangepassword">Forgot password</Link> */}
     </div>
   )
 }

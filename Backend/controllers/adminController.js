@@ -6,33 +6,27 @@ const projectModel = require('../model/projectModel');
 const leaveModel = require('../model/leaveModel.js'); 
 const announcementModel = require('../model/announcementNote');
 
-
+//People Page Get All Employee details
 async function handleAllEmployeeDetails(req,res){
-     console.log("Here Enter for All Employee Get...")
      const allEmpDetails = await employeeModel.find();
 
      const detailedProfiles = await detailedProfile.find();
 
      const allEmpDetailsWithProfiles = allEmpDetails.map((employee) => {
         const profile = detailedProfiles.find((detail) => detail.id === employee.id);
-        console.log(`Employee ID: ${employee.id}, Profile ID: ${profile ? profile.id : 'No matching profile'}`);
         return {
             ...employee._doc, 
             imageUrl: profile ? profile.profileImage : null, 
         };
         
-    });
-
-    console.log("----------------------------------ALLEMP------------------------",allEmpDetailsWithProfiles);
-     
-     console.log(allEmpDetails)
+    });     
      return res.status(200).send({
         allEmpDetailsWithProfiles
     });
 }
 
+//Delete Employee/HR/Manager by Admin
 async function handleDeleteEmployee(req, res) {
-    // console.log("ENTER FOR DELETE");
 
     const { id } = req.params;  
     try { 
@@ -66,25 +60,20 @@ async function handleDeleteEmployee(req, res) {
                 { 'tasks.assignedTo.id': id },
                 { $pull: { tasks: { 'assignedTo.id': id } } }
             );
-            console.log(`Updated ${updatedTasks.modifiedCount} projects by removing manager from task assignments`);
-            console.log(`Updated ${updatedProjects.modifiedCount} projects by removing employee from teamMembers`);
         }
 
         // 4 
         if (employee.role === 'HR' || employee.role === 'Manager') {
             const deletedAnnouncements = await announcementModel.deleteMany({ senderID: id });
-            console.log(`Deleted ${deletedAnnouncements.deletedCount} announcements sent by employee ID: ${id}`);
         } else {
             const updatedAnnouncements = await announcementModel.updateMany(
                 { receiverIDs: id },
                 { $pull: { receiverIDs: id } } 
             );
-            console.log(`Updated ${updatedAnnouncements.modifiedCount} announcements by removing employee from receiverIDs`);
         }
 
         // 5 
         const deletedLeaveRecords = await leaveModel.deleteMany({ senderId: id });
-        console.log(`Deleted ${deletedLeaveRecords.deletedCount} leave records for employee ID: ${id}`);
 
         // 6 
         const deletedEmployee = await employeeModel.findOneAndDelete({ id });

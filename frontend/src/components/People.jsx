@@ -4,7 +4,9 @@ import '../components/css/People.css';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import image from './images/empPhoto.jpg';  
-import { FaTrashAlt } from 'react-icons/fa'; 
+import { FaTrashAlt } from 'react-icons/fa';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
 
 const People = () => {
   const navigate = useNavigate();  
@@ -18,7 +20,12 @@ const People = () => {
   };
 
   const handleDelete = async (id) => {
-    console.log("ID is: ", id)
+    // console.log("ID is: ", id)
+    const x = prompt("Please `YES` [capital] for validation");
+    if(x!='YES'){
+      alert("Error: You must enter 'YES' to proceed with deletion.");
+      return;
+    }
     try {
       const response = await axios.delete(`${process.env.REACT_APP_BACKEND_BASEURL}/api/login/delete/${id}`, {
         withCredentials: true,
@@ -27,10 +34,15 @@ const People = () => {
         }
       });  
       getAllEmployeeView(); 
+      toast.success("Employee deleted successfully");
     } catch (error) {
-      console.log("ERROR: ",error);  
+      // console.log("ERROR: ",error);  
+      toast.error("Error: Unable to delete employee");
       if(error.response.data.error=="jwt malformed"){
-        navigate("/api/login");
+        toast.error("Session expired. Redirecting to login...");
+        setTimeout(() => {
+          navigate("/api/login");
+        }, 2000);
       }
     }
   }
@@ -54,9 +66,12 @@ const People = () => {
 
       setProfileImages(images);  
     } catch (error) {
-      console.log("ERROR: ", error);  
+      // console.log("ERROR: ", error);  
+      toast.error("Error: Unable to fetch employees");
       if(error.response.data.error=="jwt malformed"){
-        navigate("/api/login");
+        setTimeout(() => {
+          navigate("/api/login");
+        }, 2000);
       }
     }
   };
@@ -92,6 +107,18 @@ const People = () => {
           <p className="role">Click to Register</p>
         </div>
       </div>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 };

@@ -1,8 +1,7 @@
 
 const leaveModel = require('../model/leaveModel.js'); 
 
-// how to store number of approved leave a
-
+//Leave Id geneerate for unique id
 const generateLeaveID = async () => {
     const lastLeave = await leaveModel.findOne().sort({ appliedOn: -1 });
     if (!lastLeave) return 'L1';
@@ -11,8 +10,8 @@ const generateLeaveID = async () => {
     return `L${lastNumber + 1}`;
 };
 
+//Apply Leave by Employee/HR/Manager
 async function handleApplyLeave(req,res){
-    console.log("ENTER HERE FOR SAVE LEAVE...")
     try {
         const { senderId,leaveType,fromDate,toDate,totalDays,otherReason} = req.body;  
 
@@ -43,6 +42,7 @@ async function handleApplyLeave(req,res){
     }
 }
 
+//Get All Leaves by Admin to view
 async function handleGetAllLeaves(req,res){
     try { 
         const receivedLeaves = await leaveModel.find().sort({ appliedOn: -1 });
@@ -53,10 +53,11 @@ async function handleGetAllLeaves(req,res){
     }
 }
 
+//Employee view Sent Leave List
 async function handleGetSentLeaves(req,res){
     try {
         const { id: senderId } = req.params;
-        console.log(senderId)
+        // console.log(senderId)
         const sentLeaves = await leaveModel.find({ senderId }).sort({ appliedOn: -1 });
         res.status(200).send({status:true, sentLeave: sentLeaves});
 
@@ -65,14 +66,14 @@ async function handleGetSentLeaves(req,res){
     }
 }
 
+//Admin Update the status of leave
 async function handleUpdateLeave(req,res){
-    console.log("ENTER HERE....")
+    // console.log("ENTER HERE....")
     try {
         const { leaveID } = req.params;
         const leaveData = req.body;
         // console.log(leaveID,leaveStatus,comment) 
-
-        console.log(leaveData,leaveID)
+        // console.log(leaveData,leaveID)
       const LeaveUpdate = await leaveModel.findOneAndUpdate(
         { leaveID: leaveID },
         leaveData,
@@ -96,12 +97,12 @@ async function handleUpdateLeave(req,res){
        
 }
 
-
+//Delete Leave by Employee/Hr/Manager
 async function handleDeleteLeave(req,res){
     console.log("Enter Here...")
     try {
         const { leaveID } = req.params;
-        console.log(leaveID)
+        // console.log(leaveID)
         if (!leaveID) {
             return res.status(400).send({ error: "Leave ID is required." });
         }
@@ -117,17 +118,18 @@ async function handleDeleteLeave(req,res){
     }
 }
 
+//List of Approved
 async function handleApprovedListDate(req,res){
     const { senderId } = req.params;
-    console.log("Sender ID is here...",senderId)        
+    // console.log("Sender ID is here...",senderId)        
     try {
         const approvedLeaves = await leaveModel.find({
             senderId: senderId,
             leaveStatus: 'Approved'
         });
-        console.log("Lengthis:---> ",approvedLeaves.length)
+        // console.log("Lengthis:---> ",approvedLeaves.length)
         if (approvedLeaves.length === 0) {
-            return res.status(404).send({ message: "No approved leaves found." });
+            // console.log("Not Approved");
         }
         const leaveDates = approvedLeaves.map(leave => ({
             fromDate: leave.fromDate,

@@ -3,11 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from "js-cookie";
 import { Link } from 'react-router-dom';
 import './css/Sidebar.css'
-import { FaUser, FaListAlt, FaCog, FaPowerOff } from 'react-icons/fa'; // Import icons
+import axios from 'axios';
+import { FaUser, FaListAlt, FaCog, FaPowerOff } from 'react-icons/fa'; 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Sidebar = ({ menuOpen, toggleMenu }) => {
   const navigate = useNavigate();
   const [role, setRole] = useState("");
+  const token = Cookies.get("jwt11");
 
   useEffect(() => {
     const empRole = Cookies.get("employeeRole");
@@ -16,6 +20,32 @@ const Sidebar = ({ menuOpen, toggleMenu }) => {
     }
   }, []);
   
+  const logoutsystem = async () => {
+    try { 
+      // console.log(token)
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASEURL}/api/logout`,{
+        withCredentials: true,
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    },);  
+      Cookies.remove("jwt11");
+      Cookies.remove("employeeID");
+      Cookies.remove("employeeName");
+      Cookies.remove("employeeRole");
+      console.log("Logout Done")
+      navigate("/api/login");
+    } catch (error) {
+      console.error("Logout error:", error);
+      if(error.response.data.error=="jwt malformed"){
+        toast.error("Session expired. Redirecting to login...");
+        setTimeout(() => {
+          navigate("/api/login");
+        }, 2000);
+      }
+    }
+  }
+
 
   return (
     <div className={`menu ${menuOpen ? "open" : ""}`}>
@@ -37,28 +67,34 @@ const Sidebar = ({ menuOpen, toggleMenu }) => {
         {
           role == "admin" && <li><Link to="/api/approve"><FaListAlt className="icon" />Leave Handle</Link></li> 
         }
-        <li><Link to="/performance"><FaListAlt className="icon" /> Performance</Link></li>
-        <li><Link to="/salary"><FaListAlt className="icon" /> Salary</Link></li>
-        <li><Link to="/api/login/forgotpassword"><FaCog className="icon" /> Change Password</Link></li>
+        
         {
-          role === 'admin' && (
-            <li onClick={() => { navigate("/api/registration"); }} className="role-specific">
-              <div className="register-icon"><FaUser /><p>Register</p></div> 
-              {/* <FaUser className="icon" /> Register */}
-            </li>
-          )
-        }
+          role == 'hr' && <li><Link to="/salary"><FaListAlt className="icon" /> Salary</Link></li>
+        }        
+        <li><Link to="/api/login/forgotpassword"><FaCog className="icon" /> Change Password</Link></li>
         {
           role === 'admin' && (
             <li><Link to="/api/allemployeeview"><FaListAlt className="icon" />All Employee View</Link></li>
           )
         }
         {
-          (role == 'manager' || role == 'admin') && (
-            <li><Link to="/api/uploadproject"><FaListAlt className="icon" />Upload Project</Link></li>
+          (role == 'admin') && (
+            <li><Link to="/api/uploadprojectadmin"><FaListAlt className="icon" />Upload Project</Link></li>
           )
         }
-        <li><Link to="/api/login" onClick={() => Cookies.remove("jwt")}><FaPowerOff className="icon" /> Logout</Link></li>
+        {
+          (role == 'manager') && (
+            <li><Link to="/api/uploadprojectmanager"><FaListAlt className="icon" />Upload Project</Link></li>
+          )
+        }
+        {
+          role === 'admin' && (
+            <li onClick={() => { navigate("/api/registration"); }} className="role-specific">
+              <FaUser className="icon" /> Register
+            </li>
+          )
+        }
+        <li><Link to="/api/login" onClick={()=>{logoutsystem()}}><FaPowerOff className="icon" /> Logout</Link></li>
       </ul>
     </div>
   );

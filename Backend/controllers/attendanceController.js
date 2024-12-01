@@ -13,6 +13,7 @@ const haversine = require('haversine-distance');
 const companyLocation = { latitude: 23.1902117, longitude: 72.6280792  };
 const companyRadius = 1350;
 
+//Atendance Mark save in Database
 async function markAttendance(emp_id, date) {
     try {
         const attendanceRecord = {
@@ -22,7 +23,7 @@ async function markAttendance(emp_id, date) {
 
         let employee = await attendanceModel.findOne({ id: emp_id });
         
-        console.log(employee);
+        console.log("Employee",employee);
         if (employee) {
             const updatedAttendance = await attendanceModel.updateOne(
                 { id: emp_id },
@@ -44,10 +45,11 @@ async function markAttendance(emp_id, date) {
 
 }
 
+//Check for user mark attendace or not
 async function alreadyMarked(emp_id, date) {
     try {
 
-        console.log(date);
+        console.log("data",date);
         const emp = await attendanceModel.findOne(
             {
                 id: emp_id,
@@ -74,6 +76,7 @@ async function alreadyMarked(emp_id, date) {
     }
 }
 
+//Handle The markAttendace 
 async function handleMarkAttendance(req, res) {
     try {
         const { id } = req.body;
@@ -103,7 +106,7 @@ async function handleMarkAttendance(req, res) {
         const [day, month, year] = indiaDateString.split('/');
         const indiaDate = new Date(`${year}-${month}-${day}`);
     
-        console.log("India Time:", indiaDate);
+        // console.log("India Time:", indiaDate);
 
         marked = await alreadyMarked(emp.id,indiaDate);
         if(marked){
@@ -113,16 +116,16 @@ async function handleMarkAttendance(req, res) {
             });
         }
 
-        console.log(`Employee ID: ${emp.id}`);
+        // console.log(`Employee ID: ${emp.id}`);
 
         const employeeLocation = { latitude: req.body.latitude , longitude: req.body.longitude };
-        console.log(employeeLocation);
-        console.log(companyLocation);
+        // console.log(employeeLocation);
+        // console.log(companyLocation);
 
         // Calculate distance from company
         distance = haversine(companyLocation, employeeLocation);
 
-        console.log("dist: ",distance);
+        // console.log("dist: ",distance);
         if (distance > companyRadius) {
             return res.status(403).send({
                 status:false,
@@ -156,45 +159,14 @@ async function handleMarkAttendance(req, res) {
     }
 }
 
-// async function handleMarkAttendance(req,res){
-//     try {
-
-//         console.log(req.body.id);
-//         emp = await employeeModel.findOne({
-//             id:req.body.id
-//         })
-
-//         if(!emp)
-//             return res.status(404).send({"error":"employee with this id not found"}); 
-        
-//         console.log(emp.id);
-
-        
-//         // const rs = await axios.post('http://127.0.0.1:5000/');
-//         // console.log(rs.data);
-
-//         const response = await axios.post('http://127.0.0.1:5000/api/markAttendance', {
-//             id: emp.id
-//         }, { timeout: 600000 });
-
-//         return res.status(response.status).send(response.data);
-//     } catch (error) {
-//         return res.status(504).send({
-//             status:false,
-//             "error":"API not found",
-//             "Actual_error":error
-//         })
-//     }
-// }
-
+//Employee Attendace fetch by ID
 async function handleGetEmployeeAttendance(req,res){
-    console.log("Enter For Fetch Datas...")
+    // console.log("Enter For Fetch Datas...")
     const { id } = req.params;  
 
-    try {
-        console.log(id);
+    try { 
         const employee = await attendanceModel.findOne({id});
-        console.log(employee)
+        // console.log("EMP",employee)
         if (!employee) { 
             return res.status(200).json({ success: true, attendance: [] });
         }
@@ -206,11 +178,11 @@ async function handleGetEmployeeAttendance(req,res){
     }
 }
 
+//Employee Absent List [register Date to today]
 async function handleGetAbsentList(req,res){
 
-    console.log("------------------------------------------------------------------ABS COME HERE---------------------------")
     const { id } = req.params;
-    console.log("LId IS: ",id)
+    // console.log("LId IS: ",id)
 
     const employee = await employeeModel.findOne({ id });
     if (!employee) {
@@ -219,24 +191,22 @@ async function handleGetAbsentList(req,res){
             message: "Employee with this ID not found."
         });
     }
-    console.log("EMP",employee)
+    // console.log("EMP",employee)
     const attendanceRecord = await attendanceModel.findOne({ id });
     const joiningDate = new Date(employee.createdAt);
     const today = new Date();
     const totalDays = Math.floor((today - joiningDate) / (1000 * 60 * 60 * 24));
 
-    console.log(totalDays)
+    // console.log("Total Days",totalDays)
 
-    const absentDays = [];  
-    console.log("TotalDays: ",totalDays)
+    const absentDays = [];   
     for (let i = 0; i <= totalDays; i++) {
         const checkDate = new Date(joiningDate);
         checkDate.setDate(checkDate.getDate() + i);
         const dateStr = checkDate.toISOString().slice(0, 10);  
-        console.log(attendanceRecord)
-        const checkdays = attendanceRecord.attendance.find(record => record.date === dateStr);
+        //console.log("ATD->",attendanceRecord)
+        const checkdays = attendanceRecord?.attendance.find(record => record.date === dateStr);
         const status = checkdays ? checkdays.status : "absent";
- 
         if (status === "absent") {
             absentDays.push({
                 date: dateStr,
@@ -244,15 +214,63 @@ async function handleGetAbsentList(req,res){
             });
         }
     }
-    console.log("AbDASYS:---->", absentDays)
+    // console.log("AbDASYS:---->", absentDays)
     return res.status(200).json({
         status: true, 
         absentDays: absentDays
     });
 }
 
+//Get All Employee List id's with the percentage 
+async function handleGetAllEmployeeDetails(req,res){
+
+    try{
+        // console.log('--------------------------------------------------------Come for Admin Updates--------------------------------------------------------')
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth();
+        const currentYear = currentDate.getFullYear(); 
+        const dayOfMonth = currentDate.getDate(); 
+
+        const totalDaysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate(); 
+        
+        const employees = await attendanceModel.find();
+        const attendanceData = employees.map(employee => {
+        const presentDaysThisMonth = employee.attendance.filter(record => {
+            const recordDate = new Date(record.date); 
+            return (
+              recordDate.getMonth() === currentMonth &&
+              recordDate.getFullYear() === currentYear &&
+                record.status === 'present'
+            );
+          }).length;        
+        const attendancePercentage = (presentDaysThisMonth / dayOfMonth) * 100; 
+        
+        return {
+          id: employee.id,
+          attendancePercentage: attendancePercentage.toFixed(2), 
+        };
+      });
+      res.status(200).json({
+        success: true,
+        message: 'Attendance data fetched successfully',
+        data: attendanceData,
+      });
+  
+    } catch (error) {
+      console.error('Error fetching employee details:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Internal server error',
+        error: error.message,
+      });
+    }
+
+}
+
+ 
 module.exports = {
     handleMarkAttendance,
     handleGetEmployeeAttendance,
-    handleGetAbsentList
+    handleGetAbsentList,
+    handleGetAllEmployeeDetails
 };

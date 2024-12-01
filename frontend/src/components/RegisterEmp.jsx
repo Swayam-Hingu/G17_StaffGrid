@@ -4,14 +4,17 @@ import {useForm} from 'react-hook-form'
 import './css/RegisterEmp.css'
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const EMAIL_VALIDATION_API_KEY =  process.env.REACT_APP_EMAIL_VALIDATION_API_KEY; 
-// console.log(EMAIL_VALIDATION_API_KEY)
+console.log(EMAIL_VALIDATION_API_KEY)
 
 const RegisterEmp = () => {
   const navigate = useNavigate();
 
-  const {register, handleSubmit, formState: { errors }} = useForm();
+  const {register, handleSubmit, formState: { errors }, reset} = useForm();
 
 
   const validateEmail = async (email) => {
@@ -32,7 +35,8 @@ const RegisterEmp = () => {
 
 
     const isEmailValid = await validateEmail(data.mail);
-    console.log(isEmailValid)
+    // const isEmailValid=true;
+    // console.log(isEmailValid)
     if (!isEmailValid) {
       alert("The email address is invalid or undeliverable. Please provide a valid email.");
       return;  
@@ -50,11 +54,18 @@ const RegisterEmp = () => {
                 'Authorization': `Bearer ${token}` 
             }
         });
-        console.log("User registered successfully:", response.data);
+        // console.log("User registered successfully:", response.data);
+        reset();
+        toast.success("Employee registered successfully!");
+        
     } catch (error) {
-        console.log("ERROR: ", error.response ? error.response.data : error.message); // Log error response
+        // console.log("ERROR: ", error.response ? error.response.data : error.message);  
+        toast.error("Error occurred during registration. Please try again.");
         if(error.response.data.error=="jwt malformed"){
-          navigate("/api/login");
+        toast.error("Session expired. Redirecting to login...");
+          setTimeout(() => {
+            navigate("/api/login");
+          }, 2000);
         }
     }
   };
@@ -107,26 +118,43 @@ const RegisterEmp = () => {
         </div>
         {errors.mail && <p className="error-message">{errors.mail.message}</p>}
 
-        <div className="form-group">
-          <label className='l1'  htmlFor="role">Role :</label>
-          <input
-            type="text"
-            name="role"
-            id="role"
-            className="form-control"
-            {...register("role", {
-              required: "Role is required",
-              validate: value => ["manager", "employee", "hr"].includes(value.toLowerCase()) || "Role must be either 'manager', 'employee', or 'hr'"
-            })}
-          />
-          
-        </div>
-        {errors.role && <p className="error-message">{errors.role.message}</p>}
-        <div className="form-submit">
-          <input  type="submit" value="Submit" className="submitbut" />
-        </div>
+          <div className="form-group">
+            <label className='l1' htmlFor="role">Role :</label>
+            <select
+              name="role"
+              id="role"
+              className="form-control"
+              {...register("role", {
+                required: "Role is required",
+                validate: value => ["manager", "employee", "hr"].includes(value.toLowerCase()) || "Role must be either 'manager', 'employee', or 'hr'"
+              })}
+            >
+              <option value="">Select a Role</option>
+              <option value="manager">Manager</option>
+              <option value="employee">Employee</option>
+              <option value="hr">HR</option>
+            </select>
+          </div>
+
+          {errors.role && <p className="error-message">{errors.role.message}</p>}
+          <div className="form-submit">
+            <input  type="submit" value="Submit" className="submitbut" style={{ width: "100%" }} />
+          </div>
       </form>
     </div>
+
+    <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+
     </div>
   );
 };

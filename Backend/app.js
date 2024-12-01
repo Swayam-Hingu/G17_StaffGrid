@@ -26,7 +26,6 @@ const cookieParser = require('cookie-parser');
 require('./connection.js');
 
 const staticRoutes = require('./routes/authRoutes.js')//adding all datas
-const employeeRoutes = require('./routes/employeeroutes.js')
 const adminRoutes = require('./routes/adminroutes.js');
 const profileRoute = require('./routes/profileroutes.js');
 const attendanceRoute = require('./routes/attendanceRoutes.js');
@@ -36,16 +35,16 @@ const leaveRoute = require('./routes/leaveRoutes.js');
 
 const _dirname = path.resolve();
 
-const corsOptions = {
-    origin: 'https://staff-grid.vercel.app',  
-    credentials: true,  
-};
-
-
 // const corsOptions = {
-//   origin: 'http://localhost:3000',   
-//   credentials: true,   
+//     origin: 'https://staff-grid.vercel.app',  
+//     credentials: true,  
 // };
+
+
+const corsOptions = {
+  origin: 'http://localhost:3000',   
+  credentials: true,   
+};
 
 app.use(express.json());
 app.use(cors(corsOptions));
@@ -60,7 +59,6 @@ app.use("/api",staticRoutes);
 app.use("/api/attendance",attendanceRoute);
 app.use("/api/project",projectRoute);
 app.use("/api/leave",leaveRoute);
-app.use("/employee/api",employeeRoutes);
 app.use('/profile/api', profileRoute);
 app.use("/api",announcementroutes)
 app.use("/api",adminRoutes)

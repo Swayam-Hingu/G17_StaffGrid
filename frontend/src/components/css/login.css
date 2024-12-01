@@ -255,3 +255,15 @@ h2 {
   text-align: center;
   padding:10px;
 }
+ 
+.Toastify__close-button {
+  width: 20px;
+  height: 20px; 
+  font-size: 14px; 
+  padding: 0; 
+  margin: 0;
+}
+ 
+.Toastify__close-button:hover {
+  background-color: transparent; 
+}

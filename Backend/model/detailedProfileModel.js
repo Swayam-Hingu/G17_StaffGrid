@@ -1,4 +1,3 @@
-// detailedProfileModel.js
 const mongoose = require('mongoose');
 
 const detailedProfileSchema = new mongoose.Schema({

@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const employeeModel = require('../model/employee');
 const cookieParser = require('cookie-parser')
 
-// Check adminOrManager is adminOrManager
+// Check User is adminOrManager
 module.exports = async (req, res, next) => {
     try { 
 

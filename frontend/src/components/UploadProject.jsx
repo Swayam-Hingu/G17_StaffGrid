@@ -1,10 +1,16 @@
 import React from "react";
 import { useForm, useFieldArray } from "react-hook-form"; 
 import './css/UploadProject.css';
+import Cookies from 'js-cookie';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const UploadProject = () => {
   const { register, handleSubmit, control, formState: { errors } } = useForm();
+  const navigate = useNavigate();
 
   const { fields: teamMembersFields, append: appendTeamMember, remove: removeTeamMember } = useFieldArray({
     control,
@@ -16,8 +22,67 @@ const UploadProject = () => {
     name: "tasks"
   });
 
+  const token = Cookies.get('jwt11');
+  const id = Cookies.get('employeeID');
+  const name = Cookies.get('employeeName');
+
   const onSubmit = async (data) => {
-    console.log("Form Data:", data); 
+    try {
+      if (data.projectId) {
+        // Update existing project
+        const response = await axios.patch(
+          `${process.env.REACT_APP_BACKEND_BASEURL}/api/project/${data.projectId}`, 
+          data, 
+          {
+            withCredentials: true, 
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          }
+        ); 
+        toast.success("Project updated successfully!");
+        setTimeout(() => {
+          navigate("/api/project");
+        }, 2000);
+
+      } else {
+        // Create a new project
+        const response = await axios.post(`${process.env.REACT_APP_BACKEND_BASEURL}/api/project/upload`, {
+          title: data.title,
+          description: data.description,
+          teamManager: {
+            id: id,
+            name: name
+          },
+          teamMembers: data.teamMembers.map(member => ({ id: member.id })), 
+          status: data.status,
+          tasks: data.tasks.map((task) => ({
+            taskTitle: task.taskTitle,
+            taskDescription: task.taskDescription,
+            assignedTo: { id: task.assignedTo.id },
+            dueDate: task.dueDate,
+            status: task.status
+          })),
+          startDate: data.startDate,
+          endDate: data.endDate
+        }, {
+          withCredentials: true,
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        toast.success("Project Upload successfully!");
+        // console.log("Project uploaded successfully:", response.data);
+      }
+
+      setTimeout(() => {
+        navigate("/api/project");
+      }, 2000);
+
+    } catch (error) {
+      toast.error("Project Error successfully!");
+      console.error("ERROR: ", error.response ? error.response.data : error.message);
+    }
   };
 
   return (
@@ -145,6 +210,19 @@ const UploadProject = () => {
 
         </form>
       </div>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+
     </div>
   );
 };

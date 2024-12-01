@@ -1,5 +1,6 @@
 const projectModel = require('../model/projectModel');
 
+//for unique project id
 const generateProjectID = async () => {
     const lastProject = await projectModel.findOne().sort({ createdAt: -1 });
     if (!lastProject) return 'p1';
@@ -45,23 +46,22 @@ async function handleProjectUpload(req,res){
       
 }
 
+
+
 // get all list of peoject details
 async function handleGetAllProject(req,res){
-    // try {
-    //     const projects = await projectModel.find();
-    //     res.status(200).send({status:"true" , allProjects:projects});
-    // }catch (error) {
-    //     res.status(500).send({ error: error.message });
-    // }
-    console.log("----------------------------------------------")
     const { managerID } = req.params;  
       try {
-        const projects = await projectModel.find({ 'teamManager.id':  managerID });
+        let projects = await projectModel.find({ 'teamManager.id':  managerID });
   
           if (!projects) return res.status(404).send({ message: 'Project not found' });
 
           // console.log(projects)
-  
+        
+        if(managerID == '2024000001'){
+            projects = await projectModel.find();
+        }
+        // console.log("prd is: ",projects)
           res.status(200).send({status:"true" , projects});
       } catch (error) {
           res.status(500).send({ error: error.message });
@@ -85,11 +85,10 @@ async function handleGetPerticulerProject(req,res){
 // update project detail
 async function handleUpdateProjectDetail(req,res){
 
-    console.log("Enter--------------UPDATE-----------------------")
     try{
       const projectId = req.params.projectID;
       const projectData = req.body;
-      console.log(projectId,projectData)
+      // console.log(projectId,projectData)
       const updatedProject = await projectModel.findOneAndUpdate(
         { projectId: projectId },
           projectData,
@@ -113,7 +112,7 @@ async function handleUpdateProjectDetail(req,res){
 
 // delete existing project
 async function handleDeleteProject(req,res){
-    console.log("projectId: ",req.params.projectID);
+    // console.log("projectId: ",req.params.projectID);
     try {
         const deletedProject = await projectModel.findOneAndDelete({ projectId: req.params.projectID });
         if (!deletedProject) return res.status(404).json({ message: 'Project not found' });
@@ -128,6 +127,7 @@ async function handleDeleteProject(req,res){
     }
 }
 
+//Assign project return By id
 async function handleAssignProjects(req,res){
   const { employeeID } = req.params;  
   try {

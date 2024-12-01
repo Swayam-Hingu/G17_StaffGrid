@@ -3,6 +3,8 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import './css/viewannouncement.css';
 import { Link ,useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function ViewAnnouncement() {
   const [announcements, setAnnouncements] = useState([]);
@@ -12,7 +14,7 @@ function ViewAnnouncement() {
   const token = Cookies.get("jwt11");
   const empid = Cookies.get('employeeID');
   const role = Cookies.get('employeeRole'); 
-  console.log("ROLE:",role)
+  // console.log("ROLE:",role)
   
 
   const getAllMessages = async () => {
@@ -27,7 +29,9 @@ function ViewAnnouncement() {
     } catch (error) {
       console.log(error);
       if(error.response.data.error=="jwt malformed"){
-        navigate("/api/login");
+        setTimeout(() => {
+          navigate("/api/login");
+        }, 2000);
       }
     }
   };
@@ -45,7 +49,10 @@ function ViewAnnouncement() {
       } catch (error) {
         console.log(error);
         if(error.response.data.error=="jwt malformed"){
-          navigate("/api/login");
+        toast.error("Session expired. Redirecting to login...");
+          setTimeout(() => {
+            navigate("/api/login");
+          }, 2000);
         }
       }
     }
@@ -62,7 +69,7 @@ function ViewAnnouncement() {
     if(role=="admin"){
       setActiveTab("Sent by Me")
     }
-  }, [role]);
+  }, []);
 
   const renderAnnouncements = (announcementsList) => {
     return announcementsList.length > 0 ? (

@@ -6,6 +6,8 @@ import { faEllipsisV, faSearch, faEdit } from "@fortawesome/free-solid-svg-icons
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { Link ,useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function LeaveApproval() {
@@ -23,10 +25,8 @@ function LeaveApproval() {
   const [employees, setEmployees] = useState([]);
 
   const handleActionClick = (employee) => {
-    console.log(employee)
+    // console.log(employee)
     setSelectedEmployee(employee);
-    // setValue("status", employee.leaveStatus || "Pending");  // Set initial status
-    // setValue("comments", "");  // Clear comments field
     setShowPopup(true);
   };
 
@@ -36,7 +36,7 @@ function LeaveApproval() {
       selectedEmployee.leaveStatus = data.leaveStatus;
       selectedEmployee.comment = data.comment;
     } 
-    console.log(selectedEmployee);
+    // console.log(selectedEmployee);
     updateLeaveStatus();
   };
 
@@ -48,20 +48,22 @@ function LeaveApproval() {
               'Authorization': `Bearer ${token}`  
           }
       }); 
-      console.log(response.data.receivedLeaves)
+      // console.log(response.data.receivedLeaves)
       setEmployees(response.data.receivedLeaves);  
-
     } catch (error) {
         console.log("ERROR IS: ",error)
         if(error.response.data.error=="jwt malformed"){
-          navigate("/api/login");
+        toast.error("Session expired. Redirecting to login...");
+          setTimeout(() => {
+            navigate("/api/login");
+          }, 2000);
         }
     }
   }
 
 
   const updateLeaveStatus = async () => {
-    console.log("SE is here, ",selectedEmployee)
+    // console.log("SE is here, ",selectedEmployee)
     if (!selectedEmployee) return;  
     const leaveId = selectedEmployee.leaveID;
     console.log("leave id: ",leaveId)
@@ -75,14 +77,18 @@ function LeaveApproval() {
           'Authorization': `Bearer ${token}`
         }
       }); 
-      console.log(response.data)
+      // console.log(response.data)
       getAllListFirst();
       setShowPopup(false);
-  
+      toast.success('Update status');
     } catch (error) {
-      console.log("ERROR IS: ", error)
+      // console.log("ERROR IS: ", error)
+      toast.error('Update status Error');
       if(error.response.data.error=="jwt malformed"){
-        navigate("/api/login");
+        toast.error("Session expired. Redirecting to login...");
+        setTimeout(() => {
+          navigate("/api/login");
+        }, 2000);
       }
     }
   }; 
@@ -90,7 +96,7 @@ function LeaveApproval() {
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
     return `${day}-${month}-${year}`;
   };
@@ -144,6 +150,7 @@ function LeaveApproval() {
               <div className="popup-field">
                 <label>Status:</label>
                 <select {...register("leaveStatus", { required: "Status is required" })}>
+                  <option value="" disabled selected hidden>Update Status</option>
                   <option value="Pending">Pending</option>
                   <option value="Approved">Approved</option>
                   <option value="Rejected">Rejected</option>
@@ -193,6 +200,17 @@ function LeaveApproval() {
           </div>
         </div>
       )}
+            <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }

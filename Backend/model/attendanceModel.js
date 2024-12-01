@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
+
 
 const attendanceRecordSchema = new mongoose.Schema({
   date: { type: Date, required: true },

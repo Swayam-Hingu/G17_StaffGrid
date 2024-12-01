@@ -3,6 +3,8 @@ import './css/leaveBalance.css';
 import { Link,useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from 'axios'; 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LeaveBalance = () => {
   const [leaveRecords, setLeaveRecords] = useState([
@@ -15,7 +17,7 @@ const LeaveBalance = () => {
 
   // Function to handle the cancellation of leave directly
   const handleCancelClick = async (leavedata) => {
-    console.log("Delete This...",leavedata);
+    // console.log("Delete This...",leavedata);
     const leaveId = leavedata.leaveID;
     try {
       const response = await axios.delete(`${process.env.REACT_APP_BACKEND_BASEURL}/api/leave/delete/${leaveId}` , {
@@ -25,12 +27,15 @@ const LeaveBalance = () => {
           }
       }); 
       getAllListofLeave();
-      console.log(response)  
+      // console.log(response)  
 
     } catch (error) {
         console.log("ERROR IS: ",error)
         if(error.response.data.error=="jwt malformed"){
-          navigate("/api/login");
+        toast.error("Session expired. Redirecting to login...");
+          setTimeout(() => {
+            navigate("/api/login");
+          }, 2000);
         }
     }
   };
@@ -43,13 +48,16 @@ const LeaveBalance = () => {
               'Authorization': `Bearer ${token}`  
           }
       }); 
-      console.log(response) 
+      // console.log(response) 
       setLeaveRecords(response.data.sentLeave);
 
     } catch (error) {
         console.log("ERROR IS: ",error)
         if(error.response.data.error=="jwt malformed"){
-          navigate("/api/login");
+        toast.error("Session expired. Redirecting to login...");
+          setTimeout(() => {
+            navigate("/api/login");
+          }, 2000);
         }
     }
   }
@@ -60,7 +68,7 @@ const LeaveBalance = () => {
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const month = String(date.getMonth() + 1).padStart(2, '0'); 
     const year = date.getFullYear();
     return `${day}-${month}-${year}`;
   };

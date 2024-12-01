@@ -4,7 +4,8 @@ import '../components/css/leaveform.css';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LeaveForm = () => {
   const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
@@ -16,7 +17,7 @@ const LeaveForm = () => {
   const toDate = watch('toDate');
 
   const onSubmit = async(data) => {
-    console.log('Form submitted:', data); 
+    // console.log('Form submitted:', data); 
     const totalDays = calculateTotalDays();
     const payLoad = {
           senderId: empid,
@@ -28,7 +29,7 @@ const LeaveForm = () => {
     if (data.leaveType === "Other Reason") {
       payLoad.otherReason = data.otherReason;
     }
-    console.log(payLoad)
+    // console.log(payLoad)
     try {
         const response = await axios.post(`${process.env.REACT_APP_BACKEND_BASEURL}/api/leave/apply`, payLoad, {
           withCredentials: true,
@@ -36,18 +37,26 @@ const LeaveForm = () => {
               'Authorization': `Bearer ${token}`  
           }
       }); 
-      console.log(response)
-      navigate('/api/leave'); 
+      // console.log(response)
+      toast.success('Submit Leave Form');
+
+      setTimeout(() => {
+        navigate('/api/leave'); 
+    }, 3000);
     } catch (error) {
-        console.log("ERROR IS: ",error)
-        if(error.response.data.error=="jwt malformed"){
-          navigate("/api/login");
+        // console.log("ERROR IS: ",error)
+        toast.error('Error submit Leave Form');
+        if(error.response?.data?.error=="jwt malformed"){
+        toast.error("Session expired. Redirecting to login...");
+          setTimeout(() => {
+            navigate("/api/login");
+          }, 2000);
         }
     }
   };
 
   const calculateTotalDays = () => {
-    if (!fromDate || !toDate) return 0; // Ensure both dates are available
+    if (!fromDate || !toDate) return 0; 
     const from = new Date(fromDate);
     const to = new Date(toDate);
     from.setHours(0, 0, 0, 0);
@@ -73,6 +82,7 @@ const LeaveForm = () => {
             <div className="form-group1">
               <label>Leave Type</label>
               <select {...register('leaveType', { required: 'Leave type is required.' })}>
+              <option value="" disabled selected hidden>Select Leave Type</option>
                 <option value="Sick Leave">Sick Leave</option>
                 <option value="Casual Leave">Casual Leave</option>
                 <option value="Earned Leave">Earned Leave</option>
@@ -124,6 +134,17 @@ const LeaveForm = () => {
           </form>
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 };

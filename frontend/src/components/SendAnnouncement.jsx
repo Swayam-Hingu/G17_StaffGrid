@@ -4,6 +4,9 @@ import { useForm } from 'react-hook-form';
 import Cookies from 'js-cookie';
 import './css/sendannouncement.css';
 import { Link ,useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function SendAnnouncement() {
   const { register, handleSubmit, reset } = useForm(); 
@@ -20,6 +23,7 @@ function SendAnnouncement() {
   const submitHandler = async (data) => { 
     const token = Cookies.get("jwt11");
     const empid = Cookies.get('employeeID');
+    let flag = 0;
     let empIDS = [];
 
     if(emprole === 'manager'){ 
@@ -27,7 +31,7 @@ function SendAnnouncement() {
         empIDS = data.specificEmployeeId.split(',').map(id => id.trim());
         empIDS.forEach(ids => {
           if(ids.substr(5,1) !== '3' || ids.length !== 10){
-            console.log("ERROR INVALID IDS:::::::::::::::<><><><><");
+            flag=1;
           }
         });
       } else { 
@@ -35,13 +39,14 @@ function SendAnnouncement() {
         const end = data.rangeEnd;
         
         if(start.substr(5,1) !== '3' || start.length !== 10 || end.substr(5,1) !== '3' || end.length !== 10 || end < start){
-          console.log("ERROR IN INPUT RANGE");
+          flag=1;
+          return;
         } else {
           for (let i = start; i <= end; i++) {
             const empId = `${i}`;  
             empIDS.push(empId);
           }
-          console.log("Valid IDs in range:", empIDS);
+          // alert("Valid IDs in range:", empIDS);
         }      
       }
     } else if(emprole === 'admin'){ 
@@ -49,7 +54,7 @@ function SendAnnouncement() {
         empIDS = data.specificEmployeeId.split(',').map(id => id.trim());
         empIDS.forEach(ids => {
           if(ids.substr(5,1) === '0' || ids.length !== 10 || ids.substr(5,1) > '3'){
-            console.log("ERROR INVALID IDS:::::::::::::::<><><><><ADMIN");
+            flag=1; 
           }
         });
       } else if(data.rangeOption === 'All'){ 
@@ -89,7 +94,10 @@ function SendAnnouncement() {
         } catch(error){
           console.log(error);
           if(error.response.data.error=="jwt malformed"){
-            navigate("/api/login");
+        toast.error("Session expired. Redirecting to login...");
+            setTimeout(() => {
+              navigate("/api/login");
+            }, 2000);
           }
         }
       } else { 
@@ -97,13 +105,13 @@ function SendAnnouncement() {
         const end = data.rangeEnd;
 
         if((start.substr(5,1) !== end.substr(5,1)) || start.substr(5,1) < '1' || start.length !== 10 || end.substr(5,1) !== '3' || end.length !== 10 || end < start || start.substr(5,1) > '3' || end.substr(5,1) < '1' || start.substr(5,1) > '3'){
-          console.log("ERROR IN INPUT RANGE ADMIN");
+          flag=1;
         } else {
           for (let i = start; i <= end; i++) {
             const empId = `${i}`;  
             empIDS.push(empId);
           }
-          console.log("Valid IDs in range: ADMIN", empIDS);
+          // console.log("Valid IDs in range: ADMIN", empIDS);
         }      
       }
     } else if(emprole === 'hr'){ 
@@ -111,7 +119,7 @@ function SendAnnouncement() {
         empIDS = data.specificEmployeeId.split(',').map(id => id.trim());
         empIDS.forEach(ids => {
           if(ids.substr(5,1) <= '1' || ids.length !== 10 || ids.substr(5,1) > '3'){
-            console.log("ERROR INVALID IDS:::::::::::::::<><><><><");
+            flag=1;
           }
         });
       } else { 
@@ -119,18 +127,25 @@ function SendAnnouncement() {
         const end = data.rangeEnd;
 
         if(( start.substr(5,1) !== end.substr(5,1)) || start.length !== 10 || end.length !== 10 || end < start || start.substr(5,1) <= '1' || start.substr(5,1) > '3' || end.substr(5,1) <= '1' || end.substr(5,1) > '3'){
-          console.log("ERROR IN INPUT RANGE");
+          flag=1;
         } else {
           for (let i = start; i <= end; i++) {
             const empId = `${i}`;  
             empIDS.push(empId);
           }
-          console.log("Valid IDs in range:", empIDS);
+          // console.log("Valid IDs in range:", empIDS);
         }      
       }
     }
 
     try {
+
+      if(flag === 1) {
+        toast.error("Error: Invalid Employee IDs");
+        setResponseMessage("Invalid Employee IDs.");
+        return; 
+      }
+
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_BASEURL}/api/login/announcement`, {
         senderID: empid,
         senderRole: emprole,
@@ -142,12 +157,19 @@ function SendAnnouncement() {
           'Authorization': `Bearer ${token}`
         }
       });
+      reset();
       setResponseMessage("Announcement sent successfully!");
+      toast.success("Successfully send Announcement");
+      console.log("PROBLEM: ", response)
     } catch (error) {
-      console.error("Error sending announcement", error);
+      // console.error("Error sending announcement", error);
+      toast.error("Error: Invalid Employee IDs8");
       setResponseMessage("Failed to send announcement.");
       if(error.response.data.error=="jwt malformed"){
-        navigate("/api/login");
+        toast.error("Session expired. Redirecting to login...");
+        setTimeout(() => {
+          navigate("/api/login");
+        }, 2000);
       }
     }
   };
@@ -228,6 +250,20 @@ function SendAnnouncement() {
         </button>
       </form>
       {responseMessage && <p className="response-message">{responseMessage}</p>}
+
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+
     </div>
   );
 }

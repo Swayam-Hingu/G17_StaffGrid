@@ -18,7 +18,6 @@
   width: 100%;
   background-color: #e2f1e7;
   flex-direction: column;
-
 }
 
 .project-card .header {
@@ -118,12 +117,11 @@
 }
 
 @media (max-width: 768px) {
-  .project-page{
-    margin-top:250px;
-  }
+  
   .project-card {
     padding: 15px;
     margin: 10px;
+    width:400px;
   }
 
   .project-card .title {

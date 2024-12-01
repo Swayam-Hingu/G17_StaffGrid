@@ -5,21 +5,22 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './css/Forgotpassword.css'
 import Cookies from 'js-cookie';  
-
+import { toast, ToastContainer } from 'react-toastify';  
+import 'react-toastify/dist/ReactToastify.css'; 
 
 const Forgotpassword = () => {
   const { register: register1, handleSubmit: handleSubmit1, formState: { errors: errors1 } } = useForm();  
-  const { register: register2, handleSubmit: handleSubmit2, formState: { errors: errors2 } } = useForm();
+  const { register: register2, handleSubmit: handleSubmit2, formState: { errors: errors2 }, getValues} = useForm();
   const [userId, setuserId] = useState();
   const navigate = useNavigate(); 
   const token = Cookies.get("jwt11");
 
 
-
   const submitHandler1 = async (data) => {
     try { 
+      toast.info('Loding for send mail');
       
-      console.log(data.id);
+      // console.log(data.id);
       setuserId(data.id);
       const response = await axios.patch(`${process.env.REACT_APP_BACKEND_BASEURL}/api/login/sendmailforpasschange`, {
         id: data.id
@@ -29,21 +30,27 @@ const Forgotpassword = () => {
           Authorization: `Bearer ${token}`
         }
       });
-      console.log(response);
-      console.log("EmailSubmitHandler");
-      alert('Email is Sent');
+      // console.log(response);
+      // console.log("EmailSubmitHandler");
+      // alert('Email is Sent');
+      
     } catch (error) {
-      alert('Resend Again');
-      console.log("ERROR:", error);
+      // alert('Resend Again');
+      toast.error('Failed to send email. Try again');
+      // console.log("ERROR:", error);
       if(error.response.data.error=="jwt malformed"){
-        navigate("/api/login");
+        toast.error("Session expired. Redirecting to login...");
+        setTimeout(() => {
+          navigate("/api/login");
+        }, 2000);
+        
       }
     }
   };
 
   const submitHandler2 = async (data) => {
     try { 
-      console.log(userId, data.currpassword);
+      // console.log(userId, data.currpassword);
 
       const response = await axios.patch(`${process.env.REACT_APP_BACKEND_BASEURL}/api/login/changepassword`, {
         id: userId,
@@ -55,14 +62,21 @@ const Forgotpassword = () => {
           Authorization: `Bearer ${token}`
         }
       });
-      console.log(response);
-      console.log("DONE: change password");
-      navigate('/api/login');  
-    } catch (error) {
-      console.log("ERROR:", error);
-      alert('Error In Form Submission');
-      if(error.response.data.error=="jwt malformed"){
+      // console.log(response);
+      // console.log("DONE: change password");
+      toast.success('Password changed successfully');
+      setTimeout(() => {
         navigate("/api/login");
+      }, 2000); 
+    } catch (error) {
+      // console.log("ERROR:", error);
+      // alert('Error In Form Submission');
+      toast.error('Error in changing password. Please try again');
+      if(error.response.data.error=="jwt malformed"){
+        toast.error("Session expired. Redirecting to login...");
+        setTimeout(() => {
+          navigate("/api/login");
+        }, 2000);
       }
     }
   };
@@ -127,14 +141,41 @@ const Forgotpassword = () => {
           </div>
           {errors2.newpassword && <p className="error-message">{errors2.newpassword.message}</p>}
           <div className="form-group">
+            <label htmlFor="cnp"></label>
+            <input
+              type="password"
+              name="cnp"
+              placeholder='Confirm Password'
+              id="cnp"
+              className="input-field"
+              {...register2("cnp", {
+                required: "Confirm password is required",
+                minLength: {
+                  value: 6,
+                  message: "Confirm Password must be at least 6 characters"
+                },
+                validate: (value) => {
+                  // console.log(value,getValues("newpassword"))
+                  if (value !== getValues("newpassword")) {
+                    return "Passwords do not match";
+                  }
+                  return true;
+                }
+              })}
+              
+            />
+            
+          </div>
+          {errors2.cnp && <p className="error-message">{errors2.cnp.message}</p>}
+          <div className="form-group">
             <label htmlFor="currpassword"></label>
             <input
               type="password"
               name="currpassword"
               id="currpassword"
-              placeholder='Confirm New Password'
+              placeholder='OTP'
               className="input-field"
-              {...register2("currpassword", { required: "Confirmation password is required" })}
+              {...register2("currpassword", { required: "OTP password is required" })}
             />
             
           </div>
@@ -144,6 +185,19 @@ const Forgotpassword = () => {
           </div>
         </form>
       </div>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+
     </div>
   );
 };

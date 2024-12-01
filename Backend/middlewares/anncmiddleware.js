@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const employeeModel = require('../model/employee');
 const cookieParser = require('cookie-parser')
 
-// Check employee is manager || HR || Admin
+// Check User is manager || HR || Admin
 module.exports = async (req, res, next) => {
     try { 
 
@@ -28,7 +28,6 @@ module.exports = async (req, res, next) => {
 
         // Check if the login is an emp 
         // ----------------------update------------------------
-        console.log("emp id:                            ",emp.role)
         if (emp.role != 'manager' && emp.role != 'hr' && emp.role != 'admin') {
             return res.status(403).send({
                 success: false,

@@ -4,6 +4,8 @@ import "../components/css/profile.css";
 import axios from 'axios';
 import Cookies from 'js-cookie'; 
 import { Link ,useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function ProfilePage() {
@@ -15,7 +17,7 @@ function ProfilePage() {
   
   const imageRef = useRef();
   
-  console.log("TIS: ",token)
+  // console.log("TIS: ",token)
 
   const [detail,setDetail] = useState({});
   const [profile,setProfile] = useState({});
@@ -33,15 +35,17 @@ function ProfilePage() {
           'Authorization': `Bearer ${token}`,
         },
       });
-      console.log("GETORNOT::: >",response.data.detailemployee);
+      // console.log("GETORNOT::: >",response.data.detailemployee);
       setView(response.data.success);
       setProfile(response.data.detailemployee)
       setImgset(response.data.detailemployee.profileImage)
-      console.log("IMG RES:> ",response.data.detailemployee.profileImage)
+      // console.log("IMG RES:> ",response.data.detailemployee.profileImage)
     } catch (error) {
-      console.error("Error in checkCompOrNot:", error.response.data.error);
+      // console.error("Error in checkCompOrNot:", error.response.data.error);
       if(error.response.data.error=="jwt malformed"){
-        navigate("/api/login");
+        setTimeout(() => {
+          navigate("/api/login");
+        }, 2000);
       }
     }
   };
@@ -49,7 +53,6 @@ function ProfilePage() {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    console.log("File is her, ",file)
     if (file) {
       setFileSet(file);
       const reader = new FileReader();
@@ -63,11 +66,11 @@ function ProfilePage() {
   
   const submitHandler = async (data) => { 
     try {
-      console.log("Data is:: ", data);
-      console.log("TOKEN::", token);
+      // console.log("Data is:: ", data);
+      // console.log("TOKEN::", token);
 
       const formData = new FormData();
-      console.log(detail.name,data.firstName)
+      // console.log(detail.name,data.firstName)
       formData.append("name", detail.name);
       formData.append("id", detail.id);
       formData.append("role", detail.role);
@@ -93,15 +96,14 @@ function ProfilePage() {
       formData.append("accountNo", data.accountNo);
       formData.append("aadharNumber", data.aadharNumber);
       
-      console.log(data.profileImage);
+      // console.log(data.profileImage);
       data.profileImage=fileset;
-      console.log(fileset); 
-      if (data.profileImage) {
-        console.log("IJDFSL: ",fileset);
+      // console.log(fileset); 
+      if (data.profileImage) { 
         formData.append("profileImage", fileset);   
       }
 
-      console.log("Form Data:", formData)
+      // console.log("Form Data:", formData)
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_BASEURL}/profile/api/add-detailprofile/${empid}`, formData, {
         withCredentials: true,
         headers: {
@@ -110,13 +112,20 @@ function ProfilePage() {
         },
       });
 
-      console.log(response.data); 
-      await checkCompOrNot()  
+      // console.log(response.data); 
+      await checkCompOrNot() 
+      
+      // toast.success("Profile Upload successfully!");
+
     } catch (error) {
-      console.error("Error in form submission:", error);
-      alert("ERROR {Form Submission}");
+      // console.error("Error in form submission:", error);
+      // alert("ERROR {Form Submission}");
+      toast.error("Error in form submission!");
       if(error.response.data.error=="jwt malformed"){
-        navigate("/api/login");
+        toast.error("Session expired. Redirecting to login...");
+        setTimeout(() => {
+          navigate("/api/login");
+        }, 2000);
       }
     }
   };
@@ -129,9 +138,13 @@ function ProfilePage() {
             'Authorization': `Bearer ${token}` 
         }}); 
       setDetail(response.data);
+      // toast.success("fetch profile details.");
     } catch (error) { 
+      toast.error("Failed to fetch profile details.");
       if(error.response.data.error=="jwt malformed"){
-        navigate("/api/login");
+        setTimeout(() => {
+          navigate("/api/login");
+        }, 2000);
       }
     }
   }
@@ -563,7 +576,7 @@ function ProfilePage() {
                           )}
                           className="form-control"
                         >
-
+                        <option value="" disabled selected hidden>Select Gender</option>
                           <option value="male">Male</option>
                           <option value="female">Female</option>
                           <option value="other">Other</option>
@@ -867,6 +880,19 @@ function ProfilePage() {
 
         
       }
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+
     </>
  
  

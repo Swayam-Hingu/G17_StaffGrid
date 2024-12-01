@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import ProjectCard from '../components/ProjectCard';
+import ProjectCard from './ProjectCard';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Modal from 'react-modal'; // Import Modal component
 import { Link ,useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const ProjectPage = () => {
   const id = Cookies.get('employeeID');
   const token = Cookies.get("jwt11");
   const role = Cookies.get('employeeRole');
   const navigate = useNavigate();
-  console.log(role)
+  // console.log(role)
 
   const [projects, setProjects] = useState([]);
-  const [selectedUpdateProject, setSelectedUpdateProject] = useState(null); // Track selected project for update
-  const [modalIsOpen, setModalIsOpen] = useState(false); // Modal open state
+  const [selectedUpdateProject, setSelectedUpdateProject] = useState(null); 
+  const [modalIsOpen, setModalIsOpen] = useState(false); 
 
   // Get all projects for manager
   const getAllManagerorAdminProject = async () => {
@@ -26,11 +29,17 @@ const ProjectPage = () => {
         },
       });
       setProjects(response.data.projects);
+      // toast.success("Fetch Projects!");
+
     } catch (error) {
       console.log('ERROR: ', error);
-      if(error.response.data.error=="jwt malformed"){
-        navigate("/api/login");
-      }
+      toast.error("Fetch Projects error");
+        if(error.response.data.error=="jwt malformed"){
+        toast.error("Session expired. Redirecting to login...");
+          setTimeout(() => {
+            navigate("/api/login");
+          }, 2000);
+        }
     }
   };
 
@@ -44,11 +53,15 @@ const ProjectPage = () => {
         },
       });
       setProjects(response.data.projects);
+      // toast.success("Fetch Projects!");
     } catch (error) {
-      console.log('ERROR: ',error);
-      if(error.response.data.error=="jwt malformed"){
-        navigate("/api/login");
-      }
+      toast.error("Fetch Projects error");
+        if(error.response.data.error=="jwt malformed"){
+        toast.error("Session expired. Redirecting to login...");
+          setTimeout(() => {
+            navigate("/api/login");
+          }, 2000);
+        }
     }
   };
 
@@ -61,31 +74,36 @@ const ProjectPage = () => {
           'Authorization': `Bearer ${token}`,
         },
       });
-      getAllManagerorAdminProject();  
+      getAllManagerorAdminProject(); 
+      toast.delete("Delete Project!");
+
     } catch (error) {
-      console.log('ERROR: ', error);
-      if(error.response.data.error=="jwt malformed"){
-        navigate("/api/login");
-      }
+      toast.error("Error Delete Project");
+
+        // if(error.response.data.error=="jwt malformed"){
+        //   setTimeout(() => {
+        //     navigate("/api/login");
+        //   }, 2000);
+        // }
     }
   };
 
   // Handle project update
   const handleUpdate = (project) => {
-    console.log("UPDATE FOR HERE....")
+    // console.log("UPDATE FOR HERE....")
     setSelectedUpdateProject(project);  
     setModalIsOpen(true);  
   };
 
   // Close the modal
   const handleCloseModal = () => {
-    setModalIsOpen(false); // Close the modal
-    setSelectedUpdateProject(null); // Reset the selected project
+    setModalIsOpen(false);  
+    setSelectedUpdateProject(null);  
   };
 
   // Handle form submission for updating the project status
   const handleFormSubmit = async (updatedProject) => {
-    console.log(updatedProject)
+    // console.log(updatedProject)
     try {
       const response = await axios.patch(
         `${process.env.REACT_APP_BACKEND_BASEURL}/api/project/${updatedProject.projectId}`, 
@@ -99,11 +117,16 @@ const ProjectPage = () => {
       ); 
       getAllManagerorAdminProject();  
       handleCloseModal();  
+      toast.success("Update Project Done");
+
     } catch (error) {
-      console.log('ERROR: ', error);
-      if(error.response.data.error=="jwt malformed"){
-        navigate("/api/login");
-      }
+      toast.error("Error in Update project");
+        if(error.response.data.error=="jwt malformed"){
+        toast.error("Session expired. Redirecting to login...");
+          setTimeout(() => {
+            navigate("/api/login");
+          }, 2000);
+        }
     }
   };
 
@@ -133,8 +156,7 @@ const ProjectPage = () => {
       ) : (
         <p>No projects available.</p>
       )}
-
-      {/* Modal for updating project status */}
+ 
       <div>
       <Modal
         isOpen={modalIsOpen}
@@ -143,8 +165,8 @@ const ProjectPage = () => {
         style={{
           content: { 
             maxWidth: '600px',
-            width: '80%', // Make the modal responsive to smaller screens
-            margin: '0 auto', // Center the modal horizontally
+            width: '80%',  
+            margin: '0 auto', 
             padding: '30px',
             marginTop:'100px',
             borderRadius: '10px',
@@ -157,11 +179,11 @@ const ProjectPage = () => {
           },
       
           overlay: {
-            backgroundColor: 'rgba(0, 0, 0, 0.3)', // Semi-transparent dark overlay
+            backgroundColor: 'rgba(0, 0, 0, 0.3)', 
           },
         }}
       >
-        <h3 style={{ color: '#387478' }}>Update Project Status</h3> {/* Header in teal */}
+        <h3 style={{ color: '#387478' }}>Update Project Status</h3> 
 
         {selectedUpdateProject && (
           <form
@@ -420,6 +442,19 @@ const ProjectPage = () => {
         )}
       </Modal>
       </div>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      
     </div>
   );
 };

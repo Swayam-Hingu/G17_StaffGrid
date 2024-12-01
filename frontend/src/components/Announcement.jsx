@@ -18,7 +18,6 @@ function Announcement() {
         </div>
         <div>
           {(role=='manager' || role== 'hr' || role=='admin')? <SendAnnouncement /> : null}
-           {/* <SendAnnouncement />  */}
         </div>
       </div>
     </div>

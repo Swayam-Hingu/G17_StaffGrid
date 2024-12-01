@@ -7,21 +7,22 @@ const {
     handleUserProfileSave ,
     handleUserProfileGet,
     handleUserProfileGetDetailed,
-    handleUserProfileViewOrNot,
-    handleUploadImage,
-    handleUpdateDetails
+    handleUserProfileViewOrNot
 } = require('../controllers/profileController');
  
 
-// ahiya have post to register vakhte thai jase
 
-// aa patch/put karine frontend sathe connect karvanu che ---  handleUpdateDetails 
-router.patch('/updateProfileDetail/:id',authmiddleware,upload.single('profileImage'),handleUpdateDetails);
+//Add Detail profile details
 router.post('/add-detailprofile/:id',upload.single('profileImage'),handleUserProfileSave);
-router.get('/getEmpDetailbyid/:id',authmiddleware,handleUserProfileGet);
-router.get('/getEmpfulldetailbyid/:id',authmiddleware,handleUserProfileGetDetailed);
-router.get('/checkfillornot/:id',authmiddleware,handleUserProfileViewOrNot);
 
-router.post('/uploadImage',authmiddleware,upload.single('profileImage'),handleUploadImage);
+//Get Profile by id
+router.get('/getEmpDetailbyid/:id',authmiddleware,handleUserProfileGet);
+
+//get admin/employee/hr/manager details profile
+router.get('/getEmpfulldetailbyid/:id',authmiddleware,handleUserProfileGetDetailed);
+
+//Check user fill or not their profile detail
+router.get('/checkfillornot/:id',authmiddleware,handleUserProfileViewOrNot);
+ 
 
 module.exports = router;

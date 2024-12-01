@@ -8,6 +8,9 @@ const {
     handleDeleteEmployee
 } = require('../controllers/adminController'); 
 
+//Admin view All Employee List
 router.get('/login/viewAllemployee',authmiddleware,adminMiddleware, handleAllEmployeeDetails); 
+
+//Admin want to delete Employee by employee id
 router.delete('/login/delete/:id',authmiddleware,adminMiddleware, handleDeleteEmployee); 
 module.exports = router;
