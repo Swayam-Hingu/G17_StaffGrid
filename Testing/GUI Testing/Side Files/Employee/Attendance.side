@@ -1,0 +1,243 @@
+{
+  "id": "d019d72e-4aeb-421d-b5f1-196dd947c429",
+  "version": "2.0",
+  "name": "staff Grid GUI Testing",
+  "url": "https://staff-grid.vercel.app",
+  "tests": [{
+    "id": "d569a971-023b-4e68-8aec-01f1ae207266",
+    "name": "Employee Login",
+    "commands": [{
+      "id": "e518caf2-9b7a-4ee2-a5de-b9ad027da1c9",
+      "comment": "",
+      "command": "open",
+      "target": "/api/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1f7857fd-1fdf-4bd5-9ead-9fcd8ea80379",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x832",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "75b063a8-2181-4963-8442-08fa81d9e558",
+      "comment": "",
+      "command": "click",
+      "target": "id=id",
+      "targets": [
+        ["id=id", "id"],
+        ["name=id", "name"],
+        ["css=#id", "css:finder"],
+        ["xpath=//input[@id='id']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/div[2]/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6a1043b3-4231-41a6-88b9-5e677e293aea",
+      "comment": "",
+      "command": "click",
+      "target": "id=id",
+      "targets": [
+        ["id=id", "id"],
+        ["name=id", "name"],
+        ["css=#id", "css:finder"],
+        ["xpath=//input[@id='id']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/div[2]/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "05b7529a-e798-4b03-8616-8b4bdf8cb94f",
+      "comment": "",
+      "command": "click",
+      "target": "id=id",
+      "targets": [
+        ["id=id", "id"],
+        ["name=id", "name"],
+        ["css=#id", "css:finder"],
+        ["xpath=//input[@id='id']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/div[2]/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b8d7f6a8-4e9a-43ec-a4be-4fb4afb4d28f",
+      "comment": "",
+      "command": "type",
+      "target": "id=id",
+      "targets": [
+        ["id=id", "id"],
+        ["name=id", "name"],
+        ["css=#id", "css:finder"],
+        ["xpath=//input[@id='id']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/div[2]/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "2024030001"
+    }, {
+      "id": "d8bc194a-337b-4e96-a1cf-56a28e4a2133",
+      "comment": "",
+      "command": "click",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=pass", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/div[2]/form/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "865dd3d7-ee82-4759-adf7-e2ae47b52646",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=pass", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/div[2]/form/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "R123456"
+    }, {
+      "id": "dfe99e99-50e9-4da1-8997-d4b13633751d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-btn",
+      "targets": [
+        ["css=.login-btn", "css:finder"],
+        ["xpath=//input[@value='Login']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/div[2]/form/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f0de9cb5-5977-4295-9248-42434bb8baac",
+      "comment": "",
+      "command": "click",
+      "target": "css=.hamburger",
+      "targets": [
+        ["css=.hamburger", "css:finder"],
+        ["xpath=//div[@id='root']/div[2]/header/div/div/div", "xpath:idRelative"],
+        ["xpath=//header/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ac2a7a33-9d1c-47d9-8143-856f6fa50932",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Attendance",
+      "targets": [
+        ["linkText=Attendance", "linkText"],
+        ["css=li:nth-child(2) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Attendance')]", "xpath:link"],
+        ["xpath=//div[@id='root']/div[2]/header/div[2]/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/attendance')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Attendance')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "28aec2b2-bcb0-4a0e-a6f1-06790b1801b4",
+      "comment": "",
+      "command": "click",
+      "target": "css=.close",
+      "targets": [
+        ["css=.close", "css:finder"],
+        ["xpath=//div[@id='root']/div[2]/header/div[2]/div/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'✖')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3728c6d0-4b39-467a-b7db-b97941fb8761",
+      "comment": "",
+      "command": "click",
+      "target": "css=.dashboard-container",
+      "targets": [
+        ["css=.dashboard-container", "css:finder"],
+        ["xpath=//div[@id='root']/div[3]", "xpath:idRelative"],
+        ["xpath=//body/div/div[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3e970889-e731-4e99-b4e6-50e2a6f1c6bc",
+      "comment": "",
+      "command": "click",
+      "target": "css=.react-datepicker__navigation-icon--previous",
+      "targets": [
+        ["css=.react-datepicker__navigation-icon--previous", "css:finder"],
+        ["xpath=//div[@id='root']/div[3]/div[2]/div/div/div/button/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Previous Month')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5d591818-90e1-43e9-9948-690230f9eba7",
+      "comment": "",
+      "command": "click",
+      "target": "css=.react-datepicker__navigation--previous",
+      "targets": [
+        ["css=.react-datepicker__navigation--previous", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div[3]/div[2]/div/div/div/button", "xpath:idRelative"],
+        ["xpath=//div/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Previous Month')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5de3deee-d8b9-4d0d-a2ae-9cfeaba78523",
+      "comment": "",
+      "command": "click",
+      "target": "css=.react-datepicker__navigation-icon--previous",
+      "targets": [
+        ["css=.react-datepicker__navigation-icon--previous", "css:finder"],
+        ["xpath=//div[@id='root']/div[3]/div[2]/div/div/div/button/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Previous Month')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4a3b49f3-e528-489c-bec0-7ed081dc77b0",
+      "comment": "",
+      "command": "click",
+      "target": "css=.react-datepicker__navigation--next",
+      "targets": [
+        ["css=.react-datepicker__navigation--next", "css:finder"],
+        ["xpath=(//button[@type='button'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div[3]/div[2]/div/div/div/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Next Month')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "fe9b137f-f72f-4a1c-aa24-ffb6ee364637",
+      "comment": "",
+      "command": "click",
+      "target": "css=.react-datepicker__navigation--next",
+      "targets": [
+        ["css=.react-datepicker__navigation--next", "css:finder"],
+        ["xpath=(//button[@type='button'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div[3]/div[2]/div/div/div/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Next Month')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "d4da93bc-c175-4e3c-9027-9bd0def0a748",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["https://staff-grid.vercel.app/"],
+  "plugins": []
+}

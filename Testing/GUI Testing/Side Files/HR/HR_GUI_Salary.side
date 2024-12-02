@@ -1,0 +1,225 @@
+{
+  "id": "b2bae984-9c97-49b0-8343-7111334433ed",
+  "version": "2.0",
+  "name": "HR_GUI",
+  "url": "https://staff-grid.vercel.app",
+  "tests": [{
+    "id": "4171478d-00ae-4b06-88c9-4af01f3cd0dc",
+    "name": "SalaryHR",
+    "commands": [{
+      "id": "47675683-7499-4fcf-a61f-0d290c2f3042",
+      "comment": "",
+      "command": "open",
+      "target": "/api/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "680b8634-56ad-4e95-98f5-f852c49ba3aa",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x832",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7f7d7027-d1f0-48c3-b4cb-5108e511ac45",
+      "comment": "",
+      "command": "click",
+      "target": "id=id",
+      "targets": [
+        ["id=id", "id"],
+        ["name=id", "name"],
+        ["css=#id", "css:finder"],
+        ["xpath=//input[@id='id']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/div[2]/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e2885c43-ef08-4cd1-9a07-a764a9405a0f",
+      "comment": "",
+      "command": "type",
+      "target": "id=id",
+      "targets": [
+        ["id=id", "id"],
+        ["name=id", "name"],
+        ["css=#id", "css:finder"],
+        ["xpath=//input[@id='id']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/div[2]/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "2024010008"
+    }, {
+      "id": "cf7b998d-966b-4e3c-b076-965e2a5c595c",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=pass", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/div[2]/form/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "wrX_Am9y"
+    }, {
+      "id": "ee19f308-0f88-4695-988d-ac1c4f414227",
+      "comment": "",
+      "command": "click",
+      "target": "css=.login-btn",
+      "targets": [
+        ["css=.login-btn", "css:finder"],
+        ["xpath=//input[@value='Login']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/div[2]/form/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "11fafd33-2e12-4942-b614-a944b024a71e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.hamburger",
+      "targets": [
+        ["css=.hamburger", "css:finder"],
+        ["xpath=//div[@id='root']/div/header/div/div/div", "xpath:idRelative"],
+        ["xpath=//div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0d2b7c14-9f88-4ddd-bf1d-207e2192b76a",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Salary",
+      "targets": [
+        ["linkText=Salary", "linkText"],
+        ["css=li:nth-child(6) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Salary')]", "xpath:link"],
+        ["xpath=//div[@id='root']/div/header/div[2]/ul/li[6]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/salary')]", "xpath:href"],
+        ["xpath=//li[6]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Salary')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e5c018bd-4fb1-4ca6-933c-f23af3b1b068",
+      "comment": "",
+      "command": "click",
+      "target": "css=.close",
+      "targets": [
+        ["css=.close", "css:finder"],
+        ["xpath=//div[@id='root']/div/header/div[2]/div/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'✖')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a129106e-a6d4-4b44-af74-4a31c9b00552",
+      "comment": "",
+      "command": "click",
+      "target": "css=.add-btn",
+      "targets": [
+        ["css=.add-btn", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div[2]/div/form/div/button", "xpath:idRelative"],
+        ["xpath=//form/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add Employee')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "927adfa7-31ac-4c59-ac56-d3dade1fa360",
+      "comment": "",
+      "command": "click",
+      "target": "name=employees.0.employeeId",
+      "targets": [
+        ["name=employees.0.employeeId", "name"],
+        ["css=.form-control:nth-child(2)", "css:finder"],
+        ["xpath=//input[@name='employees.0.employeeId']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div[2]/div/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8ed89029-656a-43d2-962f-80ca71be9a24",
+      "comment": "",
+      "command": "type",
+      "target": "name=employees.0.employeeId",
+      "targets": [
+        ["name=employees.0.employeeId", "name"],
+        ["css=.form-control:nth-child(2)", "css:finder"],
+        ["xpath=//input[@name='employees.0.employeeId']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div[2]/div/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "2024020004"
+    }, {
+      "id": "44d0c9de-f157-4ed0-b7f2-72f780bce5f2",
+      "comment": "",
+      "command": "click",
+      "target": "name=employees.0.salary",
+      "targets": [
+        ["name=employees.0.salary", "name"],
+        ["css=.form-control:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='employees.0.salary']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div[2]/div/form/div/div/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f629e100-5ec9-4351-87dc-b0d273e7d9f2",
+      "comment": "",
+      "command": "type",
+      "target": "name=employees.0.salary",
+      "targets": [
+        ["name=employees.0.salary", "name"],
+        ["css=.form-control:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='employees.0.salary']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div[2]/div/form/div/div/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "200000"
+    }, {
+      "id": "8f90d66d-619b-46b4-a7c5-c078fd417444",
+      "comment": "",
+      "command": "click",
+      "target": "name=employees.0.bonus",
+      "targets": [
+        ["name=employees.0.bonus", "name"],
+        ["css=.form-control:nth-child(4)", "css:finder"],
+        ["xpath=//select[@name='employees.0.bonus']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div[2]/div/form/div/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7891a4be-e0ba-4333-a4d2-e57244062b34",
+      "comment": "",
+      "command": "select",
+      "target": "name=employees.0.bonus",
+      "targets": [],
+      "value": "label=Bonus B"
+    }, {
+      "id": "1b66da29-8edb-48db-b0a6-d212a8aff918",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-primary",
+      "targets": [
+        ["css=.btn-primary", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div[2]/div/form/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Submit')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "e56dd37e-8cc6-4a89-97ec-e74455fbdebb",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["4171478d-00ae-4b06-88c9-4af01f3cd0dc"]
+  }],
+  "urls": ["https://staff-grid.vercel.app/"],
+  "plugins": []
+}
