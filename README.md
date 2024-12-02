@@ -44,10 +44,12 @@
 
 ### **Backend** 
 - **Node.js** 🟩: Powers the backend server and handles API requests.
+- **Express.js** ⚡: A web application framework for Node.js, used to build the backend API.
 - **MongoDB** 🗄️: A NoSQL database used to store and manage employee data, offering flexibility and scalability.
 
 ### **Testing & Performance** ⚙️
 - **JMeter** 🚀: Used for performance and load testing to ensure scalability.
+- **BlazeMeter** 🌐: An online platform for load testing and performance testing in various environments.
 - **Mocha** 🧪: A testing framework for unit and integration tests to ensure code quality.
 - **Selenium IDE** 🧑‍💻: Used for **GUI testing** to automate and verify the user interface interactions in the browser.
 
