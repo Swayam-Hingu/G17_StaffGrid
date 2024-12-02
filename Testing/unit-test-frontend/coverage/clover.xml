@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1733053361080" clover="3.2.0">
+  <project timestamp="1733053361080" name="All files">
+    <metrics statements="48" coveredstatements="43" conditionals="32" coveredconditionals="23" methods="17" coveredmethods="17" elements="97" coveredelements="83" complexity="0" loc="48" ncloc="48" packages="1" files="3" classes="3"/>
+    <file name="RegisterEmp.jsx" path="D:\@StaffGrid\G17_StaffGrid\frontend\src\components\RegisterEmp.jsx">
+      <metrics statements="26" coveredstatements="21" conditionals="16" coveredconditionals="10" methods="4" coveredmethods="4"/>
+      <line num="8" count="1" type="stmt"/>
+      <line num="11" count="1" type="stmt"/>
+      <line num="12" count="8" type="stmt"/>
+      <line num="14" count="8" type="stmt"/>
+      <line num="17" count="8" type="stmt"/>
+      <line num="19" count="2" type="stmt"/>
+      <line num="20" count="2" type="stmt"/>
+      <line num="23" count="2" type="cond" truecount="2" falsecount="0"/>
+      <line num="25" count="0" type="stmt"/>
+      <line num="26" count="0" type="stmt"/>
+      <line num="30" count="8" type="stmt"/>
+      <line num="31" count="2" type="stmt"/>
+      <line num="34" count="2" type="stmt"/>
+      <line num="35" count="2" type="stmt"/>
+      <line num="36" count="2" type="cond" truecount="2" falsecount="0"/>
+      <line num="37" count="1" type="stmt"/>
+      <line num="38" count="1" type="stmt"/>
+      <line num="41" count="1" type="stmt"/>
+      <line num="42" count="1" type="stmt"/>
+      <line num="43" count="1" type="stmt"/>
+      <line num="53" count="1" type="stmt"/>
+      <line num="55" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="56" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="57" count="0" type="stmt"/>
+      <line num="62" count="8" type="stmt"/>
+      <line num="118" count="4" type="cond" truecount="1" falsecount="1"/>
+    </file>
+    <file name="Salary.jsx" path="D:\@StaffGrid\G17_StaffGrid\frontend\src\components\Salary.jsx">
+      <metrics statements="9" coveredstatements="9" conditionals="6" coveredconditionals="3" methods="5" coveredmethods="5"/>
+      <line num="5" count="1" type="stmt"/>
+      <line num="6" count="21" type="stmt"/>
+      <line num="8" count="20" type="stmt"/>
+      <line num="13" count="20" type="stmt"/>
+      <line num="14" count="5" type="stmt"/>
+      <line num="17" count="20" type="stmt"/>
+      <line num="26" count="12" type="stmt"/>
+      <line num="65" count="3" type="stmt"/>
+      <line num="74" count="9" type="stmt"/>
+    </file>
+    <file name="UploadProject.jsx" path="D:\@StaffGrid\G17_StaffGrid\frontend\src\components\UploadProject.jsx">
+      <metrics statements="13" coveredstatements="13" conditionals="10" coveredconditionals="10" methods="8" coveredmethods="8"/>
+      <line num="6" count="1" type="stmt"/>
+      <line num="7" count="15" type="stmt"/>
+      <line num="9" count="15" type="stmt"/>
+      <line num="14" count="15" type="stmt"/>
+      <line num="19" count="15" type="stmt"/>
+      <line num="20" count="1" type="stmt"/>
+      <line num="23" count="15" type="stmt"/>
+      <line num="56" count="3" type="stmt"/>
+      <line num="67" count="1" type="stmt"/>
+      <line num="70" count="2" type="stmt"/>
+      <line num="78" count="3" type="stmt"/>
+      <line num="116" count="1" type="stmt"/>
+      <line num="119" count="2" type="stmt"/>
+    </file>
+  </project>
+</coverage>
